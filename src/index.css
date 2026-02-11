@@ -2,25 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Set a decorative background image that conveys the cyberpunk HUD theme.
- * Fixed path to include repository name and correct file extension (.jpg).
- */
 body {
-  /* ★修正: リポジトリ名 + 正しい拡張子 */
+  @apply bg-slate-950 text-slate-200 antialiased font-sans overflow-hidden;
+  /* 修正: 拡張子を .png に変更 */
   background-image: url('/worlddashboard_2/cyberpunk-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: multiply;
-  background-color: #020617; /* Fallback color */
+  background-color: #020617;
 }
 
-/*
- * Custom component styles.
- */
 @layer components {
   .glassmorphic {
-    @apply bg-slate-800 bg-opacity-40 backdrop-blur-md border border-white/10 rounded-lg;
-    box-shadow: 0 0 12px 0 rgba(59, 130, 246, 0.15);
+    @apply bg-slate-900 bg-opacity-60 backdrop-blur-xl border border-white/10 rounded-lg;
+    box-shadow: 0 0 20px 0 rgba(6, 182, 212, 0.1);
   }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  }
+
+  .scanline-effect {
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    background-size: 100% 4px, 3px 100%;
+  }
+}
+
+/* カスタムスクロールバー (ニュースフィード用) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.3);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.6);
 }
