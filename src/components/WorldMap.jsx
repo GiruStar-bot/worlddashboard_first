@@ -2,14 +2,17 @@ import React, { useMemo } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /*
- * WorldMap component
- * FIXED: reverted to reliable CDN URL and added numeric-to-ISO3 mapping
- * to solve both "missing map" and "numeric ID" issues.
+ * WorldMap Component (Enhanced)
+ * * 1. Uses reliable CDN for TopoJSON.
+ * 2. Implements a robust mapping (ISO_MAP) to convert the map's numeric IDs
+ * to the ISO Alpha-3 codes used in our dataset.
+ * 3. Handles missing risk data gracefully with a fallback color.
  */
 
+// Stable CDN for world map topology
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
 
-// Mapping from UN M49 Numeric code (used in topojson) to ISO Alpha-3 code (used in our data).
+// Mapping table: UN Numeric Code (TopoJSON) -> ISO Alpha-3 Code (Our Data)
 const ISO_MAP = {
   "004": "AFG", "008": "ALB", "010": "ATA", "012": "DZA", "016": "ASM", "020": "AND", "024": "AGO", 
   "028": "ATG", "031": "AZE", "032": "ARG", "036": "AUS", "040": "AUT", "044": "BHS", "048": "BHR", 
@@ -49,7 +52,7 @@ const ISO_MAP = {
   "894": "ZMB"
 };
 
-// Convert a hex colour to an RGB object.
+// --- Color Utility Functions ---
 function hexToRgb(hex) {
   const h = hex.replace('#', '');
   return {
@@ -59,14 +62,10 @@ function hexToRgb(hex) {
   };
 }
 
-// Convert an RGB object back to a hex string.
 function rgbToHex({ r, g, b }) {
-  return (
-    '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('')
-  );
+  return '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('');
 }
 
-// Linearly interpolate between two colours.
 function mixColours(a, b, t) {
   return rgbToHex({
     r: Math.round(a.r + (b.r - a.r) * t),
@@ -75,13 +74,13 @@ function mixColours(a, b, t) {
   });
 }
 
-// Risk colors: Low (Cyan) -> Mid (Purple) -> High (Red)
+// Colors: Low Risk (Cyan) -> Mid Risk (Purple) -> High Risk (Red)
 const COLOUR_LOW = hexToRgb('#06b6d4');
 const COLOUR_MID = hexToRgb('#8b5cf6');
 const COLOUR_HIGH = hexToRgb('#ef4444');
 
 export default function WorldMap({ data, onCountryClick, onHover, selectedIso }) {
-  // Build a lookup of FSI risk values keyed by ISO3 code.
+  // 1. Build a lookup for Risk scores (keyed by ISO3)
   const riskByIso = useMemo(() => {
     const map = {};
     if (data && data.regions) {
@@ -89,25 +88,25 @@ export default function WorldMap({ data, onCountryClick, onHover, selectedIso })
         region.forEach((entry) => {
           const iso = entry.master.iso3;
           const risk = entry.canonical?.risk?.fsi_total?.value;
-          map[iso] = risk;
+          map[iso] = risk; // Can be undefined
         });
       });
     }
     return map;
   }, [data]);
 
-  // Determine the range of risk values for color scaling.
+  // 2. Determine min/max for color scaling
   const [minRisk, maxRisk] = useMemo(() => {
     const values = Object.values(riskByIso).filter((v) => v != null);
     if (!values.length) return [0, 120];
     return [Math.min(...values), Math.max(...values)];
   }, [riskByIso]);
 
+  // 3. Color generation function
   const getColour = (risk) => {
-    if (risk == null) return '#1e293b'; // Fallback for no data
-    if (minRisk === maxRisk) return rgbToHex(COLOUR_LOW);
+    if (risk == null) return '#1e293b'; // Dark grey for missing data
     
-    // Calculate normalized position (0 to 1)
+    // Normalize risk to 0..1 range
     const t = (risk - minRisk) / (maxRisk - minRisk);
     
     if (t < 0.5) {
@@ -123,11 +122,12 @@ export default function WorldMap({ data, onCountryClick, onHover, selectedIso })
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                // Convert Numeric ID (e.g. "392") to ISO3 Code (e.g. "JPN")
+                // -- KEY FIX: ID Conversion --
+                // The TopoJSON uses numeric IDs (e.g. "392"). We need ISO3 ("JPN").
                 const isoNumeric = geo.id; 
                 const isoAlpha3 = ISO_MAP[isoNumeric];
                 
-                // If mapping fails, fallback to ID, but risk lookup will likely fail (gray color)
+                // Use ISO3 if found, otherwise fallback to original ID (unlikely to match)
                 const iso = isoAlpha3 || isoNumeric;
                 
                 const risk = riskByIso[iso];
@@ -142,21 +142,20 @@ export default function WorldMap({ data, onCountryClick, onHover, selectedIso })
                     stroke="#334155"
                     strokeWidth={0.5}
                     style={{
-                      default: { outline: 'none', transition: 'fill 0.3s' },
+                      default: { outline: 'none', transition: 'fill 0.3s ease' },
                       hover: { fill: '#f472b6', cursor: 'pointer', outline: 'none' },
                       pressed: { fill: '#ec4899', outline: 'none' },
                     }}
                     onMouseEnter={(evt) => {
                       const { clientX: x, clientY: y } = evt;
-                      // Pass the converted ISO code to the parent
+                      // Pass the converted ISO code up
                       onHover(iso, { x, y });
                     }}
                     onMouseLeave={() => onHover(null)}
                     onClick={() => {
-                      // Pass the converted ISO code to the parent
                       if (isoAlpha3) onCountryClick(iso);
                     }}
-                    // Apply CSS filter for selected state glow
+                    // Apply glow effect if selected
                     filter={isSelected ? 'url(#country-glow)' : undefined}
                   />
                 );
@@ -164,7 +163,6 @@ export default function WorldMap({ data, onCountryClick, onHover, selectedIso })
             }
           </Geographies>
         </ZoomableGroup>
-        {/* SVG Filter for Glow Effect */}
         <defs>
           <filter id="country-glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="coloredBlur" />
