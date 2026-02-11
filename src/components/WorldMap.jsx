@@ -2,10 +2,9 @@ import React, { useMemo } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /*
- * WorldMap Component (v2.2 Updated)
- * - Increased projection scale to fill the screen on load.
- * - Centered on [0, 0] to align with UK/Greenwich meridian vertically.
- * - Adjusted zoom/pan constraints for better UX.
+ * WorldMap Component (v2.3 Updated)
+ * - Added translateExtent to lock the map area and prevent dragging it off-screen.
+ * - Keeps the map centered and prevents "lost map" scenarios.
  */
 
 // Stable CDN for world map topology
@@ -112,17 +111,20 @@ export default function WorldMap({ data, onCountryClick, onHover, selectedIso })
   return (
     <div className="w-full h-full bg-slate-950">
       <ComposableMap 
-        // Increased scale (220) so the map fills the screen upon loading.
         projectionConfig={{ scale: 220 }} 
         className="w-full h-full"
       >
         <ZoomableGroup 
-          // Center on [Longitude 0, Latitude 0] to effectively align UK/Greenwich axis vertically.
           center={[0, 0]} 
           zoom={1} 
           minZoom={1} 
           maxZoom={8}
-          // Removed translateExtent to allow freer movement and prevent map from "locking" too early
+          // Restrict panning so the map doesn't float away.
+          // Setting translateExtent to [[0, 0], [800, 600]] locks the map to the viewbox.
+          translateExtent={[
+            [0, 0],
+            [800, 600]
+          ]}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
