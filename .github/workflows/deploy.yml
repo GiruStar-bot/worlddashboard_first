@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,20 +21,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
-      # 依存関係のインストール
+      # 依存関係をクリーンインストール (npm installより確実)
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      # 【修正】実行権限を強制的に付与するステップを追加
+      # 【重要】Windowsからのプッシュ時に発生する権限エラーを回避
       - name: Fix permissions
         run: chmod +x node_modules/.bin/vite || true
 
-      # ビルド実行
       - name: Build
         run: npm run build
 
-      # ビルド成果物(distフォルダ)をアップロード
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
