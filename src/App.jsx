@@ -2,20 +2,30 @@ import React, { useEffect, useState, useMemo } from 'react';
 import WorldMap from './components/WorldMap.jsx';
 import CountryDetails from './components/CountryDetails.jsx';
 import GlobalAnalytics from './components/GlobalAnalytics.jsx';
-import { Globe, AlertTriangle } from 'lucide-react';
 
+/*
+ * Root component orchestrating the overall layout of the dashboard.
+ */
 export default function App() {
   const [data, setData] = useState(null);
   const [selectedIso, setSelectedIso] = useState(null);
-  const [hoverInfo, setHoverInfo] = useState(null);
+  const [hoverInfo, setHoverInfo] = useState(null); // { iso3, x, y }
 
+  // Load the dataset from the public folder.
+  // We use import.meta.env.BASE_URL to ensure the path is correct
+  // whether running locally ("/") or on GitHub Pages ("/worlddashboard_2/").
   useEffect(() => {
-    fetch('worlddash_global_master.json')
-      .then((res) => res.json())
+    // ★修正: リポジトリ名を含めた正しいパスでデータを取得
+    fetch(`${import.meta.env.BASE_URL}worlddash_global_master.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error("JSON not found");
+        return res.json();
+      })
       .then((json) => setData(json))
       .catch((err) => console.error('Failed to load data', err));
   }, []);
 
+  // Flatten the nested regions structure into a list keyed by ISO3 code.
   const countryByIso3 = useMemo(() => {
     const map = {};
     if (!data) return map;
@@ -29,90 +39,69 @@ export default function App() {
 
   const selectedCountry = selectedIso ? countryByIso3[selectedIso] : null;
 
-  // Handlers
   const handleCountryClick = (iso3) => {
     setSelectedIso((prev) => (prev === iso3 ? null : iso3));
   };
 
-  const handleHover = (iso3, pos) => {
-    if (iso3 && pos) {
-      const country = countryByIso3[iso3];
-      const name = country?.master?.name || iso3;
-      const risk = country?.canonical?.risk?.fsi_total?.value;
-      setHoverInfo({ x: pos.x, y: pos.y, name, risk });
-    } else {
+  const handleHover = (iso3, position) => {
+    if (!iso3) {
       setHoverInfo(null);
+    } else {
+      setHoverInfo({ iso3, x: position.x, y: position.y });
     }
   };
 
   if (!data) {
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-slate-950 text-primary font-mono animate-pulse gap-4">
-        <Globe size={48} className="animate-spin-slow" />
-        <div className="text-xl tracking-widest">INITIALIZING WORLDDASH SYSTEM...</div>
+      <div className="h-screen flex items-center justify-center text-xl text-secondary animate-pulse">
+        Loading System Data...
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-slate-950 relative font-sans">
-      {/* CSS Scanline Effect */}
-      <div className="absolute inset-0 pointer-events-none scanline-effect z-50 opacity-10"></div>
-
-      {/* Header */}
-      <header className="h-14 border-b border-white/10 bg-slate-900/90 flex items-center px-6 justify-between shrink-0 z-40 backdrop-blur-sm shadow-lg">
-        <div className="flex items-center gap-3">
-          <Globe className="text-primary animate-pulse" size={20} />
-          <h1 className="text-lg font-bold tracking-widest text-slate-100 font-mono">
-            WORLD<span className="text-primary text-glow">DASH</span> <span className="text-[10px] text-slate-500 ml-1">v2.0</span>
-          </h1>
-        </div>
-        <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-            LIVE
-          </div>
-          <div className="hidden sm:block">COUNTRIES: {data.meta?.stats?.total_countries || 0}</div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden relative">
-        <main className={`flex-1 relative transition-all duration-500 ease-out ${selectedCountry ? 'mr-96' : ''}`}>
-          <div className="absolute inset-0">
-            <WorldMap 
-              data={data} 
-              onCountryClick={handleCountryClick} 
-              onHover={handleHover} 
-              selectedIso={selectedIso} 
-            />
-          </div>
-          
-          {/* Bottom Analytics */}
-          <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none p-4 flex flex-col justify-end z-20">
-             <div className="pointer-events-auto w-full max-w-5xl mx-auto h-full">
-               <GlobalAnalytics data={data} />
-             </div>
-          </div>
-
-          {/* Hover Tooltip */}
+    <div className="flex flex-col h-screen overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
+        {/* Map occupies the majority of horizontal space */}
+        <div className="flex-1 relative overflow-hidden">
+          <WorldMap
+            data={data}
+            onCountryClick={handleCountryClick}
+            onHover={handleHover}
+            selectedIso={selectedIso}
+          />
+          {/* Tooltip follows the cursor when hovering over a country */}
           {hoverInfo && (
-            <div className="fixed pointer-events-none z-50 px-3 py-2 bg-slate-900/95 border border-primary/30 text-slate-100 text-xs font-mono shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded-none" style={{ left: hoverInfo.x + 20, top: hoverInfo.y + 20 }}>
-              <div className="text-primary font-bold mb-1">{hoverInfo.name}</div>
-              {hoverInfo.risk && (
-                <div className="flex items-center gap-1">
-                  <AlertTriangle size={10} className={hoverInfo.risk > 80 ? "text-red-500" : "text-emerald-500"} />
-                  FSI: {hoverInfo.risk}
-                </div>
-              )}
+            <div
+              className="absolute pointer-events-none z-50 px-3 py-2 text-xs rounded bg-slate-800/80 backdrop-blur border border-white/10"
+              style={{ left: hoverInfo.x + 10, top: hoverInfo.y + 10 }}
+            >
+              <div className="font-bold text-primary">
+                {countryByIso3[hoverInfo.iso3]?.master?.name || hoverInfo.iso3}
+              </div>
+              {(() => {
+                const country = countryByIso3[hoverInfo.iso3];
+                if (!country) return null;
+                const risk = country.canonical?.risk?.fsi_total?.value;
+                return risk != null ? (
+                  <div className="text-xs text-secondary">
+                    FSI Risk: {risk.toFixed(1)}
+                  </div>
+                ) : (
+                  <div className="text-xs text-secondary">Risk: N/A</div>
+                );
+              })()}
             </div>
           )}
-        </main>
-
-        {/* Right Sidebar */}
-        <aside className={`fixed top-14 bottom-0 right-0 w-96 bg-slate-900/95 border-l border-primary/20 transform transition-transform duration-500 z-30 ${selectedCountry ? 'translate-x-0' : 'translate-x-full'}`}>
-          <CountryDetails country={selectedCountry} onClose={() => setSelectedIso(null)} />
-        </aside>
+        </div>
+        {/* Sidebar with country details */}
+        <div className="w-80 border-l border-slate-700 p-4 overflow-y-auto hidden lg:block bg-slate-900/90">
+          <CountryDetails country={selectedCountry} />
+        </div>
+      </div>
+      {/* Bottom analytics panel */}
+      <div className="border-t border-slate-700 p-4 overflow-y-auto bg-slate-900/80">
+        <GlobalAnalytics data={data} />
       </div>
     </div>
   );
