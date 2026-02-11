@@ -21,11 +21,15 @@ jobs:
         with:
           node-version: 20
 
-      # 依存関係のインストール (package-lock.jsonがある場合)
+      # 依存関係のインストール
       - name: Install dependencies
         run: npm install
 
-      # ビルド実行 (React -> HTML/CSS/JS)
+      # 【修正】実行権限を強制的に付与するステップを追加
+      - name: Fix permissions
+        run: chmod +x node_modules/.bin/vite || true
+
+      # ビルド実行
       - name: Build
         run: npm run build
 
