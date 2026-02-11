@@ -7,7 +7,7 @@ import { Newspaper, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react';
 const PIE_COLOURS = ['#06b6d4', '#8b5cf6', '#ef4444', '#facc15', '#22c55e', '#e879f9'];
 const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 // Google AlertsのRSSをここに入れてください。デフォルトはBBC
-const DEFAULT_FEED = "https://www.google.com/alerts/feeds/08185291032701299485/6950656386178969119";
+const DEFAULT_FEED = "https://feeds.bbci.co.uk/news/world/rss.xml";
 
 export default function GlobalAnalytics({ data, isExpanded }) {
   const [news, setNews] = useState([]);
