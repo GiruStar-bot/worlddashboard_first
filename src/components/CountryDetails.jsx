@@ -11,9 +11,10 @@ import {
 import { X, Activity, Users, Globe, AlertTriangle } from 'lucide-react';
 
 /*
- * CountryDetails HUD - Displays detailed info for the selected country.
- * UPDATED: Added more fields (Regime Type, GDP Growth) to utilize the full JSON dataset.
+ * CountryDetails Component
+ * UPDATED: Enhanced tooltip visibility for the Radar chart.
  */
+
 function Metric({ label, value, icon: Icon, color = "text-primary" }) {
   return (
     <div className="p-3 bg-slate-800/50 border border-white/5 rounded flex flex-col items-start hover:border-primary/30 transition-colors group">
@@ -139,7 +140,10 @@ export default function CountryDetails({ country, onClose }) {
               <PolarAngleAxis dataKey="subject" stroke="#94a3b8" tick={{ fontSize: 9 }} />
               <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
               <Radar name="Score" dataKey="score" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.4} />
-              <ChartTooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', fontSize: '11px' }} />
+              <ChartTooltip 
+                contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f1f5f9', fontSize: '11px' }}
+                itemStyle={{ color: '#f1f5f9' }}
+              />
             </RadarChart>
           </ResponsiveContainer>
         </div>
