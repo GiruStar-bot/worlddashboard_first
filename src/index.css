@@ -1,36 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Set a decorative background image that conveys the cyberpunk HUD theme.
+ * Fixed path to include repository name and correct file extension (.jpg).
+ */
 body {
-  @apply bg-slate-950 text-slate-200 antialiased font-sans overflow-hidden;
-  background-image: url('/cyberpunk-bg.png'); /* Ensure this matches your file */
+  /* ★修正: リポジトリ名 + 正しい拡張子 */
+  background-image: url('/worlddashboard_2/cyberpunk-bg.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   background-blend-mode: multiply;
-  background-color: #020617;
+  background-color: #020617; /* Fallback color */
 }
 
+/*
+ * Custom component styles.
+ */
 @layer components {
   .glassmorphic {
-    @apply bg-slate-900/70 backdrop-blur-md border border-white/10 shadow-lg;
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.05), inset 0 0 20px rgba(0,0,0,0.5);
-  }
-  
-  .scanline-effect {
-    background: linear-gradient(
-      to bottom,
-      rgba(255,255,255,0),
-      rgba(255,255,255,0) 50%,
-      rgba(0,0,0,0.1) 50%,
-      rgba(0,0,0,0.1)
-    );
-    background-size: 100% 4px;
-  }
-
-  .text-glow {
-    text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+    @apply bg-slate-800 bg-opacity-40 backdrop-blur-md border border-white/10 rounded-lg;
+    box-shadow: 0 0 12px 0 rgba(59, 130, 246, 0.15);
   }
 }
