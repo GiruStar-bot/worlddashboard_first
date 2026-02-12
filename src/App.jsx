@@ -12,9 +12,9 @@ import {
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /**
- * WorldDashboard v5.3 - Immersive Map View Update
- * - 改善: 初期表示時の地図のズーム倍率と中心座標を変更し、没入感のある迫力ある構図を実現。
- * - 調整: 拡大に合わせ、パン（ドラッグ移動）の限界範囲を最適化。
+ * WorldDashboard v5.4 - Panel UI Optimization
+ * - 改善: 国詳細パネルのヘッダーをスリム化し、長い国名も省略されずに表示されるように修正。
+ * - 改善: ステータスカードとチャートの余白を調整し、一度に見える情報量を増加（視認性の向上）。
  */
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
@@ -119,13 +119,7 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
   return (
     <div className="w-full h-full bg-slate-950">
       <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
-        <ZoomableGroup 
-          center={[10, 20]} // 変更点：初期中心座標をアフリカ北西部・ヨーロッパ寄りに移動
-          zoom={1.7}        // 変更点：初期ズームを1から1.7に拡大し、没入感を向上
-          minZoom={1} 
-          maxZoom={8} 
-          translateExtent={[[-400, -200], [1200, 800]]} // 変更点：拡大に合わせてパン制限範囲を広げ、スムーズに移動可能に
-        >
+        <ZoomableGroup center={[10, 20]} zoom={1.7} minZoom={1} maxZoom={8} translateExtent={[[-400, -200], [1200, 800]]}>
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
@@ -162,10 +156,11 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
 // ==========================================
 // 2. CountryDetails Component (右パネル)
 // ==========================================
+// 改善: Metricカードもスリム化して情報密度を上げる
 const Metric = ({ label, value, icon: Icon, color = "text-cyan-400" }) => (
-  <div className="p-5 bg-white/[0.03] border border-white/[0.06] rounded-2xl hover:bg-white/[0.08] hover:border-cyan-500/30 transition-all duration-300 flex flex-col items-start group shadow-lg">
-    <div className="text-[10px] text-slate-400 mb-2 flex items-center gap-2 uppercase font-semibold tracking-wider group-hover:text-slate-200">
-      {Icon && <Icon size={14} className="opacity-70 group-hover:opacity-100 transition-opacity" />} {label}
+  <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl hover:bg-white/[0.08] hover:border-cyan-500/30 transition-all duration-300 flex flex-col items-start group shadow-lg">
+    <div className="text-[9px] text-slate-400 mb-1.5 flex items-center gap-1.5 uppercase font-semibold tracking-wider group-hover:text-slate-200">
+      {Icon && <Icon size={12} className="opacity-70 group-hover:opacity-100 transition-opacity" />} {label}
     </div>
     <div className={`font-mono ${color} text-lg md:text-xl leading-tight w-full font-bold tracking-tight text-shadow-sm`}>{value}</div>
   </div>
@@ -203,28 +198,34 @@ const CountryDetails = ({ country, onClose }) => {
 
   return (
     <div className="flex flex-col h-full bg-slate-900/50 backdrop-blur-[40px] border-l border-white/10 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden">
-      <div className="p-8 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
-        <div className="space-y-2">
-          <div className="text-[10px] text-cyan-400 animate-pulse tracking-[0.4em] font-semibold uppercase font-mono">TARGET_ACQUIRED</div>
-          <h2 className="text-3xl font-bold text-slate-100 tracking-tight leading-snug uppercase truncate max-w-[200px]">{master.name}</h2>
-          <div className="flex gap-3 mt-2 font-mono">
-             <span className="bg-cyan-500/10 text-cyan-400 text-[10px] px-3 py-1 rounded-full border border-cyan-500/20 uppercase font-semibold tracking-wider">{master.iso3}</span>
-             <span className="bg-white/5 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-white/10 uppercase font-semibold tracking-wider">{canonical?.politics?.regime_type || 'N/A'}</span>
+      {/* 改善: ヘッダーのスリム化と国名省略の解除 */}
+      <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
+        <div className="space-y-1.5 flex-1 pr-4">
+          <div className="text-[9px] text-cyan-400 animate-pulse tracking-[0.5em] font-semibold uppercase font-mono">TARGET_ACQUIRED</div>
+          {/* truncateを外し、改行を許可。文字サイズも少しスマートに */}
+          <h2 className="text-xl md:text-2xl font-bold text-slate-100 tracking-tight leading-tight uppercase break-words">{master.name}</h2>
+          <div className="flex flex-wrap gap-2 pt-1 font-mono">
+             <span className="bg-cyan-500/10 text-cyan-400 text-[9px] px-2.5 py-0.5 rounded-full border border-cyan-500/20 uppercase font-semibold tracking-wider">{master.iso3}</span>
+             <span className="bg-white/5 text-slate-400 text-[9px] px-2.5 py-0.5 rounded-full border border-white/10 uppercase font-semibold tracking-wider">{canonical?.politics?.regime_type || 'N/A'}</span>
           </div>
         </div>
-        <button onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2.5 rounded-full transition-colors duration-300"><X size={20} /></button>
+        <button onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors duration-300 shrink-0"><X size={20} /></button>
       </div>
-      <div className="flex-1 overflow-y-auto p-8 pb-24 space-y-8 custom-scrollbar">
-        <div ref={headlineRef} className="p-5 rounded-2xl bg-cyan-500/[0.03] border border-cyan-500/10 font-sans text-sm text-slate-300 leading-relaxed min-h-[4rem]"></div>
-        <div className="grid grid-cols-2 gap-5">
+      
+      {/* 改善: パディングを少し減らし、コンテンツ領域を拡大 */}
+      <div className="flex-1 overflow-y-auto p-6 pb-24 space-y-6 custom-scrollbar">
+        <div ref={headlineRef} className="p-4 rounded-2xl bg-cyan-500/[0.03] border border-cyan-500/10 font-sans text-xs text-slate-300 leading-relaxed min-h-[3.5rem]"></div>
+        
+        <div className="grid grid-cols-2 gap-4">
           <Metric label="Population" value={population.toLocaleString()} icon={Users} color="text-blue-400" />
           <Metric label="GDP (Nominal)" value={`$${(gdpNominal / 1e9).toFixed(1)}B`} icon={Activity} color="text-emerald-400" />
           <Metric label="GDP Growth" value={gdpGrowth !== undefined ? `${gdpGrowth > 0 ? '+' : ''}${gdpGrowth}%` : "N/A"} icon={TrendingUp} color={gdpGrowth < 0 ? "text-rose-400" : "text-emerald-400"} />
           <Metric label="Risk Index" value={riskValue ? riskValue.toFixed(1) : "N/A"} icon={AlertTriangle} color={riskValue > 80 ? "text-rose-500" : (riskValue > 60 ? "text-amber-400" : "text-cyan-400")} />
         </div>
-        <div className="space-y-4">
+
+        <div className="space-y-3">
           <h3 className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-semibold">Neural_Parameter_Map</h3>
-          <div className="h-60 border border-white/5 rounded-2xl bg-slate-800/20 p-4 shadow-lg relative">
+          <div className="h-56 border border-white/5 rounded-2xl bg-slate-800/20 p-2 shadow-lg relative">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
                 <PolarGrid stroke="rgba(255,255,255,0.05)" />
@@ -235,11 +236,12 @@ const CountryDetails = ({ country, onClose }) => {
             </ResponsiveContainer>
           </div>
         </div>
-        <div className="space-y-3 pb-6">
+        
+        <div className="space-y-2 pb-4">
           <h3 className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-semibold">Classification_Tags</h3>
           <div className="flex flex-wrap gap-2">
              {ui_view?.tags?.map(t => (
-               <span key={t} className="px-3 py-1 rounded-full border border-white/10 text-[10px] text-slate-300 uppercase font-medium bg-slate-800/50 hover:border-cyan-500/40 transition-colors tracking-wide font-mono cursor-default">#{t}</span>
+               <span key={t} className="px-2.5 py-1 rounded-full border border-white/10 text-[9px] text-slate-300 uppercase font-medium bg-slate-800/50 hover:border-cyan-500/40 transition-colors tracking-wide font-mono cursor-default">#{t}</span>
              ))}
           </div>
         </div>
@@ -480,7 +482,7 @@ export default function App() {
   if (!data) return (
     <div className="h-screen flex flex-col items-center justify-center text-cyan-400 animate-pulse font-mono bg-slate-950 tracking-[1em]">
        <Globe size={60} className="mb-10 opacity-30 animate-spin-slow" />
-       CONNECTING_NEXUS_v5.3
+       CONNECTING_NEXUS_v5.4
     </div>
   );
 
@@ -498,7 +500,7 @@ export default function App() {
             <h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">
               WORLD<span className="text-cyan-400 opacity-90">DASH</span>
             </h1>
-            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.3</div>
+            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.4</div>
           </div>
         </div>
 
