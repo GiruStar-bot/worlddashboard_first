@@ -7,15 +7,14 @@ import {
 import { 
   Globe, ChevronUp, ChevronDown, Activity, Maximize, Minimize, 
   X, Users, AlertTriangle, Newspaper, ExternalLink, RefreshCw, TrendingUp,
-  BarChart2, Cpu
+  BarChart2
 } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /**
- * WorldDashboard v5.2 - Top Panel & Layout Restructure
- * - 改善: 画面上部の暗いグラデーションを廃止し、地図の視認性を劇的に向上。
- * - 新設: 地図の切れ目を覆う「トップパネル」を実装。中央に今後の新機能用スペースを確保。
- * - 構造化: 左右のサイドパネルがトップパネルとボトムパネルの間にピタッと収まる設計に変更。
+ * WorldDashboard v5.3 - Immersive Map View Update
+ * - 改善: 初期表示時の地図のズーム倍率と中心座標を変更し、没入感のある迫力ある構図を実現。
+ * - 調整: 拡大に合わせ、パン（ドラッグ移動）の限界範囲を最適化。
  */
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
@@ -120,7 +119,13 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
   return (
     <div className="w-full h-full bg-slate-950">
       <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
-        <ZoomableGroup center={[0, 0]} zoom={1} minZoom={1} maxZoom={8} translateExtent={[[0, 0], [800, 600]]}>
+        <ZoomableGroup 
+          center={[10, 20]} // 変更点：初期中心座標をアフリカ北西部・ヨーロッパ寄りに移動
+          zoom={1.7}        // 変更点：初期ズームを1から1.7に拡大し、没入感を向上
+          minZoom={1} 
+          maxZoom={8} 
+          translateExtent={[[-400, -200], [1200, 800]]} // 変更点：拡大に合わせてパン制限範囲を広げ、スムーズに移動可能に
+        >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
@@ -209,7 +214,7 @@ const CountryDetails = ({ country, onClose }) => {
         </div>
         <button onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2.5 rounded-full transition-colors duration-300"><X size={20} /></button>
       </div>
-      <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-8 pb-24 space-y-8 custom-scrollbar">
         <div ref={headlineRef} className="p-5 rounded-2xl bg-cyan-500/[0.03] border border-cyan-500/10 font-sans text-sm text-slate-300 leading-relaxed min-h-[4rem]"></div>
         <div className="grid grid-cols-2 gap-5">
           <Metric label="Population" value={population.toLocaleString()} icon={Users} color="text-blue-400" />
@@ -394,7 +399,7 @@ const RankingPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso }) =
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-3 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-6 pb-24 space-y-3 custom-scrollbar">
           {currentData.map((c, i) => {
             const iso = c.master.iso3;
             const isSelected = iso === selectedIso;
@@ -475,7 +480,7 @@ export default function App() {
   if (!data) return (
     <div className="h-screen flex flex-col items-center justify-center text-cyan-400 animate-pulse font-mono bg-slate-950 tracking-[1em]">
        <Globe size={60} className="mb-10 opacity-30 animate-spin-slow" />
-       CONNECTING_NEXUS_v5.2
+       CONNECTING_NEXUS_v5.3
     </div>
   );
 
@@ -484,7 +489,6 @@ export default function App() {
       <div className="absolute inset-0 pointer-events-none z-[999] opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
       <div className="absolute inset-0 pointer-events-none z-[998] opacity-[0.05] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.6)_50%)] bg-[length:100%_4px]"></div>
       
-      {/* --- 新設：トップパネル（上部グラデーションを廃止し、明確な硝子パネルに） --- */}
       <header className="absolute top-0 left-0 right-0 h-20 flex items-center px-8 justify-between z-[110] bg-slate-950/70 backdrop-blur-[40px] border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-mono transition-all duration-500">
         <div className="flex items-center gap-6">
           <div className="p-2 bg-cyan-500/10 rounded-xl border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
@@ -494,11 +498,10 @@ export default function App() {
             <h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">
               WORLD<span className="text-cyan-400 opacity-90">DASH</span>
             </h1>
-            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.2</div>
+            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.3</div>
           </div>
         </div>
 
-        {/* 今後の新機能拡張スペース */}
         <div className="hidden md:flex flex-1 items-center justify-center pointer-events-none">
           <div className="px-6 py-1.5 rounded-full bg-white/[0.02] border border-white/5 flex items-center gap-3 shadow-inner">
             <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
@@ -537,17 +540,14 @@ export default function App() {
           </div>
         )}
 
-        {/* 構造化：サイドパネルの展開範囲をトップ・ボトムパネルの「内側」に制限（top-20, bottom-12） */}
         <div className={`absolute top-20 bottom-12 left-0 w-[22rem] md:w-[26rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${isRankingOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <RankingPanel data={data} isOpen={isRankingOpen} onClose={() => setIsRankingOpen(false)} onSelectCountry={handleCountryClick} selectedIso={selectedIso} />
         </div>
 
-        {/* 構造化：右側詳細パネルも同様に上下のパネルを回避 */}
         <aside className={`absolute top-20 bottom-12 right-0 w-[24rem] md:w-[28rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${selectedIso ? 'translate-x-0' : 'translate-x-full'}`}>
           <CountryDetails country={data?.regions ? Object.values(data.regions).flat().find(c => c.master.iso3 === selectedIso) : null} onClose={() => setSelectedIso(null)} />
         </aside>
 
-        {/* ボトムパネル */}
         <footer className={`absolute bottom-0 left-0 right-0 z-[100] transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col overflow-hidden shrink-0 ${isAnalyticsOpen ? 'h-[calc(100vh-7rem)] rounded-t-[3rem] bg-slate-950/80 backdrop-blur-[40px] border-t border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.8)]' : 'h-12 bg-gradient-to-b from-white/[0.05] to-transparent backdrop-blur-[8px] border-t border-white/20 hover:bg-white/[0.08]'}`}>
           <button onClick={() => setIsAnalyticsOpen(!isAnalyticsOpen)} className={`h-12 w-full flex items-center justify-center gap-4 text-[10px] font-semibold tracking-[0.8em] transition-all shrink-0 pointer-events-auto uppercase font-mono ${isAnalyticsOpen ? 'text-cyan-400/60 hover:text-cyan-400 border-b border-white/5' : 'text-cyan-400/80 hover:text-cyan-300'}`}>
             <Activity size={14} className={`${isAnalyticsOpen ? 'animate-pulse text-cyan-400' : 'opacity-70 group-hover:opacity-100'}`} /> 
