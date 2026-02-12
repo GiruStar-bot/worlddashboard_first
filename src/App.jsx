@@ -8,45 +8,112 @@ import {
   Globe, ChevronUp, ChevronDown, Activity, Maximize, Minimize, 
   X, Users, AlertTriangle, Newspaper, ExternalLink, RefreshCw, TrendingUp 
 } from 'lucide-react';
-// プレビューのエラーは無視し、GitHub環境で正しく動く標準パッケージを使用します
-import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /**
- * WorldDashboard v5.0 - High Performance Glass UI
- * - 修正内容: Canvasエラーを無視し、正規の react-simple-maps に復帰。
- * - 超絶軽量化: React.memoとDOM直接操作(useRef)により、ホバー・アニメーション時の無駄な再描画を根絶。
- * - UI/機能: 地政学リスクによる色分けの復活、全ステータス指標のHUD表示。
+ * WorldDashboard v5.0 - Ultimate Stable Glass UI
+ * - 最適化: 外部の地図ライブラリへの依存を完全に排除し、ビルドエラーを根絶。
+ * - パフォーマンス: 座標計算をロード時に1度だけ行う「独自の軽量SVGマップエンジン」を搭載。
+ * React.memoとvectorEffectの活用により、パン/ズーム時のラグを完全に解消しました。
+ * - デザイン: 高密度ブラーを用いた有機的硝子UI（Glassmorphism）。
+ * - 指標: 人口・GDP・成長率・リスク・政体を全表示。
  */
 
-// --- データ設定 ---
-const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
 const PIE_COLOURS = ['#22d3ee', '#818cf8', '#f43f5e', '#fbbf24', '#34d399', '#f472b6'];
 const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 const DEFAULT_FEED = "https://feeds.bbci.co.uk/news/world/rss.xml";
 
-// 国名マッピング (Numeric ID -> ISO3) - これによりデータと地図が結びつき、色がつきます
-const ISO_MAP = {
-  "004": "AFG", "008": "ALB", "012": "DZA", "024": "AGO", "031": "AZE", "032": "ARG", "036": "AUS", "040": "AUT", "050": "BGD", "051": "ARM", "056": "BEL", "068": "BOL", "070": "BIH", "072": "BWA", "076": "BRA", "096": "BRN", "100": "BGR", "104": "MMR", "108": "BDI", "112": "BLR", "116": "KHM", "120": "CMR", "124": "CAN", "140": "CAF", "148": "TCD", "152": "CHL", "156": "CHN", "170": "COL", "178": "COG", "180": "COD", "188": "CRI", "191": "HRV", "192": "CUB", "196": "CYP", "203": "CZE", "208": "DNK", "214": "DOM", "218": "ECU", "222": "SLV", "226": "GNQ", "231": "ETH", "232": "ERI", "233": "EST", "242": "FJI", "246": "FIN", "250": "FRA", "266": "GAB", "268": "GEO", "270": "GMB", "276": "DEU", "288": "GHA", "300": "GRC", "320": "GTM", "324": "GIN", "328": "GUY", "332": "HTI", "340": "HND", "348": "HUN", "352": "ISL", "356": "IND", "360": "IDN", "364": "IRN", "368": "IRQ", "372": "IRL", "376": "ISR", "380": "ITA", "384": "CIV", "388": "JAM", "392": "JPN", "398": "KAZ", "400": "JOR", "404": "KEN", "408": "PRK", "410": "KOR", "414": "KWT", "417": "KGZ", "418": "LAO", "422": "LBN", "426": "LSO", "428": "LVA", "430": "LBR", "434": "LBY", "440": "LTU", "442": "LUX", "450": "MDG", "454": "MWI", "458": "MYS", "462": "MDV", "466": "MLI", "470": "MLT", "478": "MRT", "480": "MUS", "484": "MEX", "492": "MCO", "496": "MNG", "498": "MDA", "499": "MNE", "504": "MAR", "508": "MOZ", "512": "OMN", "516": "NAM", "520": "NRU", "524": "NPL", "528": "NLD", "554": "NZL", "558": "NIC", "562": "NER", "566": "NGA", "578": "NOR", "586": "PAK", "591": "PAN", "598": "PNG", "600": "PRY", "604": "PER", "608": "PHL", "616": "POL", "620": "PRT", "634": "QAT", "642": "ROU", "643": "RUS", "646": "RWA", "682": "SAU", "686": "SEN", "688": "SRB", "694": "SLE", "702": "SGP", "703": "SVK", "704": "VNM", "705": "SVN", "710": "ZAF", "716": "ZWE", "724": "ESP", "728": "SSD", "729": "SDN", "740": "SUR", "748": "SWZ", "752": "SWE", "756": "CHE", "760": "SYR", "762": "TJK", "764": "THA", "768": "TGO", "772": "TKL", "776": "TON", "780": "TTO", "784": "ARE", "788": "TUN", "792": "TUR", "795": "TKM", "800": "UGA", "804": "UKR", "807": "MKD", "818": "EGY", "826": "GBR", "834": "TZA", "840": "USA", "858": "URY", "860": "UZB", "862": "VEN", "882": "WSM", "887": "YEM", "894": "ZMB"
-};
-
-// --- カラー計算（負荷軽減） ---
+// リスク値に基づくカラー計算
 const getRiskColor = (risk, min, max) => {
-  if (risk == null) return 'rgba(30, 41, 59, 0.5)';
+  if (risk == null) return 'rgba(30, 41, 59, 0.4)';
   const t = (risk - min) / (max - min || 1);
   const mix = (a, b, w) => ({
     r: Math.round(a.r + (b.r - a.r) * w),
     g: Math.round(a.g + (b.g - a.g) * w),
     b: Math.round(a.b + (b.b - a.b) * w)
   });
-  const cA = { r: 34, g: 211, b: 238 }; // Neon Cyan
-  const cB = { r: 129, g: 140, b: 248 }; // Indigo
-  const cC = { r: 244, g: 63, b: 94 }; // Rose Red
+  const cA = { r: 34, g: 211, b: 238 }; 
+  const cB = { r: 129, g: 140, b: 248 }; 
+  const cC = { r: 244, g: 63, b: 94 }; 
   const res = t < 0.5 ? mix(cA, cB, t / 0.5) : mix(cB, cC, (t - 0.5) / 0.5);
   return `rgb(${res.r}, ${res.g}, ${res.b})`;
 };
 
-// --- コンポーネント: WorldMap (React.memoで重さを完全解消) ---
+// --- 単一の国境線を描画する軽量コンポーネント (再描画を極限まで抑える) ---
+const GeoPath = React.memo(({ feature, risk, isSelected, minR, maxR, onHover, onClick }) => {
+  const fillColor = getRiskColor(risk, minR, maxR);
+  return (
+    <path
+      d={feature.pathD}
+      fill={fillColor}
+      stroke="rgba(255,255,255,0.15)"
+      vectorEffect="non-scaling-stroke" // ズームしても線の太さを一定に保つ魔法のプロパティ
+      className="transition-colors duration-300 cursor-pointer hover:fill-cyan-400 outline-none"
+      onMouseEnter={(e) => onHover(feature.iso, { x: e.clientX, y: e.clientY })}
+      onMouseLeave={() => onHover(null)}
+      onClick={() => onClick(feature.iso)}
+      filter={isSelected ? 'url(#glow-filter)' : undefined}
+    />
+  );
+});
+
+// --- 完全独立・超軽量化 マップコンポーネント ---
 const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => {
+  const [geoData, setGeoData] = useState([]);
+  const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    // GeoJSONを取得し、初期ロード時に1度だけパス（SVG）文字列に変換してキャッシュする
+    fetch('https://cdn.jsdelivr.net/gh/datasets/geo-countries@master/data/countries.geojson')
+      .then(res => res.json())
+      .then(json => {
+         const width = 1000;
+         const height = 600;
+         // メルカトル図法変換関数
+         const mapLonLatToXY = (lon, lat) => {
+           const x = (lon + 180) * (width / 360);
+           const clampedLat = Math.min(Math.max(lat, -85), 85);
+           const latRad = clampedLat * Math.PI / 180;
+           const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
+           const y = 350 - (width * mercN / (2 * Math.PI)); // 350 offset centers Europe/Africa nicely
+           return { x, y };
+         };
+
+         const processedFeatures = json.features.map(feature => {
+            const iso = feature.properties.ISO_A3;
+            const geom = feature.geometry;
+            if (!geom) return null;
+
+            const createPath = (coords, type) => {
+              if (type === 'Polygon') {
+                return coords.map(ring => 
+                  ring.map(([lon, lat], i) => {
+                    const { x, y } = mapLonLatToXY(lon, lat);
+                    return `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+                  }).join(' ') + ' Z'
+                ).join(' ');
+              } else if (type === 'MultiPolygon') {
+                return coords.map(poly => 
+                  poly.map(ring => 
+                    ring.map(([lon, lat], i) => {
+                      const { x, y } = mapLonLatToXY(lon, lat);
+                      return `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+                    }).join(' ') + ' Z'
+                  ).join(' ')
+                ).join(' ');
+              }
+              return '';
+            };
+
+            return { iso, pathD: createPath(geom.coordinates, geom.type) };
+         }).filter(Boolean);
+
+         setGeoData(processedFeatures);
+      })
+      .catch(err => console.error("Map cartography load failed", err));
+  }, []);
+
   const riskByIso = useMemo(() => {
     const map = {};
     if (data?.regions) {
@@ -60,47 +127,71 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
     return vals.length ? [Math.min(...vals), Math.max(...vals)] : [0, 120];
   }, [riskByIso]);
 
+  // パン＆ズーム機能
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - transform.x, y: e.clientY - transform.y });
+  };
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    const newY = e.clientY - dragStart.y;
+    // ズームレベルに応じて上下の移動制限（黒い空間が見えないようにロック）
+    const maxY = (transform.k - 1) * 300;
+    const clampedY = Math.min(Math.max(newY, -maxY), maxY);
+    setTransform(prev => ({ ...prev, x: e.clientX - dragStart.x, y: clampedY }));
+  };
+  const handleMouseUp = () => setIsDragging(false);
+  const handleWheel = (e) => {
+    const scaleChange = e.deltaY > 0 ? 0.9 : 1.1;
+    setTransform(prev => {
+      const newK = Math.min(Math.max(prev.k * scaleChange, 1), 8);
+      // ズームアウト時にY座標が範囲外にならないよう補正
+      const maxY = (newK - 1) * 300;
+      const clampedY = Math.min(Math.max(prev.y, -maxY), maxY);
+      return { ...prev, k: newK, y: clampedY };
+    });
+  };
+
+  if (geoData.length === 0) {
+    return (
+      <div className="w-full h-full bg-slate-950 flex flex-col items-center justify-center text-cyan-400 font-mono tracking-[0.5em] animate-pulse">
+        <Activity size={40} className="mb-6 opacity-50" />
+        <div>DOWNLOADING CARTOGRAPHY...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full h-full bg-slate-950">
-      <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
-        <ZoomableGroup 
-          center={[0, 0]} zoom={1} minZoom={1} maxZoom={8} 
-          translateExtent={[[-500, 0], [1300, 600]]} // 上下ロック、左右自由
-        >
-          <Geographies geography={GEO_URL}>
-            {({ geographies }) => geographies.map(geo => {
-              const iso = ISO_MAP[geo.id] || geo.id;
-              const risk = riskByIso[iso];
-              const isSelected = iso === selectedIso;
-              
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={getRiskColor(risk, minR, maxR)}
-                  stroke="rgba(255,255,255,0.15)"
-                  strokeWidth={0.5}
-                  style={{
-                    default: { outline: 'none', transition: 'fill 0.3s ease' },
-                    hover: { fill: '#22d3ee', cursor: 'pointer', outline: 'none' }, // ホバー時はシアンに発光
-                    pressed: { fill: '#818cf8', outline: 'none' },
-                  }}
-                  onMouseEnter={(e) => onHover(iso, { x: e.clientX, y: e.clientY })}
-                  onMouseLeave={() => onHover(null)}
-                  onClick={() => onCountryClick(iso)}
-                  filter={isSelected ? 'url(#glow-filter)' : undefined}
-                />
-              );
-            })}
-          </Geographies>
-        </ZoomableGroup>
+    <div 
+      className={`w-full h-full bg-slate-950 overflow-hidden outline-none ${isDragging ? 'cursor-grabbing' : 'cursor-crosshair'}`}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onWheel={handleWheel}
+    >
+      <svg viewBox="0 0 1000 600" className="w-full h-full pointer-events-none">
         <defs>
           <filter id="glow-filter" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
-      </ComposableMap>
+        <g transform={`translate(${transform.x}, ${transform.y}) scale(${transform.k})`} className="pointer-events-auto" style={{ transformOrigin: 'center' }}>
+          {geoData.map((feature, i) => (
+            <GeoPath
+              key={feature.iso || i}
+              feature={feature}
+              risk={riskByIso[feature.iso]}
+              isSelected={selectedIso === feature.iso}
+              minR={minR}
+              maxR={maxR}
+              onHover={onHover}
+              onClick={onCountryClick}
+            />
+          ))}
+        </g>
+      </svg>
     </div>
   );
 });
@@ -239,7 +330,7 @@ const CountryDetails = ({ country, onClose }) => {
   );
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/40 backdrop-blur-[64px] border-l border-white/10 shadow-[-40px_0_80px_rgba(0,0,0,0.6)] overflow-hidden">
+    <div className="flex flex-col h-full bg-slate-900/40 backdrop-blur-3xl border-l border-white/10 shadow-[-40px_0_80px_rgba(0,0,0,0.6)] overflow-hidden">
       <div className="p-10 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
         <div className="space-y-4">
           <div className="text-[11px] text-cyan-400 animate-pulse tracking-[0.6em] font-black uppercase font-mono">TARGET_SCAN</div>
@@ -321,7 +412,7 @@ export default function App() {
     return () => document.removeEventListener('fullscreenchange', cb);
   }, []);
 
-  // ホバー関数をメモ化し、無駄な再描画を防ぐ
+  // ホバー関数とクリック関数をメモ化し、無駄な再描画を防ぐ
   const handleHover = useCallback((iso, pos) => {
     setHoverInfo(iso ? { iso3: iso, ...pos } : null);
   }, []);
@@ -361,7 +452,7 @@ export default function App() {
 
       <main className="flex-1 relative">
         <div className="absolute inset-0 z-10 scale-[1.02] transform transition-transform duration-[3000ms] cubic-bezier(0.16, 1, 0.3, 1)">
-          {/* React.memo化された軽量な地図コンポーネントを配置 */}
+          {/* React.memo化された超軽量な自前地図コンポーネントを配置 */}
           <WorldMap data={data} onCountryClick={handleCountryClick} onHover={handleHover} selectedIso={selectedIso} />
         </div>
         
@@ -377,7 +468,6 @@ export default function App() {
         )}
 
         <aside className={`absolute top-0 bottom-0 right-0 w-[28rem] md:w-[40rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${selectedIso ? 'translate-x-0' : 'translate-x-full'}`}>
-          {/* 詳細パネル */}
           <CountryDetails country={data?.regions ? Object.values(data.regions).flat().find(c => c.master.iso3 === selectedIso) : null} onClose={() => setSelectedIso(null)} />
         </aside>
 
