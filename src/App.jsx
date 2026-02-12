@@ -12,10 +12,10 @@ import {
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /**
- * WorldDashboard v5.5 - Flat Projection Update
- * - 改善: 地図の投影法を「正距円筒図法 (geoEquirectangular)」に変更。
- * - 効果: 端に行くほど曲がって小さくなる歪みを解消し、世界全体をフラットに歪みなく見渡せるように最適化。
- * - 注記: 3D地球儀化は、SVG再描画による「激重ラグ」を再発させるリスクが極めて高いため、パフォーマンスと安定性を優先し採用を見送りました。
+ * WorldDashboard v5.6 - Comprehensive Ranking Update
+ * - 新機能: LEADERBOARD (ランキング) に「GDP成長率」と「人口」を追加。
+ * - UI改善: ランキングタブを2x2のグリッドに拡張し、コンパクトかつ直感的に4指標を切り替え可能に。
+ * - 指標ごとに専用のアクセントカラー（Emerald, Rose, Blue, Amber）を適用し、視認性を向上。
  */
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
@@ -119,7 +119,6 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
 
   return (
     <div className="w-full h-full bg-slate-950">
-      {/* projection="geoEquirectangular" に変更し、端が曲がって小さくなる現象を解消 */}
       <ComposableMap projection="geoEquirectangular" projectionConfig={{ scale: 160 }} className="w-full h-full outline-none">
         <ZoomableGroup center={[10, 15]} zoom={1.5} minZoom={1} maxZoom={8} translateExtent={[[-500, -200], [1300, 800]]}>
           <Geographies geography={GEO_URL}>
@@ -339,10 +338,10 @@ const GlobalAnalytics = ({ data, isExpanded }) => {
 };
 
 // ==========================================
-// 4. RankingPanel Component (左側リーダーボード)
+// 4. RankingPanel Component (左側リーダーボード) 4指標追加版
 // ==========================================
 const RankingPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso }) => {
-  const [activeTab, setActiveTab] = useState('gdp');
+  const [activeTab, setActiveTab] = useState('gdp'); // 'gdp', 'risk', 'growth', 'pop'
 
   const countries = useMemo(() => {
     const arr = [];
@@ -352,46 +351,70 @@ const RankingPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso }) =
 
   const rankings = useMemo(() => {
     const gdp = [...countries]
-      .filter(c => c.canonical?.economy?.gdp_nominal?.value)
+      .filter(c => c.canonical?.economy?.gdp_nominal?.value != null)
       .sort((a, b) => b.canonical.economy.gdp_nominal.value - a.canonical.economy.gdp_nominal.value);
     const risk = [...countries]
-      .filter(c => c.canonical?.risk?.fsi_total?.value)
+      .filter(c => c.canonical?.risk?.fsi_total?.value != null)
       .sort((a, b) => b.canonical.risk.fsi_total.value - a.canonical.risk.fsi_total.value);
+    const growth = [...countries]
+      .filter(c => c.canonical?.economy?.gdp_growth?.value != null)
+      .sort((a, b) => b.canonical.economy.gdp_growth.value - a.canonical.economy.gdp_growth.value);
+    const pop = [...countries]
+      .filter(c => c.canonical?.society?.population?.value != null)
+      .sort((a, b) => b.canonical.society.population.value - a.canonical.society.population.value);
       
-    return { gdp, risk };
+    return { gdp, risk, growth, pop };
   }, [countries]);
 
   const currentData = rankings[activeTab];
-  const maxVal = currentData.length > 0 
-    ? (activeTab === 'gdp' ? currentData[0].canonical.economy.gdp_nominal.value : 120) 
-    : 1;
+  
+  let maxVal = 1;
+  if (currentData.length > 0) {
+    if (activeTab === 'gdp') maxVal = currentData[0].canonical.economy.gdp_nominal.value;
+    else if (activeTab === 'risk') maxVal = 120; // Risk is out of 120
+    else if (activeTab === 'growth') maxVal = currentData[0].canonical.economy.gdp_growth.value;
+    else if (activeTab === 'pop') maxVal = currentData[0].canonical.society.population.value;
+  }
 
   return (
-    <div className={`absolute top-0 bottom-0 left-0 w-[22rem] md:w-[26rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+    <div className={`absolute top-0 bottom-0 left-0 w-[24rem] md:w-[28rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className="flex flex-col h-full bg-slate-900/50 backdrop-blur-[40px] border-r border-white/10 shadow-[20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden">
         
-        <div className="p-8 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
-          <div className="space-y-2">
-            <div className="text-[10px] text-emerald-400 animate-pulse tracking-[0.4em] font-semibold uppercase font-mono">GLOBAL_RANKING</div>
-            <h2 className="text-3xl font-bold text-slate-100 tracking-tight leading-snug uppercase">LEADERBOARD</h2>
+        <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
+          <div className="space-y-1.5">
+            <div className="text-[9px] text-emerald-400 animate-pulse tracking-[0.4em] font-semibold uppercase font-mono">GLOBAL_RANKING</div>
+            <h2 className="text-2xl font-bold text-slate-100 tracking-tight leading-snug uppercase">LEADERBOARD</h2>
           </div>
           <button onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2.5 rounded-full transition-colors duration-300">
             <X size={20} />
           </button>
         </div>
 
-        <div className="flex border-b border-white/5 bg-white/[0.02] shrink-0">
+        {/* 4つのタブを2x2のグリッドで配置 */}
+        <div className="grid grid-cols-2 bg-white/[0.02] shrink-0 border-b border-white/5">
           <button 
             onClick={() => setActiveTab('gdp')}
-            className={`flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase font-mono transition-colors ${activeTab === 'gdp' ? 'text-emerald-400 border-b-2 border-emerald-400 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
+            className={`py-3 text-[9px] font-bold tracking-[0.1em] uppercase font-mono transition-colors border-r border-b border-white/5 ${activeTab === 'gdp' ? 'text-emerald-400 border-b-emerald-400/50 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
           >
             GDP (Nominal)
           </button>
           <button 
             onClick={() => setActiveTab('risk')}
-            className={`flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase font-mono transition-colors ${activeTab === 'risk' ? 'text-rose-400 border-b-2 border-rose-400 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
+            className={`py-3 text-[9px] font-bold tracking-[0.1em] uppercase font-mono transition-colors border-b border-white/5 ${activeTab === 'risk' ? 'text-rose-400 border-b-rose-400/50 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
           >
-            FSI Risk Index
+            FSI Risk
+          </button>
+          <button 
+            onClick={() => setActiveTab('growth')}
+            className={`py-3 text-[9px] font-bold tracking-[0.1em] uppercase font-mono transition-colors border-r border-white/5 ${activeTab === 'growth' ? 'text-blue-400 border-b-blue-400/50 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
+          >
+            GDP Growth
+          </button>
+          <button 
+            onClick={() => setActiveTab('pop')}
+            className={`py-3 text-[9px] font-bold tracking-[0.1em] uppercase font-mono transition-colors ${activeTab === 'pop' ? 'text-amber-400 border-b-amber-400/50 bg-white/[0.05]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]'}`}
+          >
+            Population
           </button>
         </div>
 
@@ -399,30 +422,53 @@ const RankingPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso }) =
           {currentData.map((c, i) => {
             const iso = c.master.iso3;
             const isSelected = iso === selectedIso;
-            const val = activeTab === 'gdp' 
-              ? `$${(c.canonical.economy.gdp_nominal.value / 1e9).toFixed(1)}B`
-              : c.canonical.risk.fsi_total.value.toFixed(1);
-            const numVal = activeTab === 'gdp' ? c.canonical.economy.gdp_nominal.value : c.canonical.risk.fsi_total.value;
-            const pct = (numVal / maxVal) * 100;
-            const colorClass = activeTab === 'gdp' ? 'bg-emerald-400' : 'bg-rose-400';
-            const textColorClass = activeTab === 'gdp' ? 'text-emerald-400' : 'text-rose-400';
+            
+            let valStr, numVal, colorClass, textColorClass, borderColor;
+            if (activeTab === 'gdp') {
+              numVal = c.canonical.economy.gdp_nominal.value;
+              valStr = `$${(numVal / 1e9).toFixed(1)}B`;
+              colorClass = 'bg-emerald-400';
+              textColorClass = 'text-emerald-400';
+              borderColor = 'border-emerald-500/50';
+            } else if (activeTab === 'risk') {
+              numVal = c.canonical.risk.fsi_total.value;
+              valStr = numVal.toFixed(1);
+              colorClass = 'bg-rose-400';
+              textColorClass = 'text-rose-400';
+              borderColor = 'border-rose-500/50';
+            } else if (activeTab === 'growth') {
+              numVal = c.canonical.economy.gdp_growth.value;
+              valStr = `${numVal > 0 ? '+' : ''}${numVal.toFixed(1)}%`;
+              colorClass = 'bg-blue-400';
+              textColorClass = 'text-blue-400';
+              borderColor = 'border-blue-500/50';
+            } else if (activeTab === 'pop') {
+              numVal = c.canonical.society.population.value;
+              valStr = numVal.toLocaleString();
+              colorClass = 'bg-amber-400';
+              textColorClass = 'text-amber-400';
+              borderColor = 'border-amber-500/50';
+            }
+            
+            // プログレスバーの計算（マイナス成長はバーを0とする）
+            const pct = Math.max(0, (numVal / maxVal) * 100);
 
             return (
               <div 
                 key={iso}
                 onClick={() => onSelectCountry(iso)}
-                className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer group ${isSelected ? `bg-white/[0.1] border-${activeTab === 'gdp' ? 'emerald' : 'rose'}-500/50 shadow-lg` : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.06] hover:border-white/20'}`}
+                className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer group ${isSelected ? `bg-white/[0.1] ${borderColor} shadow-lg` : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.06] hover:border-white/20'}`}
               >
                 <div className="flex items-center justify-between mb-2 gap-2">
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="text-[10px] font-mono text-slate-500 font-bold w-4 text-right shrink-0">{i + 1}.</span>
-                    <span className={`text-xs font-bold uppercase tracking-wide transition-colors truncate max-w-[110px] sm:max-w-[130px] ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>{c.master.name}</span>
+                    <span className={`text-xs font-bold uppercase tracking-wide transition-colors truncate max-w-[120px] sm:max-w-[140px] ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>{c.master.name}</span>
                     <span className="text-[9px] font-mono text-slate-500 px-1.5 py-0.5 border border-white/10 rounded-full shrink-0">{iso}</span>
                   </div>
-                  <span className={`font-mono text-sm font-bold shrink-0 ${textColorClass}`}>{val}</span>
+                  <span className={`font-mono text-sm font-bold shrink-0 ${textColorClass}`}>{valStr}</span>
                 </div>
                 <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-                  <div className={`h-full ${colorClass} opacity-80`} style={{ width: `${pct}%` }} />
+                  <div className={`h-full ${colorClass} opacity-80 transition-all duration-500`} style={{ width: `${pct}%` }} />
                 </div>
               </div>
             );
@@ -476,7 +522,7 @@ export default function App() {
   if (!data) return (
     <div className="h-screen flex flex-col items-center justify-center text-cyan-400 animate-pulse font-mono bg-slate-950 tracking-[1em]">
        <Globe size={60} className="mb-10 opacity-30 animate-spin-slow" />
-       CONNECTING_NEXUS_v5.5
+       CONNECTING_NEXUS_v5.6
     </div>
   );
 
@@ -494,7 +540,7 @@ export default function App() {
             <h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">
               WORLD<span className="text-cyan-400 opacity-90">DASH</span>
             </h1>
-            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.5</div>
+            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v5.6</div>
           </div>
         </div>
 
@@ -536,7 +582,7 @@ export default function App() {
           </div>
         )}
 
-        <div className={`absolute top-20 bottom-12 left-0 w-[22rem] md:w-[26rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${isRankingOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`absolute top-20 bottom-12 left-0 w-[24rem] md:w-[28rem] transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) z-[90] ${isRankingOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <RankingPanel data={data} isOpen={isRankingOpen} onClose={() => setIsRankingOpen(false)} onSelectCountry={handleCountryClick} selectedIso={selectedIso} />
         </div>
 
