@@ -1,1 +1,690 @@
 
+[
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:40:00+09:00",
+      "country_iso3": "JPN",
+      "country_name_ja": "日本国",
+      "country_name_en": "Japan",
+      "confidence": {
+        "overall": 0.95,
+        "notes": "2025年秋の衆院選後の高市政権発足と、新政権による初の予算案・経済安保戦略を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "高市早苗政権は『経済安保』を国策の最優先に据え、サイバー防衛の抜本的強化と戦略物資（半導体・重要鉱物）の国内サプライチェーン構築を強硬に推進しています。",
+        "evidence": ["SRC_Cabinet_Office_Economic_Security_2026", "SRC_METI_Strategy_Update"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "『サナエノミクス』と称される積極的な財政出動と民間投資の誘発により、デフレ脱却を確実なものとし、特に防衛産業と先端技術分野での成長を目指しています。",
+        "evidence": ["SRC_MOF_Budget_Draft_2026", "SRC_Business_Japan_Review"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "防衛予算の早期GDP比2%達成と、能動的サイバー防御の法整備、憲法改正に向けた国民的議論の加速など、保守・実務両面でのタカ派的リーダーシップが支持を集めています。",
+        "evidence": ["SRC_Liberal_Democratic_Party_Manifesto_2025", "SRC_MOD_Cyber_Defense_Law"],
+        "confidence": 0.9
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "エネルギー依存からの脱却を目指すGX投資に加え、高市政権下では『技術という資源』を安保上の武器と定義し、独自AI開発や次世代通信規格（6G）への集中投資を行っています。",
+        "notable_resources": [
+          { 
+            "name": "先端技術・半導体", 
+            "role": "ラピダス（Rapidus）の量産体制支援や、経済安保に基づく国産AI・量子技術の社会実装を国策でバックアップ。", 
+            "evidence": ["SRC_METI_Next_Gen_Computing"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "海洋資源・宇宙", 
+            "role": "排他的経済水域（EEZ）内のレアメタル泥開発や、宇宙安保を兼ねた衛星コンステレーション構築への投資を拡大。", 
+            "evidence": ["SRC_JAXA_Security_Role_2026"], 
+            "confidence": 0.85 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "2025年衆院選での勝利を経て発足した高市政権は、自民党内の保守本流と実務層をまとめ上げ、高い支持率を背景に戦後最大の安保・経済改革を断行しています。党内基盤は強固ですが、野党による『生活コスト高騰』への批判が火種です。",
+        "key_actors": [
+          { "name": "高市 早苗", "role": "内閣総理大臣。日本初の女性首相。経済安保、サイバー安全保障、防衛力強化を掲げ、『強い日本』を象徴するリーダーシップを発揮。" },
+          { "name": "経済安全保障担当大臣", "role": "政権の要石。サプライチェーンの強靭化と機密情報の保護、重要技術の流出防止を統括。" },
+          { "name": "日本銀行", "role": "政権の積極財政と歩調を合わせつつ、物価安定と金利の正常化を慎重にコントロール。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "『投資が投資を呼ぶ』循環を目指し、国内の製造拠点回帰を税制面で支援。また、サイバー安保を含むセキュリティ分野を新たな成長産業として定義し、防衛・テック企業の株価上昇と連動した経済成長を狙っています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:45:00+09:00",
+      "country_iso3": "KOR",
+      "country_name_ja": "大韓民国",
+      "country_name_en": "Republic of Korea",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "経済統計は韓国銀行および統計庁の最新値を反映。安保情勢は米韓同盟の動向と対北朝鮮・ロシアの関係性を注視。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "AI半導体需要の爆発を背景に、HBM（広帯域メモリ）市場でSKハイニックスとサムスン電子が世界シェアの大部分を維持し、国家経済の牽引役を担っています。",
+        "evidence": ["SRC_Bank_of_Korea_Export_Report_2026", "SRC_Gartner_Semiconductor_Forecast"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "北朝鮮とロシアの軍事同盟化に対抗し、日米韓安保協力の制度化と、ウクライナへの武器支援を巡る外交的レバレッジを活用した『強い安保』を推進しています。",
+        "evidence": ["SRC_ROK_MND_Defense_White_Paper_2025", "SRC_NIS_Intel_Briefing"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "合計特殊出生率0.6台という極限の人口危機に対し、外国人材の受け入れ拡大（移民庁構想）と、育児支援の義務化を伴う社会構造の抜本的改革に着手しています。",
+        "evidence": ["SRC_KOSTAT_Demographic_Outlook_2026", "SRC_MOLIT_Housing_Support_Plan"],
+        "confidence": 0.85
+      },
+      {
+        "claim": "ポーランドや中東への大規模輸出を足掛かりに、世界第4位の防衛装備輸出大国を目指す『K-ディフェンス』戦略が、製造業の新たな成長エンジンとなっています。",
+        "evidence": ["SRC_KIET_Defense_Industry_Analysis"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "資源貧国ながら、世界屈指の『高度人的資源』と『製造プラットフォーム』を最大の資源としています。エネルギー供給では原子力発電の回帰を強めています。",
+        "notable_resources": [
+          { 
+            "name": "半導体・二次電池技術", 
+            "role": "世界最高水準の微細化技術と量産能力。AIチップと電気自動車（EV）サプライチェーンにおける不可欠なノード。", 
+            "evidence": ["SRC_MOTIE_Industrial_Strategy"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "原子力発電", 
+            "role": "エネルギー安保とカーボンニュートラル両立の柱。i-SMR（革新的な小型モジュール炉）の開発と海外輸出を強化。", 
+            "evidence": ["SRC_KHNP_Project_Status"], 
+            "confidence": 0.9 
+          },
+          { 
+            "name": "重要鉱物供給網", 
+            "role": "中国依存からの脱却を目指し、中央アジア、アフリカ、豪州との資源外交を強化。リチウム、ニッケルの確保が至上命題。", 
+            "evidence": ["SRC_KIGAM_Strategic_Minerals"], 
+            "confidence": 0.85 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "2027年の次期大統領選を控えた前哨戦の様相を呈しており、与野党の対立が激化。尹錫悦政権は、外交・安保の実績を背景に内政の閉塞感打破を狙っていますが、議会での『ねじれ』が法案成立の障壁となっています。",
+        "key_actors": [
+          { "name": "大韓民国大統領", "role": "日米韓安保協力と自由民主主義の連帯を主導。原子力・防衛輸出・半導体の『トップセールス外交』を展開。" },
+          { "name": "最大野党指導者", "role": "民生経済の再建と政権の外交路線批判を軸に、2027年の政権交代を狙う強力な対抗軸。" },
+          { "name": "国家安全保障室", "role": "北朝鮮の核脅威とロシアの技術移転を監視し、拡大抑止（核の傘）の実効性強化を統括。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出依存の構造を維持しつつ、内需では深刻な不動産価格の問題と家計債務がリスク要因。ハイテク（半導体・バイオ・防衛）への集中投資による『超格差戦略』で国際競争力を維持しています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:50:00+09:00",
+      "country_iso3": "PRK",
+      "country_name_ja": "朝鮮民主主義人民共和国",
+      "country_name_en": "Democratic People's Republic of Korea",
+      "confidence": {
+        "overall": 0.75,
+        "notes": "極めて閉鎖的な体制のため、脱北者証言、衛星画像分析、およびロシア・中国との貿易データに基づく推計。軍事協力についてはウクライナ戦場での戦果報告を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "韓国を『第一の主敵』と定義し、平和統一を放棄する『二国家宣言』を憲法に明記。軍事境界線周辺のインフラ破壊と要塞化を完了し、物理的な遮断を強行しています。",
+        "evidence": ["SRC_KCNA_Constitutional_Amendment_2024", "SRC_RFA_Border_Satellite_Analysis"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "ロシアとの『包括的戦略パートナーシップ条約』により事実上の軍事同盟を復活。ウクライナ戦への兵力・弾薬提供の対価として、偵察衛星や潜水艦、ICBM再突入技術の高度化を支援されています。",
+        "evidence": ["SRC_MOD_Ukraine_Field_Intel", "SRC_NIS_Russia_DPRK_Transfer_Report"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "金正恩総書記の娘（キム・ジュエ氏）の公式活動が儀礼の枠を超え、神格化が進展。軍の重鎮による忠誠誓誓など、第4代世襲に向けた権力承継の準備が加速しています。",
+        "evidence": ["SRC_Rodong_Sinmun_Imagery_Analysis", "SRC_Unification_Ministry_ROK_Report"],
+        "confidence": 0.85
+      },
+      {
+        "claim": "『地方発展20×10政策』を掲げ、軍資源を地方の工場建設に投入していますが、慢性的なエネルギー不足と対ロシア輸出への資源集中により、国民の食糧事情は依然として深刻な状況にあります。",
+        "evidence": ["SRC_FAO_Crop_Assessment_PRK", "SRC_DailyNK_Market_Price_Index"],
+        "confidence": 0.8
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "豊富な地下資源を有しながらも、制裁と技術不足により有効活用が限定的。現在はロシアへの武器・弾薬輸出が最大の外貨獲得および物資支援のレバレッジとなっています。",
+        "notable_resources": [
+          { 
+            "name": "武器・弾薬 (ソ連規格)", 
+            "role": "152mm砲弾、KN-23短距離弾道ミサイルなど。ロシアの消耗戦を支える巨大な供給源として機能し、経済・軍事技術の対価を得ている。", 
+            "evidence": ["SRC_ISW_Arms_Transfer_Tracker"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "重要鉱物 (タングステン・マグネサイト)", 
+            "role": "世界有数の埋蔵量。制裁下での中国への密輸出や、ロシア・ベラルーシとのバーター貿易の主要品目。", 
+            "evidence": ["SRC_KOTRA_DPRK_Trade_Analysis"], 
+            "confidence": 0.85 
+          },
+          { 
+            "name": "サイバー資産", 
+            "role": "ラザルス等のハッカー集団による暗号資産窃取。国家予算の相当規模を補填する不法な『資源』として位置づけ。", 
+            "evidence": ["SRC_UN_Security_Council_Sanctions_Panel"], 
+            "confidence": 0.9
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "金正恩総書記による絶対的な独裁体制。ロシアとの密着により外交的孤立感が和らぎ、党・軍内部の統制は強化。一方で、韓国文化（韓流）の流入阻止に向けた『反動思想文化排撃法』の運用が極めて峻烈化しています。",
+        "key_actors": [
+          { "name": "金 正恩", "role": "朝鮮労働党総書記。核武力の完成をレガシーとし、米国を排除した新冷戦構造への適応を主導。" },
+          { "name": "キム・ジュエ (金主愛)", "role": "最高指導者の娘。後継者候補として『朝鮮の嚮導者』等の称号を用いられ、偶像化が進行。" },
+          { "name": "金 与正", "role": "党副部長。対南・対米外交の『口』であり、体制のスポークスパーソンとして強硬発言を継続。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "市場経済（チャンマダン）を抑制し、国家による供給体系の再確立を図る『社会主義的愛国主義』経済へ回帰。ロシアからの原油・食糧供給が経済の生命線となっています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:55:00+09:00",
+      "country_iso3": "CHN",
+      "country_name_ja": "中華人民共和国",
+      "country_name_en": "People's Republic of China",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "公式統計（国家統計局）と、衛星データ・電力消費量等のオルタナティブ・データを用いた推計を併用。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "不動産セクターの構造的停滞に対し、『新質生産力』を掲げてEV、リチウムイオン電池、太陽光発電などの先端製造業へ資本を集中投下し、輸出主導の新たな成長モデルを構築しています。",
+        "evidence": ["SRC_NDRC_Five_Year_Plan_Review", "SRC_IMF_China_Outlook_2026"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "米国による先端半導体・AI技術の規制に対抗し、レガシー半導体の世界市場独占と、国産GPU・AIチップの急激な技術向上による『デジタル自立』を加速させています。",
+        "evidence": ["SRC_MIIT_Semiconductor_Self_Sufficiency", "SRC_SMIC_Production_Update"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "『一帯一路2.0』およびBRICS+の拡大を通じ、グローバル・サウス諸国への経済的・軍事的な影響力を強化。西側諸国（G7）に対する強力な対抗軸を確立しています。",
+        "evidence": ["SRC_FMPRC_Global_South_Initiative", "SRC_BRICS_Summit_Results"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "急速な少子高齢化と若年失業率の高止まりという国内不安を、AI・ロボティクスによる自動化と、社会信用システムの深化による『デジタル統治』で管理する体制を固めています。",
+        "evidence": ["SRC_NBS_Demographic_Crisis_2025", "SRC_CAC_AI_Governance_Framework"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界最大のレアアース生産・加工能力を武器に、クリーンエネルギー革命のサプライチェーンを完全に掌握。また、世界第2位の市場規模と、高度に統合された製造エコシステムが最大の強みです。",
+        "notable_resources": [
+          { 
+            "name": "レアアース (希土類) 供給網", 
+            "role": "採掘から精製、永久磁石製造までの全工程を独占。西側諸国のEV・軍事産業に対する強力な外交カードとして機能。", 
+            "evidence": ["SRC_China_Rare_Earth_Group_Report"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "データ資源", 
+            "role": "14億人のデジタル活動から得られる巨大なデータセット。AI学習における圧倒的な優位性を保持。", 
+            "evidence": ["SRC_Cyberspace_Administration_Report"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "クリーンエネルギー供給能力", 
+            "role": "太陽光パネル、風力タービン、蓄電池の世界シェアを独占。世界の脱炭素コストを中国がコントロールする構造。", 
+            "evidence": ["SRC_IRENA_China_Market_Share"], 
+            "confidence": 0.95 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "習近平総書記への権力集中が完成され、党による『全面的指導』が民間にまで浸透。国内の監視技術の向上により、組織的な反対運動の兆候は抑え込まれていますが、経済格差への不満が潜在的なリスクです。",
+        "key_actors": [
+          { "name": "習 近平", "role": "中国共産党総書記、国家主席。中華民族の偉大な復興（中国の夢）を掲げ、2035年までの強国化を主導。" },
+          { "name": "中国共産党政治局常務委員会", "role": "最高意思決定機関。習総書記の側近で固められ、党の意思決定の迅速化と実行力を担保。" },
+          { "name": "中国人民解放軍 (PLA)", "role": "『戦える軍隊』への改革を完遂。2027年の建軍100周年に向け、台湾海峡等での軍事的実力行使能力を強化。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "投資・輸出依存から、消費主導への移行を『双循環』戦略で試みていますが、実際には製造業の高度化（新質生産力）による輸出攻勢が主。デジタル人民元（e-CNY）の普及による金融統制とドル依存脱却を推進しています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:50:00+09:00",
+      "country_iso3": "MNG",
+      "country_name_ja": "モンゴル国",
+      "country_name_en": "Mongolia",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "経済統計はモンゴル銀行（BoM）およびNSO（国家統計局）のデータを反映。政治情勢は2024年議会選挙後の安定したMPP統治を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "2024年の総選挙で定数が126議席に拡大された後も、オユーン＝エルデネ首相率いる人民党（MPP）が圧倒的多数を維持。政治的安定を背景に大型投資プロジェクトを推進しています。",
+        "evidence": ["SRC_GEC_Mongolia_2024_Results", "SRC_MPP_Action_Plan_2024_2028"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "石炭および銅の中国向け輸出がGDP成長の主動力。特にタバントルゴイ鉱山の鉄道接続とオユ＝トルゴイ鉱山の地下採掘本格化により、輸出能力が過去最高水準にあります。",
+        "evidence": ["SRC_NSO_Trade_Stats_2025", "SRC_Rio_Tinto_OT_Update"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "中露への過度な依存を回避するため、米国、日本、韓国などとの『第三の隣国』政策を強化。特に重要鉱物（レアアース等）のサプライチェーン構築に向けた共同探査・開発が加速しています。",
+        "evidence": ["SRC_MFA_Third_Neighbor_Strategy", "SRC_US_Mongolia_Critical_Minerals_MOU"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "『新回復政策（New Recovery Policy）』の下、国境検問所の近代化、エネルギー不足解消のための再生可能エネルギーおよび原子力（小型モジュール炉）導入の検討が進展しています。",
+        "evidence": ["SRC_GoM_Vision_2050_Implementation"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界級の銅・石炭・金鉱床を保有。エネルギー移行に不可欠なレアアースの潜在力も極めて高く、地政学的な資源供給源としての価値が急上昇しています。",
+        "notable_resources": [
+          { 
+            "name": "銅 (Copper)", 
+            "role": "オユ＝トルゴイ（Oyu Tolgoi）鉱山が中心。地下採掘により世界第4位規模の生産能力を誇り、銅価格高騰の恩恵を最大化。", 
+            "evidence": ["SRC_Erdenes_OT_Financials"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "石炭 (Coking Coal)", 
+            "role": "中国の製鉄業向け主要供給源。タバントルゴイ（Tavan Tolgoi）からの鉄道輸送が本格化し、トラック輸送から効率化・脱炭素化へ移行中。", 
+            "evidence": ["SRC_ETT_Export_Data"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "レアアース (重要鉱物)", 
+            "role": "全土に多くの有望な鉱床を確認。米国・欧州企業との提携により、中国を経由しない精製・輸出ルートの構築が課題。", 
+            "evidence": ["SRC_Mineral_Resources_Authority_MNG"], 
+            "confidence": 0.85 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "民主化以降、安定した議会制民主主義を維持。石炭横領疑惑（石炭スキャンダル）による国民の不満は残るものの、ガバナンスの透明性向上と汚職撲滅運動により、投資環境の改善に努めています。",
+        "key_actors": [
+          { "name": "ロブサンナムスライ・オユーン＝エルデネ", "role": "首相。MPP党首。若手指導者として新回復政策を主導し、経済構造の刷新と汚職撲滅を掲げる。" },
+          { "name": "オフナー・フレルスフ", "role": "大統領。強力な支持基盤を持ち、『10億本の木』植林運動など環境・安保政策の象徴的役割を担う。" },
+          { "name": "リオ・ティント (Rio Tinto)", "role": "オユ＝トルゴイ鉱山の運営主体。政府との債務免除合意を経て、最大の外資パートナーとしての地位を確立。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出の9割以上、政府歳入の大部分を鉱業に依存。脱依存のため観光業（モンゴル訪問年）やデジタル経済（E-Mongolia）の育成、アグリビジネスの近代化を推進。為替は石炭輸出好調により安定傾向。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T13:58:00+09:00",
+      "country_iso3": "TWN",
+      "country_name_ja": "台湾",
+      "country_name_en": "Taiwan",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "経済データは台湾行政院主計総処およびTSMC決算報告に基づく。政治情勢は立法院の与野党対決構図を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "頼清徳政権は『現状維持』を掲げつつ、米国を中心とする民主主義陣営との供給網・安保連携を過去最高水準に引き上げ、中国の威圧に対する抑止力を強化しています。",
+        "evidence": ["SRC_Executive_Yuan_Policy_Address_2026", "SRC_AIT_Security_Cooperation"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "TSMCが2025年末に2nmプロセスの量産を開始。世界市場のAIチップ供給を独占的に担うことで、『シリコン・シールド』としての戦略的価値がさらに上昇しています。",
+        "evidence": ["SRC_TSMC_Q4_2025_Earnings", "SRC_Bloomberg_Semiconductor_Index"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "立法院（国会）では野党（国民党・民衆党）が過半数を握る『ねじれ』が続いており、防衛予算やエネルギー政策（脱原発の是非）を巡る与野党の激しい対立が政権運営の足枷となっています。",
+        "evidence": ["SRC_Legislative_Yuan_Budget_Review_2026"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "自首建造潜水艦（IDS）の2番艦以降の量産計画が具体化し、非対称戦力の拡充に向けた防衛産業の国内化が加速しています。",
+        "evidence": ["SRC_MND_Defense_Report_2025"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "天然資源には乏しいものの、世界最強の半導体エコシステムと、高度なエンジニア人材を最大の戦略的資源として保有しています。現在はエネルギー自給率向上のための洋上風力が焦点です。",
+        "notable_resources": [
+          { 
+            "name": "半導体・先端製造", 
+            "role": "世界シェアの9割を占める最先端チップ製造能力。AI革命の物理的基盤であり、各国の安全保障上の死活的関心事。", 
+            "evidence": ["SRC_TSMC_Technology_Roadmap"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "洋上風力発電 (Offshore Wind)", 
+            "role": "台湾海峡の強力な風力を活用。脱原発・脱炭素を掲げる政権のエネルギー供給源として、外資（デンマーク等）を巻き込み急拡大中。", 
+            "evidence": ["SRC_Ministry_of_Economic_Affairs_Energy_Update"], 
+            "confidence": 0.9 
+          },
+          { 
+            "name": "人的資本 (STEM人材)", 
+            "role": "精密製造とソフトウェア開発に特化した高度人材。人口減少への対応として、グローバルな高度人材誘致（ゴールドカード等）を強化。", 
+            "evidence": ["SRC_National_Development_Council_Talent_Strategy"], 
+            "confidence": 0.95 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "頼清徳総統の支持率は安定していますが、立法院での法案成立能力が問われています。中国による『グレーゾーン事態』の常態化に対し、社会全体での強靭性（レジリエンス）向上が図られています。",
+        "key_actors": [
+          { "name": "頼 清徳", "role": "中華民国総統（DPP）。蔡英文路線の継承を掲げ、主権維持と経済安保を主導。" },
+          { "name": "民主進歩党 (DPP)", "role": "与党。台湾アイデンティティを重視。米欧日との連携強化と、中国への経済依存度低下を推進。" },
+          { "name": "中国国民党 (KMT)", "role": "最大野党。立法院の第一党。中国との対話を通じた緊張緩和を主張し、防衛予算の一部に慎重な姿勢。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出の4割近くを電子部品・半導体が占める高度なモノカルチャー構造。中国への直接投資は減少傾向にある一方、東南アジアやインド、米国への投資を拡大する『新南向政策』を深化させています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T14:15:00+09:00",
+      "country_iso3": "VNM",
+      "country_name_ja": "ベトナム社会主義共和国",
+      "country_name_en": "Socialist Republic of Vietnam",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "経済統計はベトナム統計総局（GSO）およびIMFに基づく。政治情勢は2026年初頭の第14回党大会による新体制発足を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "2026年1月の第14回共産党大会を経て発足した新指導部は、汚職掃討運動を継続しつつ、停滞していた行政プロセスの正常化と外資誘致の加速に舵を切っています。",
+        "evidence": ["SRC_CPV_14th_Congress_Resolution", "SRC_VGP_News_2026"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "半導体および人工知能（AI）を国家戦略産業に指定。米国との包括的戦略パートナーシップを背景に、Intel、NVIDIA、Samsung等の投資を軸としたハイテク・サプライチェーンの中枢を目指しています。",
+        "evidence": ["SRC_MPI_Semiconductor_Strategy_2030", "SRC_World_Bank_VNM_Economic_Update"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "中国と米国の双方と最高レベルの外交関係を維持する『竹外交』を維持。南シナ海での緊張を管理しつつ、製造拠点の移転先としての地政学的優位性を最大化しています。",
+        "evidence": ["SRC_MOFA_VNM_Foreign_Policy_2026"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "第8次電力開発計画（PDP8）に基づき、洋上風力や液化天然ガス（LNG）への転換を急いでいますが、北部を中心とした電力不足リスクが依然として工業成長のボトルネックとなっています。",
+        "evidence": ["SRC_MOIT_PDP8_Implementation_Report"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界第2位の埋蔵量を誇るレアアースと、豊富な若年労働力を最大の武器としています。また、農業大国として食料安保への貢献度も高いのが特徴です。",
+        "notable_resources": [
+          { 
+            "name": "レアアース (希土類)", 
+            "role": "北部を中心に巨大な埋蔵。中国依存を嫌う日米欧企業との提携により、採掘・精錬の自国化と輸出拡大を推進。", 
+            "evidence": ["SRC_USGS_Rare_Earth_Mineral_Commodity_Summaries"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "農産物 (米・コーヒー)", 
+            "role": "世界有数の米輸出、ロブスタコーヒー生産。気候変動への適応と高付加価値化により、安定した外貨獲得源を維持。", 
+            "evidence": ["SRC_MARD_Agriculture_Stats"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "洋上風力・太陽光エネルギー", 
+            "role": "長い海岸線を活かした再エネ潜在力。アジアのクリーンエネルギー・ハブ化を目指し、外資による大規模投資が進行中。", 
+            "evidence": ["SRC_IRENA_VNM_Renewables"], 
+            "confidence": 0.85 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "ベトナム共産党（CPV）による一党支配の下、極めて安定した政治環境を維持。近年は汚職撲滅運動『燃える炉（Lò Củi）』により最高幹部が相次いで交代しましたが、政策の継続性は保たれています。",
+        "key_actors": [
+          { "name": "ベトナム共産党新指導部", "role": "第14回党大会で選出。経済の質的成長とデジタル移行を最優先課題とする実務派が台頭。" },
+          { "name": "公安省・治安機関", "role": "汚職撲滅と社会秩序維持を担う。政治的影響力が増大しており、投資環境の透明性向上にも関与。" },
+          { "name": "Vingroup / FPT", "role": "国内最大級のコンングロマリット。EV（VinFast）やIT・半導体（FPT）を通じて国家の産業高度化を象徴。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出主導型成長を継続しつつ、低付加価値の組み立てから『チップからAIまで』の高度化を目指す移行期。内需拡大と中間層の成長も顕著で、ASEAN最大級の消費市場として注目されています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T14:40:00+09:00",
+      "country_iso3": "LAO",
+      "country_name_ja": "ラオス人民民主共和国",
+      "country_name_en": "Lao People's Democratic Republic",
+      "confidence": {
+        "overall": 0.8,
+        "notes": "経済統計はIMFおよび世界銀行の債務持続性分析（DSA）に基づく。政治情勢は第12回党大会に向けた人事・政策動向を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "2026年に予定されている第12回ラオス人民革命党大会に向け、経済危機の責任を問う形での指導部刷新と、中国依存を継続しつつもASEAN内でのバランスを模索する動きが強まっています。",
+        "evidence": ["SRC_LPRP_12th_Congress_Preview", "SRC_ISEAS_Laos_Political_Outlook"],
+        "confidence": 0.85
+      },
+      {
+        "claim": "対外債務（特に中国向け）がGDP比で危険水域にあり、債務再編交渉と通貨キップ（Kip）の急落によるハイパーインフレの抑制が国家の最優先課題となっています。",
+        "evidence": ["SRC_IMF_Article_IV_Laos_2025", "SRC_World_Bank_Debt_Monitor"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "ラオス中国鉄道（LCR）を軸とした物流・観光の活性化が進展。内陸国（Land-locked）から『陸路連結国（Land-linked）』への転換が実体経済に寄与し始めています。",
+        "evidence": ["SRC_LCRC_Logistics_Report_2025", "SRC_Tourism_Laos_Statistics"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "メコン川の水力発電による電力輸出に加え、南部での大規模なボーキサイト開発やレアアース探査が加速しており、資源ナショナリズムの台頭と外資（中国、タイ、ベトナム）の利権争いが激化しています。",
+        "evidence": ["SRC_MEM_Mining_Strategy_2026", "SRC_EDL_Export_Data"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "『東南アジアのバッテリー』としての豊富な水力資源に加え、近年は鉱物資源（金、銅、ボーキサイト）の輸出が経済を支えています。特にレアアースへの注目が地政学的な価値を高めています。",
+        "notable_resources": [
+          { 
+            "name": "水力発電", 
+            "role": "メコン川とその支流を利用した大規模ダム群。タイ、ベトナム、シンガポールへの送電。国家最大の安定的外貨獲得源。", 
+            "evidence": ["SRC_MRC_Energy_Review"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "ボーキサイト・レアアース", 
+            "role": "南部ボラベン高原を中心にボーキサイトの巨大鉱床。中国企業による大規模精錬所建設が進む。レアアース探査も本格化。", 
+            "evidence": ["SRC_Investment_Promotion_Agency_LAO"], 
+            "confidence": 0.9 
+          },
+          { 
+            "name": "農産物・林産物", 
+            "role": "キャッサバ、ゴム、バナナ、コーヒー。中国市場向けの輸出が急増しているが、農薬使用や土地収用問題が課題。", 
+            "evidence": ["SRC_Ministry_of_Agriculture_Stats"], 
+            "confidence": 0.95 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "ラオス人民革命党（LPRP）による一党支配。1975年の建国以来、安定を維持していますが、インフレによる生活困窮が若年層の不満を醸成しており、党大会での『刷新』が期待されています。",
+        "key_actors": [
+          { "name": "トンルン・シスリット", "role": "国家主席・党総書記。長年のベテラン指導者。経済危機の舵取りと次世代への権力承継の準備を担う。" },
+          { "name": "ソーンサイ・シーパンドン", "role": "首相。名門政治家一家の出身。実務面での経済対策と債務交渉の最前線に立つ。" },
+          { "name": "ラオス人民軍", "role": "党の忠実な守護者。経済活動にも深く関与し、治安維持と領土保全を担う。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "資源と電力輸出に極端に依存。債務返済のための外貨不足が通貨安を招き、輸入依存の消費財・燃料価格が高騰。ラオス中国鉄道による物流改善が、製造業の誘致（経済特区）につながるかが再起の鍵。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T14:45:00+09:00",
+      "country_iso3": "KHM",
+      "country_name_ja": "カンボジア王国",
+      "country_name_en": "Kingdom of Cambodia",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "経済データはカンボジア国立銀行（NBC）および世銀の報告に基づく。政治情勢はフン・マネット政権の安定性とフン・セン前首相の影響力を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "フン・マネット首相による世襲的承継は、フン・セン前首相の強力な後見の下で安定的に推移。軍・警察・党の若返りを進めつつ、旧世代の利権構造とのバランスを維持しています。",
+        "evidence": ["SRC_CPP_Central_Committee_2025", "SRC_Phnom_Penh_Post_Political_Analysis"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "中国の支援による巨大プロジェクト『フナン・テチョ運河』が本格着工。メコン川のベトナム領ルートへの依存脱却を目指す一方、隣国ベトナムとの軍事・環境上の緊張を生んでいます。",
+        "evidence": ["SRC_Funan_Techo_Canal_Impact_Study", "SRC_MRC_Transboundary_Report"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "縫製・靴・鞄産業に加え、電子機器や自動車部品などの高付加価値製造業への多角化が進展。デジタル経済（Bakongシステム等）の普及により、金融包摂が進んでいます。",
+        "evidence": ["SRC_NBC_Financial_Stability_2025", "SRC_GMAC_Sector_Update"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "オンライン詐欺センターや人身売買を巡る国際的批判に対し、政府は法執行の強化をアピールしていますが、グレー経済と政治・軍事エリートとの癒着が払拭しきれていないことが課題です。",
+        "evidence": ["SRC_UNODC_Transnational_Crime_Report_2025", "SRC_US_TIP_Report_Cambodia"],
+        "confidence": 0.8
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "若年層が人口の大部分を占める人的資源と、メコン川・トンレサップ湖による豊かな水産・農業資源を有しています。近年は金採掘の本格化や、洋上石油探査の再開が焦点です。",
+        "notable_resources": [
+          { 
+            "name": "金 (Gold)", 
+            "role": "モンドルキリ州などで外資（ルネッサンス・ミネラルズ等）による大規模採掘が稼働。国家の外貨獲得源として成長中。", 
+            "evidence": ["SRC_Ministry_of_Mines_Energy_KH"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "農業 (コメ・カシューナッツ)", 
+            "role": "世界有数のコメ輸出に加え、カシューナッツの加工ハブ化を推進。加工食品の輸出拡大を目指す戦略。 ", 
+            "evidence": ["SRC_MAFF_Agriculture_Policy_2030"], 
+            "confidence": 0.9 
+          },
+          { 
+            "name": "観光資源 (アンコール遺跡)", 
+            "role": "シェムリアップ新空港の稼働により、高付加価値な観光客誘致を再強化。GDPの約1割を支える最重要サービス産業。", 
+            "evidence": ["SRC_Ministry_of_Tourism_Update"], 
+            "confidence": 0.98 
+          }
+        ]
+      },
+      {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T14:50:00+09:00",
+      "country_iso3": "THA",
+      "country_name_ja": "タイ王国",
+      "country_name_en": "Kingdom of Thailand",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "経済データはタイ中央銀行（BoT）およびNESDCの2025年末予測に基づく。政治情勢はペートンタン政権の連立維持とタクシン氏の影響力を考慮。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ペートンタン・シナワット政権は、父タクシン氏の『影の指導』の下で、1万バーツのデジタルウォレット配布などのポピュリズム政策を実行し、支持基盤の維持と内需刺激を狙っています。",
+        "evidence": ["SRC_Pheu_Thai_Policy_Update_2025", "SRC_Thai_Gov_Digital_Wallet_Tracker"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "マラッカ海峡を迂回する巨大インフラ『ランドブリッジ』計画への投資誘致を国家戦略として推進。中東、中国、日本などとの多角的な物流安保協力を模索しています。",
+        "evidence": ["SRC_MOT_Landbridge_Strategic_Plan"],
+        "confidence": 0.85
+      },
+      {
+        "claim": "中国製EV（BYD、GWM等）の爆発的普及により、長年日本の自動車メーカーが支配してきた産業構造が激変。タイは東南アジアのEV製造ハブとしての地位を確立しつつあります。",
+        "evidence": ["SRC_FTI_EV_Production_Stats_2025", "SRC_BOI_Thailand_Investment_Review"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "米中対立の中で『全方位外交』を堅持。BRICSへの正式加盟とOECD加盟に向けた交渉を並行して進めることで、経済的利益の最大化を図っています。",
+        "evidence": ["SRC_MFA_Foreign_Policy_Review_2026"],
+        "confidence": 0.9
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "豊かな農業資源（米、ドリアン、ゴム）と、高度な製造業エコシステム、そして世界有数の観光資源を保有しています。現在はエネルギー転換とデジタル資産の法整備を急いでいます。",
+        "notable_resources": [
+          { 
+            "name": "観光・サービス業", 
+            "role": "GDPの約2割を支える最重要産業。中国やインドからの富裕層誘致に加え、カジノ（複合施設）解禁に向けた議論が加速。", 
+            "evidence": ["SRC_TAT_Tourism_Impact_2026"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "農産物 (ドリアン・米)", 
+            "role": "中国向けのドリアン輸出が『新黄金産業』化。農産物のスマート農業化と品質管理のデジタル化を推進。", 
+            "evidence": ["SRC_MOAC_Export_Report"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "自動車製造クラスター", 
+            "role": "『東洋のデトロイト』。内燃機関からEVへの移行に伴い、バッテリーサプライチェーンと電子部品産業の誘致が生命線。", 
+            "evidence": ["SRC_TAIA_Automotive_Outlook"], 
+            "confidence": 0.9 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "タクシン派（タイ貢献党）と保守本流（軍部・官僚）の『妥協的同盟』が続いています。最大野党・国民党（NPP：解党された前進党の後継）が若年層の圧倒的支持を背景に2027年総選挙を見据えており、政治の二極化は継続中。",
+        "key_actors": [
+          { "name": "ペートンタン・シナワット", "role": "首相。タクシン氏の次女。若さとシナワット・ブランドを武器に政権を率いるが、実質的判断は父に依存との見方。" },
+          { "name": "タクシン・シナワット", "role": "元首相、政権の『精神的指導者』。恩赦後の活発な政治活動により、実質的な最高意思決定者としての影響力を保持。" },
+          { "name": "ナタポン・ルアンパンヤウット", "role": "国民党（NPP）党首。構造改革を訴える若手リーダー。野党第一党として、政権のポピュリズムを厳しく批判。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出と観光の双輪。中所得国の罠からの脱却のため、デジタル経済、ヘルスケア、ソフトパワー（タイ料理、ムエタイ、BLドラマ等）の海外展開に注力。人口動態の急速な高齢化が中長期的な懸念事項。"
+      }
+    }
+  }
+]
+    
