@@ -12,72 +12,26 @@ import {
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 /**
- * WorldDashboard v6.2 - Deep Intelligence Expansion (Embedded Fix)
- * - Fix: 外部JSON読み込みエラーを回避するため、レポートデータをコード内に直接埋め込みました。
- * - これにより、コンゴ民主共和国(COD)を選択した際、確実にレポートボタンが表示されます。
- * - Fix: WorldMap内の変数の参照エラー(minRisk -> minR)を修正
+ * WorldDashboard v6.3 - Global Intelligence Nexus
+ * * [アーキテクチャ変更]
+ * - レポートデータ管理: 地域別JSON分割読み込み方式へ移行
+ * - 対応ファイル: reports_africa.json, reports_asia.json, reports_europe.json 等
+ * - 言語対応: 日本語フィールド (country_name_ja) を優先表示するようにUIを調整
  */
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
 const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 
-// ==========================================
-// STATIC REPORT DATA (Embedded for Stability)
-// 外部ファイルの読み込みエラーを防ぐため、ここに直接データを持ちます
-// ==========================================
-const LOCAL_REPORT_DATA = [
-  {
-    "meta": {
-      "schema_version": "1.0",
-      "generated_at": "2026-02-13T08:59:19+09:00",
-      "country_iso3": "COD",
-      "country_name_ja": "コンゴ民主共和国",
-      "country_name_en": "Democratic Republic of the Congo",
-      "confidence": {
-        "overall": 0.7,
-        "notes": "Sources include UN, IMF, think tanks; data partly missing."
-      }
-    },
-    "key_takeaways": [
-      {
-        "claim": "The DRC’s vast critical mineral wealth (e.g. ∼70% of global cobalt) has not translated into prosperity due to chronic conflict and weak governance.",
-        "evidence": ["SRC_001", "SRC_003"],
-        "confidence": 0.9
-      },
-      {
-        "claim": "Armed groups (e.g. M23) backed by neighboring states (Rwanda, Uganda) fuel violence and economic disruption, deterring investment.",
-        "evidence": ["SRC_002", "SRC_004"],
-        "confidence": 0.9
-      },
-      {
-        "claim": "Regionally, the DRC is a trade and transit hub (in SADC and COMESA) with major corridors (e.g. Durban-Kolwezi) and is now part of AfCFTA/EAC, making its stability a continental concern.",
-        "evidence": ["SRC_006", "SRC_010"],
-        "confidence": 0.8
-      }
-    ],
-    "analysis": {
-      "resource_endowment": {
-        "summary": "The DRC possesses vast mineral wealth (copper, cobalt, gold, coltan, etc.) and dominates global cobalt supply, but this has not ensured economic development.",
-        "notable_resources": [
-          { "name": "cobalt", "role": "World’s largest producer (72% of global output in 2021), key for EV batteries", "evidence": ["SRC_001"], "confidence": 0.9 },
-          { "name": "copper", "role": "Major global supplier (4th largest producer, ∼8% of world output in 2021)", "evidence": ["SRC_001"], "confidence": 0.9 },
-          { "name": "coltan/tantalum", "role": "Significant share of global supply (∼30% of global coltan from Great Lakes region, critical for electronics)", "evidence": ["SRC_004"], "confidence": 0.8 },
-          { "name": "gold", "role": "Notable gold production (important export and artisanal economy)", "evidence": ["SRC_003"], "confidence": 0.7 }
-        ]
-      },
-      "political_stability": {
-        "summary": "Persistent armed conflict, weak governance, and regional interventions make the DRC highly unstable despite its resource wealth.",
-        "key_actors": [
-           { "name": "M23 Rebels", "role": "Insurgent Group" },
-           { "name": "Gov Forces", "role": "State Military" },
-           { "name": "Regional Powers", "role": "Intervention" }
-        ]
-      },
-      "economic_structure": {
-        "summary": "A large, resource-rich economy central to regional trade (member of SADC, COMESA) but with low value-added diversification."
-      }
-    }
-  }
+// 読み込み対象のレポートファイルリスト
+// プロジェクトのpublicフォルダにこれらのファイルを配置してください
+const REPORT_FILES = [
+  "reports_africa.json",
+  "reports_asia.json",
+  "reports_europe.json",
+  "reports_americas.json",
+  "reports_oceania.json",
+  // 既存のファイル名も互換性のために残す
+  "Afreica_countries_reports.json" 
 ];
 
 // 国名マッピング (Numeric ID -> ISO3)
@@ -218,6 +172,9 @@ const DeepReportPanel = ({ report, onClose }) => {
   if (!report) return null;
 
   const { meta, key_takeaways, analysis } = report;
+  
+  // 日本語名があれば優先、なければ英語名
+  const displayName = meta.country_name_ja || meta.country_name_en;
 
   return (
     <div className="flex flex-col h-full bg-slate-900/60 backdrop-blur-[50px] border-r border-l border-white/10 shadow-2xl overflow-hidden animate-in slide-in-from-right duration-700">
@@ -227,7 +184,7 @@ const DeepReportPanel = ({ report, onClose }) => {
             <FileText size={12}/> DEEP_DIVE_INTEL
           </div>
           <h2 className="text-xl font-bold text-slate-100 tracking-tight leading-snug uppercase">
-            {meta.country_name_en} <span className="text-slate-500 text-sm">REPORT</span>
+            {displayName} <span className="text-slate-500 text-sm">REPORT</span>
           </h2>
         </div>
         <button onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors duration-300">
@@ -539,25 +496,45 @@ export default function App() {
   useEffect(() => {
     const baseUrl = window.location.hostname.includes('github.io') ? "/worlddashboard_2/" : "/";
     
-    // マスタデータのみ外部取得、レポートはローカル変数を使用
-    fetch(`${baseUrl}worlddash_global_master.json`)
+    // 1. マスタデータの取得
+    const loadMaster = fetch(`${baseUrl}worlddash_global_master.json`)
       .then(res => res.json())
-      .then(masterData => {
-        setData(masterData);
-        
-        // レポートデータの処理 (ローカル変数 LOCAL_REPORT_DATA を使用)
-        const reportMap = {};
-        const reportList = Array.isArray(LOCAL_REPORT_DATA) ? LOCAL_REPORT_DATA : [LOCAL_REPORT_DATA];
+      .catch(e => {
+        console.error("Master data load failed", e);
+        return null;
+      });
 
-        reportList.forEach(r => {
-          if (r && r.meta && r.meta.country_iso3) {
-            reportMap[r.meta.country_iso3] = r;
-          }
-        });
-        
-        setReports(reportMap);
-      })
-      .catch(e => console.error("Master data load failed", e));
+    // 2. 分割されたレポートファイルの取得 (並列処理)
+    // エラーが起きても他のファイルの読み込みを止めないように個別にcatchする
+    const loadReports = Promise.all(
+      REPORT_FILES.map(filename => 
+        fetch(`${baseUrl}${filename}`)
+          .then(res => {
+            if (!res.ok) throw new Error(`${filename} not found`);
+            return res.json();
+          })
+          .catch(err => {
+            console.warn(`Failed to load ${filename}, skipping.`, err);
+            return []; // 失敗時は空配列を返す
+          })
+      )
+    ).then(results => {
+      // すべての結果(配列の配列)を1つのオブジェクトに統合
+      const mergedReports = {};
+      results.flat().forEach(r => {
+        if (r && r.meta && r.meta.country_iso3) {
+          mergedReports[r.meta.country_iso3] = r;
+        }
+      });
+      return mergedReports;
+    });
+
+    // 3. 両方のデータが揃ったらStateを更新
+    Promise.all([loadMaster, loadReports]).then(([masterData, mergedReports]) => {
+      if (masterData) setData(masterData);
+      setReports(mergedReports);
+    });
+
   }, []);
 
   const toggleFs = () => {
@@ -583,7 +560,7 @@ export default function App() {
   if (!data) return (
     <div className="h-screen flex flex-col items-center justify-center text-cyan-400 animate-pulse font-mono bg-slate-950 tracking-[1em]">
        <Globe size={60} className="mb-10 opacity-30 animate-spin-slow" />
-       CONNECTING_NEXUS_v6.2
+       CONNECTING_NEXUS_v6.3
     </div>
   );
 
@@ -599,7 +576,7 @@ export default function App() {
           <div className="p-2 bg-cyan-500/10 rounded-xl border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
             <Globe className="text-cyan-400 animate-pulse" size={24} />
           </div>
-          <div><h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">WORLD<span className="text-cyan-400 opacity-90">DASH</span></h1><div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v6.2</div></div>
+          <div><h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">WORLD<span className="text-cyan-400 opacity-90">DASH</span></h1><div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">Global_Intelligence_Nexus_v6.3</div></div>
         </div>
 
         <div className="hidden md:flex flex-1 items-center justify-center pointer-events-none">
