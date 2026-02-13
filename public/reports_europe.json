@@ -1,1 +1,553 @@
-
+[
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:00:00+09:00",
+      "country_iso3": "DEU",
+      "country_name_ja": "ドイツ連邦共和国",
+      "country_name_en": "Federal Republic of Germany",
+      "confidence": { "overall": 0.92, "notes": "連邦統計局、主要経済研究所（Ifo, ZEW）レポートに基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "『ショルツ・ドクトリン（時代の転換点）』の実行段階に入り、特別基金を活用したドイツ連邦軍の再建と、ロシア産エネルギーからの完全脱却を達成し、欧州の安全保障の要としての役割を再定義しています。",
+        "evidence": ["SRC_Bundeswehr_Modernization_Report", "SRC_BMWK_Energy_Security_Update"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "自動車産業のEVシフト遅れと中国市場での苦戦が響き、産業空洞化のリスクが指摘される中、半導体（TSMC、Intel誘致）やグリーン水素への巨額補助金投入により、産業基盤の刷新を図っています。",
+        "evidence": ["SRC_VDA_Automotive_Strategy", "SRC_Germany_Chips_Act_Funding"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "移民政策への反発を背景に、AfD（ドイツのための選択肢）などの極右勢力が州議会で無視できない勢力を維持しており、連邦レベルでの連立形成が複雑化し、政治的意志決定のスピードを鈍らせています。",
+        "evidence": ["SRC_Forsa_Poll_Trends", "SRC_Bertelsmann_Democracy_Index"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "国内の褐炭採掘を段階的に縮小し、北海沿岸の風力発電と輸入水素（H2Global財団）への転換を進めています。産業の血液であるエネルギー価格の高止まりが課題です。",
+        "notable_resources": [
+          { "name": "風力・再エネ", "role": "北部の余剰電力を南部の産業地帯へ送る送電網（SuedLink）の完成が急務。", "evidence": ["SRC_BNetzA_Grid_Expansion"], "confidence": 0.95 },
+          { "name": "高度製造技術", "role": "「隠れたチャンピオン」と呼ばれる中堅・中小企業群が持つ特許とノウハウ。", "evidence": ["SRC_Hidden_Champions_Analysis"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "連立政権（信号連立）内の不協和音が常態化しています。財政規律（債務ブレーキ）の維持か、投資拡大かを巡る議論が政局の焦点です。",
+        "key_actors": [
+           { "name": "オラフ・ショルツ", "role": "首相。慎重な調整型リーダーシップをとるが、決断の遅さに批判も。", "evidence": [] },
+           { "name": "AfD (ドイツのための選択肢)", "role": "極右政党。東部州での支持を基盤に、既存政党への拒否権を行使しうる存在へ。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸出主導型経済の修正を迫られています。対中デリスク（リスク低減）を進めつつ、インドや東南アジアへの市場多角化を模索しています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:05:00+09:00",
+      "country_iso3": "FRA",
+      "country_name_ja": "フランス共和国",
+      "country_name_en": "French Republic",
+      "confidence": { "overall": 0.9, "notes": "フランス財務省、IEA、国防省白書に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "『フランス2030』計画に基づき、原子力発電のルネサンス（新規原子炉建設）と再産業化を推進し、欧州におけるエネルギー自律性と防衛産業のリーダーシップを確立しています。",
+        "evidence": ["SRC_Elysee_France_2030_Progress", "SRC_EDF_Nuclear_Roadmap"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "マクロン大統領の任期後半を迎え、国民連合（RN）などの右派ポピュリズム勢力が台頭。移民法や年金改革を巡る社会的分断が深く、ストライキや暴動のリスクが常在しています。",
+        "evidence": ["SRC_IFOP_Political_Trust_Survey", "SRC_Interior_Ministry_Social_Unrest"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "「欧州の戦略的自律」を掲げ、NATO内での欧州の柱の強化や、中国との独自外交を展開するなど、米国の動向に左右されない外交ポジションを維持しています。",
+        "evidence": ["SRC_MFA_Strategic_Autonomy_Paper", "SRC_SIPRI_French_Arms_Export"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "欧州最大の農業生産力と、低炭素電力の源泉である原子力（56基稼働）が強みです。リチウム鉱山（ボーヴォワール等）の開発により、EV素材の自給を目指しています。",
+        "notable_resources": [
+          { "name": "原子力", "role": "ベースロード電源として欧州近隣国へも電力を輸出。脱炭素の切り札。", "evidence": ["SRC_RTE_Electricity_Balance"], "confidence": 0.98 },
+          { "name": "農業（小麦・ワイン）", "role": "EUの食料安全保障の中核。気候変動による干ばつが生産リスク。", "evidence": ["SRC_Agreste_Production_Data"], "confidence": 0.95 },
+          { "name": "リチウム", "role": "マシフ・サントラル地域での採掘計画が進み、欧州の電池供給網の一角を担う。", "evidence": ["SRC_Imerys_Lithium_Project"], "confidence": 0.88 }
+        ]
+      },
+      "political_stability": {
+        "summary": "マクロン大統領の議会基盤は脆弱（少数与党）で、法案成立ごとに野党との妥協が必要です。2027年大統領選を見据えた極右・極左の動きが活発化しています。",
+        "key_actors": [
+           { "name": "エマニュエル・マクロン", "role": "大統領。改革路線を堅持するが、国民との対話に苦慮。", "evidence": [] },
+           { "name": "マリーヌ・ル・ペン", "role": "国民連合（RN）実質的指導者。政権奪取を現実的な視野に入れる。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "ラグジュアリー産業、航空宇宙、防衛、観光が強力な輸出エンジン。財政赤字の削減がEUからの要請で急務となっています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:10:00+09:00",
+      "country_iso3": "GBR",
+      "country_name_ja": "グレートブリテン及び北アイルランド連合王国",
+      "country_name_en": "United Kingdom",
+      "confidence": { "overall": 0.9, "notes": "OBR（予算責任局）、イングランド銀行レポートに基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ブレグジット後の新たな均衡点として、EUとの『ウィンザー枠組み』等を活用した実務関係の改善と、CPTPP加盟によるインド太平洋への関与拡大（グローバル・ブリテン）を両立させています。",
+        "evidence": ["SRC_FCDO_Integrated_Review_Refresh", "SRC_Trade_Data_CPTPP"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "ロンドンの金融ハブとしての地位維持に加え、AI安全性サミットの主導やライフサイエンス分野への集中投資により、サービス・ハイテク立国としての生き残りを図っています。",
+        "evidence": ["SRC_CityUK_Finance_Report", "SRC_DSIT_Science_Superpower"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "国民保健サービス（NHS）の危機や生活コスト高騰が社会問題化しており、労働党政権（または保守党からの政権交代）の下で、公共サービスの再生とグリーン投資の両立が模索されています。",
+        "evidence": ["SRC_NHS_Performance_Stats", "SRC_Resolution_Foundation_Living_Standards"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "北海の石油・ガス減産に伴い、世界最大級の洋上風力発電能力（ドッガーバンク等）への転換を加速。炭素回収貯留（CCUS）技術で先行しています。",
+        "notable_resources": [
+          { "name": "洋上風力", "role": "エネルギー安全保障の柱。2030年までに50GW目標。", "evidence": ["SRC_Crown_Estate_Wind_Report"], "confidence": 0.95 },
+          { "name": "金融・法務サービス", "role": "世界貿易を支えるソフトインフラ。対中東・アジア資本の窓口。", "evidence": ["SRC_The_City_Global_Role"], "confidence": 0.98 }
+        ]
+      },
+      "political_stability": {
+        "summary": "スコットランド独立の動きは一時沈静化していますが、北アイルランドの統治問題（ストームント議会）が依然として繊細な課題です。二大政党制による政権交代の可能性が高まっています。",
+        "key_actors": [
+           { "name": "英国首相", "role": "経済成長と社会的分断の修復、国際的地位の維持に腐心。", "evidence": [] },
+           { "name": "イングランド銀行", "role": "インフレ抑制と金融安定化の番人。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "サービス業がGDPの8割を占める。生産性の低迷（パズル）解決のため、インフラ投資とスキル向上政策が焦点です。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:15:00+09:00",
+      "country_iso3": "ITA",
+      "country_name_ja": "イタリア共和国",
+      "country_name_en": "Italian Republic",
+      "confidence": { "overall": 0.88, "notes": "イタリア銀行、ISTAT、欧州委員会レポートに基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "メローニ政権は予想に反してEU協調路線を取り、政治的安定を実現。対アフリカ支援策『マッティ・プラン』を通じて、エネルギー確保と不法移民抑制をセットにした外交戦略を推進しています。",
+        "evidence": ["SRC_Mattei_Plan_Africa_Summit", "SRC_EU_Migration_Pact_Italy"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "『メイド・イン・イタリー』ブランドの保護と強化を国策とし、高級消費財、機械、防衛産業の輸出が好調ですが、巨額の公的債務が金利上昇局面での財政リスクとして重くのしかかっています。",
+        "evidence": ["SRC_SACE_Export_Outlook", "SRC_Bank_of_Italy_Debt_Analysis"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "出生率の低下が欧州で最も深刻なレベルにあり、労働力不足が慢性化。社会保障制度の持続可能性が最大の長期的課題です。",
+        "evidence": ["SRC_ISTAT_Demographic_Crisis", "SRC_Pension_Reform_Debate"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "地中海の中央に位置し、北アフリカや中東からのガスパイプラインのハブ機能を有します。太陽光発電の潜在力も高いです。",
+        "notable_resources": [
+          { "name": "ガスハブ機能", "role": "アルジェリア、アゼルバイジャン等からのガスを欧州北部へ送るゲートウェイ。", "evidence": ["SRC_SNAM_Gas_Infrastructure"], "confidence": 0.92 },
+          { "name": "文化遺産・観光", "role": "世界最多のユネスコ世界遺産。観光業はGDPの1割以上。", "evidence": ["SRC_ENIT_Tourism_Data"], "confidence": 0.98 }
+        ]
+      },
+      "political_stability": {
+        "summary": "メローニ首相率いる右派連立政権は、高い支持率を維持しています。かつてのような頻繁な政権交代のリスクは低減していますが、連立パートナー（同盟、フォルツァ・イタリア）との調整が必要です。",
+        "key_actors": [
+           { "name": "ジョルジャ・メローニ", "role": "首相。現実路線への転換で国際的評価を高める。", "evidence": [] },
+           { "name": "Eni (エニ)", "role": "国策エネルギー企業。資源外交の先兵。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "北部（工業）と南部（農業・観光）の経済格差が根深い課題。復興・強靭化計画（NRRP）によるインフラ投資が進められています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:20:00+09:00",
+      "country_iso3": "UKR",
+      "country_name_ja": "ウクライナ",
+      "country_name_en": "Ukraine",
+      "confidence": { "overall": 0.75, "notes": "戦時下のためデータに制約あり。世界銀行、キーウ経済研究所、OSINT情報に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ロシアとの戦争は消耗戦の様相を呈しており、西側の支援継続が国家存続の絶対条件。防衛産業の国産化（ドローン、ミサイル）を急ピッチで進め、『欧州のイスラエル』モデルへの転換を図っています。",
+        "evidence": ["SRC_Kyiv_Security_Compact_Update", "SRC_Ukroboronprom_Production_Stats"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "EU加盟交渉が本格化しており、戦時下においても司法改革や汚職対策が進められていますが、占領された領土の奪還と復興資金の確保（凍結ロシア資産の活用）が最大の課題です。",
+        "evidence": ["SRC_EU_Accession_Report_Ukraine", "SRC_World_Bank_RDNA3"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "黒海回廊の独自確保により穀物輸出は回復傾向にありますが、港湾インフラへの攻撃リスクは消えておらず、物流の安定性は脆弱です。",
+        "evidence": ["SRC_Black_Sea_Grain_Corridor_Data", "SRC_Ministry_Infrastructure_Ukraine"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "欧州のパン籠としての農業力に加え、リチウム、チタン、ウランなどの重要鉱物が豊富ですが、多くが東部・南部の戦闘地域または占領下にあります。",
+        "notable_resources": [
+          { "name": "穀物・油糧種子", "role": "世界の食料安全保障を左右する。輸出ルート確保が至上命題。", "evidence": ["SRC_USDA_Ukraine_Outlook"], "confidence": 0.98 },
+          { "name": "クリティカル・ミネラル", "role": "欧州の資源自立に向けた潜在的供給源（リチウム、チタン）。", "evidence": ["SRC_USGS_Ukraine_Minerals"], "confidence": 0.85 },
+          { "name": "電力網・ガス貯蔵庫", "role": "欧州最大の地下ガス貯蔵能力を持ち、EUのエネルギー安全保障に寄与。", "evidence": ["SRC_Naftogaz_Storage_Capacity"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ゼレンスキー大統領の下で国民の結束は維持されていますが、長期化する戦争への疲弊や動員を巡る不満、政権内部の腐敗スキャンダルがリスク要因です。",
+        "key_actors": [
+           { "name": "ウォロディミル・ゼレンスキー", "role": "大統領。戦時指導者として国際社会への支援要請を継続。", "evidence": [] },
+           { "name": "ウクライナ軍", "role": "国民から最も信頼される組織。政治的独立性を維持。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "戦時経済。防衛費が予算の大半を占め、財政赤字は西側の直接財政支援で補填されています。インフラ復興需要が将来の成長エンジンとなる見込み。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:25:00+09:00",
+      "country_iso3": "RUS",
+      "country_name_ja": "ロシア連邦",
+      "country_name_en": "Russian Federation",
+      "confidence": { "overall": 0.7, "notes": "ロシア連邦統計局（Rosstat）のデータは偏りがあるため、西側推計や貿易相手国データを併用。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "軍需産業への巨額支出による『軍事ケインズ主義』がGDPを押し上げていますが、労働力不足とインフレが常態化し、民生経済の圧迫と中長期的な成長力の毀損が進行しています。",
+        "evidence": ["SRC_BOFIT_Russia_Forecast", "SRC_Central_Bank_Russia_Inflation"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "西側制裁への対抗策として『アジア・シフト』を加速させ、エネルギー輸出の対中・対印依存を深めるとともに、グローバル・サウスとの決済網（脱ドル化）構築を推進しています。",
+        "evidence": ["SRC_Gazprom_China_Exports", "SRC_BRICS_Pay_Initiative"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "プーチン体制は治安機関の統制強化と反体制派の排除により盤石に見えますが、エリート層内部の不満や、地方の財政難、兵士の犠牲拡大による社会的な疲弊が潜在的な不安定要因です。",
+        "evidence": ["SRC_Carnegie_Russia_Elite_Analysis", "SRC_Levada_Center_Polls"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界最大の天然ガス埋蔵量と広大な国土、豊富な鉱物資源を有しますが、西側の技術・資本へのアクセス遮断により、新規開発（LNG、北極圏開発）が停滞しています。",
+        "notable_resources": [
+          { "name": "石油・天然ガス", "role": "国家歳入の柱。シャドウ・フリート（影の船団）を利用した輸出を継続。", "evidence": ["SRC_CREA_Russia_Fossil_Tracker"], "confidence": 0.95 },
+          { "name": "濃縮ウラン・ニッケル", "role": "西側も制裁対象にしづらい戦略物資。市場への影響力を維持。", "evidence": ["SRC_WNA_Russia_Nuclear_Export"], "confidence": 0.9 },
+          { "name": "食料（小麦・肥料）", "role": "グローバル・サウスに対する外交カードとして利用。", "evidence": ["SRC_FAO_Russia_Grain_Export"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ウラジーミル・プーチン大統領による個人独裁体制が確立。後継者問題はタブー化されています。プリゴジンの乱のような突発的な武力反乱のリスクは低いものの、完全には排除できません。",
+        "key_actors": [
+           { "name": "ウラジーミル・プーチン", "role": "大統領。ウクライナでの勝利を至上命題とし、長期戦を覚悟。", "evidence": [] },
+           { "name": "シロヴィキ（治安・軍閥）", "role": "体制の中核。経済利権を掌握し、政治的影響力を増大。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "資源輸出依存型の戦時経済。輸入代替産業の育成を図っていますが、品質やコスト面で課題が多く、中国製品への依存が高まっています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:30:00+09:00",
+      "country_iso3": "NLD",
+      "country_name_ja": "オランダ",
+      "country_name_en": "Netherlands",
+      "confidence": { "overall": 0.92, "notes": "オランダ中央計画局（CPB）、ASML年次報告に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "世界最先端の半導体露光装置メーカーASMLを擁し、米国の対中輸出規制に同調しつつも自国産業の利益を守るため、複雑な経済安全保障外交を展開しています。",
+        "evidence": ["SRC_ASML_Export_Control_Impact", "SRC_Dutch_Gov_Semiconductor_Policy"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "環境規制（窒素排出削減）に対する農民の抗議運動が政治的な地殻変動を引き起こし、右派ポピュリズム政党（PVVなど）が連立政権内で影響力を行使し、EUのグリーン政策にブレーキをかけています。",
+        "evidence": ["SRC_Dutch_Election_Results_Analysis", "SRC_BBB_Party_Platform"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "欧州最大の港湾ロッテルダムをハブとした水素輸入・輸送インフラ（水素バックボーン）の整備を主導し、北西ヨーロッパのエネルギー転換の中心地を目指しています。",
+        "evidence": ["SRC_Port_of_Rotterdam_Hydrogen_Strategy", "SRC_Gasunie_Network_Plan"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "フローニンゲン・ガス田の閉鎖により天然ガス生産は終了。代わって洋上風力と水素インフラ、および高度な物流網が資源です。",
+        "notable_resources": [
+          { "name": "ASML（技術独占）", "role": "EUV露光装置の唯一のサプライヤー。世界の半導体ロードマップを左右する。", "evidence": ["SRC_TechInsights_Semi_Equipment"], "confidence": 0.99 },
+          { "name": "物流インフラ", "role": "欧州のゲートウェイ。麻薬密輸対策が治安上の課題。", "evidence": ["SRC_Eurostat_Freight_Transport"], "confidence": 0.95 }
+        ]
+      },
+      "political_stability": {
+        "summary": "政治的分断が進み、多党連立による政権運営が難航しやすくなっています。移民制限やEU懐疑主義の強まりが政策の予見可能性を低下させています。",
+        "key_actors": [
+           { "name": "ヘルト・ウィルダース", "role": "PVV党首。反移民・反イスラムを掲げ、政権の方針に強い影響を与える。", "evidence": [] },
+           { "name": "ASML", "role": "国益そのものとも言える企業。事業環境悪化なら海外移転も示唆し、政府に圧力をかける。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "貿易・物流・高付加価値農業・ハイテクが柱。住宅不足と労働力不足が経済成長のボトルネックです。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:35:00+09:00",
+      "country_iso3": "ESP",
+      "country_name_ja": "スペイン",
+      "country_name_en": "Kingdom of Spain",
+      "confidence": { "overall": 0.9, "notes": "スペイン銀行、INE（統計局）データに基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "豊富な太陽光・風力資源を活かし、欧州の『グリーン水素工場』としての地位を確立。フランス等へのパイプライン（H2Med）建設を推進し、エネルギー輸出国への転換を図っています。",
+        "evidence": ["SRC_H2Med_Project_Update", "SRC_Red_Electrica_Renewables_Data"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "コロナ禍からの観光業の回復が著しく、経済成長率はユーロ圏平均を上回っていますが、若年失業率の高止まりと住宅価格高騰が社会的な不満要因です。",
+        "evidence": ["SRC_Exceltur_Tourism_Report", "SRC_INE_Unemployment_Stats"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "カタルーニャ独立問題については、恩赦法成立など対話路線により緊張緩和が進んでいますが、右派勢力からの反発も強く、国内の分断要因として残っています。",
+        "evidence": ["SRC_El_Pais_Amnesty_Law_Impact", "SRC_CIS_Political_Barometer"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "欧州で最も高い日射量と広大な土地を有し、再エネコスト競争力で優位に立っています。LNG受入基地も多数保有し、欧州のガス供給の玄関口機能を果たしています。",
+        "notable_resources": [
+          { "name": "再生可能エネルギー", "role": "太陽光・風力が電力ミックスの過半を占める。産業誘致の呼び水。", "evidence": ["SRC_REE_Energy_Mix"], "confidence": 0.98 },
+          { "name": "観光産業", "role": "世界第2位の観光客受入数。経済の牽引役。", "evidence": ["SRC_UNWTO_Tourism_Ranking"], "confidence": 0.95 }
+        ]
+      },
+      "political_stability": {
+        "summary": "サンチェス首相（PSOE）による左派連立政権は、地域政党の協力に依存する不安定な基盤の上に成り立っています。議会運営は綱渡り状態です。",
+        "key_actors": [
+           { "name": "ペドロ・サンチェス", "role": "首相。巧みな政治手腕で政権を維持。国際的なプレゼンス向上に意欲。", "evidence": [] },
+           { "name": "国民党 (PP)", "role": "最大野党。政権奪還を目指し、政府の譲歩策を批判。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "サービス業中心だが、自動車産業（EV生産拠点化）や再エネ関連産業の育成により、産業構造の多角化を進めています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:40:00+09:00",
+      "country_iso3": "POL",
+      "country_name_ja": "ポーランド共和国",
+      "country_name_en": "Republic of Poland",
+      "confidence": { "overall": 0.9, "notes": "ポーランド国立銀行、国防省発表に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ロシアの脅威に対抗するため、GDP比4%超というNATO最高水準の防衛費を投じ、米国・韓国からの兵器調達と国内防衛産業の強化により『欧州最強の陸軍』を構築しています。",
+        "evidence": ["SRC_NATO_Defense_Expenditure_Report", "SRC_MON_Modernization_Plan"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "トゥスク政権の下でEUとの関係修復が進み、凍結されていた復興基金の解除によりインフラ投資やエネルギー転換（石炭から原子力・再エネへ）が加速しています。",
+        "evidence": ["SRC_EU_Commission_Rule_of_Law_Report", "SRC_PEP2040_Energy_Policy"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "ウクライナ支援の最重要拠点としての役割を果たしつつ、ウクライナ産農産物の流入や歴史認識問題を巡る二国間摩擦も抱える複雑な関係性を管理しています。",
+        "evidence": ["SRC_OSW_Poland_Ukraine_Relations", "SRC_Border_Trade_Data"],
+        "confidence": 0.9
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "欧州最大の石炭産出・消費国ですが、脱炭素に向けた圧力が強く、米国（Westinghouse）や韓国（KHNP）と協力して初の原子力発電所建設を進めています。",
+        "notable_resources": [
+          { "name": "石炭", "role": "エネルギー安全保障の基盤だが、段階的廃止へ向かう。", "evidence": ["SRC_ARP_Coal_Data"], "confidence": 0.95 },
+          { "name": "地政学的立地", "role": "NATO東方翼の要衝。米軍の恒久駐留拠点。", "evidence": ["SRC_US_Army_Garrison_Poland"], "confidence": 0.99 }
+        ]
+      },
+      "political_stability": {
+        "summary": "親EUのトゥスク政権と、前与党（PiS）の影響下にある大統領や司法機関との対立（コアビタシオン）が続いており、国内政治の分断は深いです。",
+        "key_actors": [
+           { "name": "ドナルド・トゥスク", "role": "首相。法の支配の回復とEU内での地位向上を主導。", "evidence": [] },
+           { "name": "アンジェイ・ドゥダ", "role": "大統領（PiS系）。政府法案への拒否権を行使し、保守派の砦となる。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "EU内でも高い経済成長率を維持。製造業のハブとして機能し、ITサービス等の輸出も拡大中ですが、労働力不足が課題です。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:45:00+09:00",
+      "country_iso3": "NOR",
+      "country_name_ja": "ノルウェー王国",
+      "country_name_en": "Kingdom of Norway",
+      "confidence": { "overall": 0.95, "notes": "ノルウェー石油局、Norges Bank（中央銀行）レポートに基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ロシア産ガスの供給途絶以降、欧州最大の天然ガス供給国としての役割を担い、大陸棚での探査・開発投資を継続することで、長期間にわたる欧州のエネルギー安全保障を支えています。",
+        "evidence": ["SRC_NPD_Shelf_Resource_Report", "SRC_Gassco_Export_Volumes"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "世界に先駆けて深海底鉱物資源（銅、コバルト、レアアース）の採掘を承認する議会決定を行い、環境保護団体の反対を押し切って新たな資源フロンティアの開拓に乗り出しました。",
+        "evidence": ["SRC_Stortinget_Seabed_Mining_Vote", "SRC_Deep_Sea_Resources_Assessment"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "世界最大のソブリン・ウエルス・ファンド（GPFG）を運用し、ポスト石油時代を見据えた再エネ・インフラ投資をグローバルに拡大しています。",
+        "evidence": ["SRC_NBIM_Annual_Report", "SRC_SWF_Asset_Allocation"],
+        "confidence": 0.99
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "石油・天然ガス、水力発電、水産物に恵まれた資源大国。電力のほぼ100%を水力で賄うため、EV普及率が世界一です。",
+        "notable_resources": [
+          { "name": "天然ガス", "role": "欧州のエネルギー危機を救った生命線。パイプラインで直結。", "evidence": ["SRC_Equinor_Gas_Strategy"], "confidence": 0.98 },
+          { "name": "海底鉱物資源", "role": "グリーン転換に必要な重要鉱物の潜在的供給源。", "evidence": ["SRC_NPD_Mineral_Resource_Estimates"], "confidence": 0.88 }
+        ]
+      },
+      "political_stability": {
+        "summary": "労働党主導の連立政権ですが、少数与党であり、政策決定には他党の協力が必要です。富裕税増税などによる富裕層の国外流出（スイス等へ）が議論を呼んでいます。",
+        "key_actors": [
+           { "name": "ヨーナス・ガール・ストーレ", "role": "首相。公平な分配と気候対策を掲げる。", "evidence": [] },
+           { "name": "Equinor (エクイノール)", "role": "国営エネルギー企業。石油ガスから洋上風力大手へ転換中。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "石油部門と本土経済の二重構造。石油収入をファンドに積み立て、財政規律を維持する「オランダ病」回避のモデルケース。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:50:00+09:00",
+      "country_iso3": "GRL",
+      "country_name_ja": "グリーンランド（デンマーク領）",
+      "country_name_en": "Greenland",
+      "confidence": { "overall": 0.8, "notes": "デンマーク・グリーンランド地質調査所（GEUS）、自治政府発表に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "気候変動による氷床融解により、世界最大級のレアアースやウラン鉱床へのアクセスが容易になり、米中欧による資源獲得競争と地政学的駆け引きの最前線となっています。",
+        "evidence": ["SRC_USGS_Greenland_Critical_Minerals", "SRC_Polar_Institute_Geopolitics"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "独立志向を持つ自治政府は、資源開発による経済的自立を目指していますが、環境保護や先住民の生活様式維持とのバランス、およびデンマークからの補助金依存脱却の道筋が課題です。",
+        "evidence": ["SRC_Naalakkersuisut_Mining_Strategy", "SRC_Independence_Commission_Work"],
+        "confidence": 0.88
+      },
+      {
+        "claim": "米国はチューレ空軍基地の維持や領事館開設など関与を強めており、北極圏の安全保障における戦略的要衝としての価値が再認識されています。",
+        "evidence": ["SRC_US_Arctic_Strategy", "SRC_Danish_Defense_Agreement_Arctic"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "手つかずの地下資源の宝庫。レアアース（クヴァネフィエルド等）は中国支配を崩す可能性を秘めています。",
+        "notable_resources": [
+          { "name": "レアアース・希土類", "role": "西側諸国にとって戦略的に極めて重要。開発には環境規制が壁。", "evidence": ["SRC_Energy_Transition_Minerals_Project"], "confidence": 0.95 },
+          { "name": "氷河・水資源", "role": "水力発電のポテンシャルに加え、砂や純水の輸出も検討。", "evidence": ["SRC_Greenland_Hydropower_Potential"], "confidence": 0.85 }
+        ]
+      },
+      "political_stability": {
+        "summary": "イヌイット・アタカチギット（IA）党を中心とする連立政権は、ウラン採掘禁止法を制定するなど環境重視姿勢ですが、経済発展圧力との板挟みにあります。",
+        "key_actors": [
+           { "name": "ムテ・B・エゲーデ", "role": "自治政府首相。環境保護と独立準備を両立させようとする。", "evidence": [] },
+           { "name": "デンマーク政府", "role": "外交・防衛権限を保持。グリーンランドの離反を防ぐべく投資を拡大。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "漁業（エビ・オヒョウ）が輸出の9割。デンマークからのブロック補助金がGDPの約2割を支える構造。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T18:55:00+09:00",
+      "country_iso3": "SRB",
+      "country_name_ja": "セルビア共和国",
+      "country_name_en": "Republic of Serbia",
+      "confidence": { "overall": 0.85, "notes": "セルビア統計局、EU進捗報告書に基づく。" }
+    },
+    "key_takeaways": [
+      {
+        "claim": "欧州最大級のリチウム鉱床（Jadarプロジェクト）の開発再開を決定し、EUのEVサプライチェーンにおける不可欠なパートナーとなることで、政治的な立場（対露制裁不参加など）を正当化しようとしています。",
+        "evidence": ["SRC_Rio_Tinto_Jadar_Update", "SRC_EU_Serbia_Critical_Raw_Materials_MoU"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "ブチッチ大統領は、EU加盟を目指しつつも、中国（インフラ投資・FTA）やロシア（ガス・政治的支援）との関係を維持する『全方位外交』を巧みに展開し、東西の狭間で利益を最大化しています。",
+        "evidence": ["SRC_Serbia_China_FTA_Impact", "SRC_Foreign_Policy_Analysis_Belgrade"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "コソボとの緊張関係は周期的​​に高まりを見せますが、経済的実利を優先する圧力（米欧からの投資）により、決定的な紛争再燃は回避されています。",
+        "evidence": ["SRC_EU_Dialogue_Belgrade_Pristina", "SRC_Security_Council_Kosovo_Report"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "西バルカン地域の経済エンジン。銅、金、そしてリチウムが戦略資源です。",
+        "notable_resources": [
+          { "name": "リチウム", "role": "欧州のバッテリー需要の相当部分を賄える埋蔵量。環境保護運動が開発の障壁。", "evidence": ["SRC_USGS_Lithium_Serbia"], "confidence": 0.95 },
+          { "name": "銅・金（ボール鉱山）", "role": "中国企業（紫金鉱業）が大規模投資を行い、生産を拡大。", "evidence": ["SRC_Zijin_Mining_Serbia_Report"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ブチッチ大統領と与党SNSによる支配体制（管理された民主主義）が続いています。メディア統制や選挙不正疑惑に対する批判はありますが、政権基盤は揺らいでいません。",
+        "key_actors": [
+           { "name": "アレクサンダル・ブチッチ", "role": "大統領。地域の安定の鍵を握るストロングマン。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "FDI（外国直接投資）主導の成長。製造業の拠点として欧州企業の進出が続く一方、インフラ整備は中国融資に依存。", "evidence": [] }
+    }
+  }
+]
