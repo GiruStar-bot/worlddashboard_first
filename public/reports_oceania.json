@@ -1,1 +1,248 @@
-
+[
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:00:00+09:00",
+      "country_iso3": "AUS",
+      "country_name_ja": "オーストラリア連邦",
+      "country_name_en": "Commonwealth of Australia",
+      "confidence": {
+        "overall": 0.95,
+        "notes": "オーストラリア統計局（ABS）、国防省（DoD）戦略見直し、資源エネルギー・観光省レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "AUKUS（米英豪安全保障枠組み）に基づく原子力潜水艦導入計画が実行段階に入り、西オーストラリア州のスターリング海軍基地拡張や国内産業基盤の育成が急ピッチで進んでいますが、巨額のコストと技術的人材不足が依然として課題です。",
+        "evidence": ["SRC_AUKUS_Submarine_Delivery_Plan", "SRC_Naval_Shipbuilding_Strategy"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "『クリティカル・ミネラル戦略2030』の下、リチウム、コバルト、レアアースの採掘から精錬までの国内一貫体制を強化し、中国への依存度を下げる西側諸国のサプライチェーン・ハブとしての地位を確立しました。",
+        "evidence": ["SRC_Critical_Minerals_Strategy_Update", "SRC_Resources_Energy_Quarterly"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "気候変動対策を巡り、石炭輸出の段階的縮小とグリーン水素輸出大国への転換（『再生可能エネルギー超大国』構想）を進めていますが、依然として化石燃料輸出が貿易黒字の柱であり、経済構造転換のジレンマを抱えています。",
+        "evidence": ["SRC_Clean_Energy_Finance_Corp_Report", "SRC_Coal_Export_Volume_Analysis"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界最大級のリチウム、鉄鉱石、金、ウランの生産国。太陽光・風力資源も豊富で、グリーン水素の製造コスト競争力は世界トップクラスです。",
+        "notable_resources": [
+          { "name": "リチウム", "role": "世界生産の約半分を占める。スポジュメン精鉱から水酸化リチウムへの高付加価値化を推進。", "evidence": ["SRC_USGS_Lithium_Australia"], "confidence": 0.98 },
+          { "name": "鉄鉱石", "role": "ピルバラ地域から中国等へ輸出。国家歳入の最大の柱。", "evidence": ["SRC_Rio_Tinto_Pilbara_Ops"], "confidence": 0.99 },
+          { "name": "グリーン水素", "role": "「サン・ケーブル」プロジェクトなど、アジア（シンガポール等）への再エネ輸出を計画。", "evidence": ["SRC_Sun_Cable_Project_Update"], "confidence": 0.9 }
+        ]
+      },
+      "political_stability": {
+        "summary": "労働党（ALP）政権による安定した運営が続いています。対中関係は「安定化」を目指しつつも、安全保障面での妥協はせず、硬軟織り交ぜた外交を展開しています。",
+        "key_actors": [
+           { "name": "アンソニー・アルバニージー", "role": "首相。気候変動対策と先住民の権利向上（ボイス国民投票後の対応）に注力。", "evidence": [] },
+           { "name": "ピーター・ダットン", "role": "自由党党首（野党）。原子力発電導入を主張し、エネルギー政策で対立軸を形成。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "資源輸出とサービス業（教育・観光）の二本柱。移民受け入れによる人口増が内需を支えていますが、住宅不足が深刻化しています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:05:00+09:00",
+      "country_iso3": "NZL",
+      "country_name_ja": "ニュージーランド",
+      "country_name_en": "New Zealand",
+      "confidence": {
+        "overall": 0.92,
+        "notes": "ニュージーランド統計局、財務省（The Treasury）経済財政報告に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "国民党主導の連立政権下で、独自の外交路線からAUKUS第2の柱（先端技術協力）への参加検討を含む対米・対豪連携強化へと舵を切り、太平洋地域における安全保障上の役割を拡大させています。",
+        "evidence": ["SRC_NZ_Defense_Policy_Review", "SRC_AUKUS_Pillar_Two_Statement"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "主力産業である農業（乳製品・食肉）において、気候変動による異常気象への適応と、生物起源メタン排出削減（農業排出への課税議論）の両立が喫緊の課題となり、生産性と環境保護のバランスに苦慮しています。",
+        "evidence": ["SRC_Fonterra_Sustainability_Report", "SRC_MPI_Agriculture_Export_Outlook"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "マオリ先住民の権利（ワイタンギ条約）を巡る解釈見直し議論が社会的な分断を招いており、抗議活動の活発化が内政の不安定要因となっています。",
+        "evidence": ["SRC_Waitangi_Tribunal_Reports", "SRC_RNZ_Political_Analysis"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "豊かな水資源と地熱エネルギーにより、電力の8割以上を再エネで賄っています。農業生産に適した気候と土壌が最大の富の源泉です。",
+        "notable_resources": [
+          { "name": "乳製品（フォンテラ）", "role": "「白い金」。世界輸出の約3割を占め、中国市場への依存度が高い。", "evidence": ["SRC_Global_Dairy_Trade_Data"], "confidence": 0.98 },
+          { "name": "再生可能エネルギー", "role": "地熱・水力・風力。100%再エネ達成（2030年目標）に向けた投資が継続。", "evidence": ["SRC_MBIE_Energy_Quarterly"], "confidence": 0.95 }
+        ]
+      },
+      "political_stability": {
+        "summary": "クリストファー・ラクソン首相率いる中道右派連立政権（国民党、ACT党、NZファースト党）。政策の調整に時間を要する場面が見られます。",
+        "key_actors": [
+           { "name": "クリストファー・ラクソン", "role": "首相。元航空会社CEO。経済効率化とインフレ抑制を掲げる。", "evidence": [] },
+           { "name": "ウィンストン・ピーターズ", "role": "外相兼副首相。対中警戒感を隠さず、伝統的な西側同盟回帰を主導。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "第一次産業依存型先進国。観光業の完全回復が経済を下支えしていますが、生産性の低さが長年の課題です。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:10:00+09:00",
+      "country_iso3": "PNG",
+      "country_name_ja": "パプアニューギニア独立国",
+      "country_name_en": "Independent State of Papua New Guinea",
+      "confidence": {
+        "overall": 0.8,
+        "notes": "パプアニューギニア中央銀行、世界銀行、現地資源開発企業（ExxonMobil, TotalEnergies）レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "米国およびオーストラリアとの防衛協力協定（DCA）を締結し、マヌス島などの港湾・基地の共同利用を進めることで、中国の太平洋進出に対する防波堤としての戦略的重要性が高まっています。",
+        "evidence": ["SRC_US_PNG_DCA_Implementation", "SRC_Lowy_Institute_Pacific_Security"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "『パプアLNG』プロジェクトなどの大型ガス開発が進行中ですが、土地所有権を巡る部族間紛争や治安悪化（暴動の頻発）がプロジェクトの遅延リスクとなり、投資環境の不透明感を招いています。",
+        "evidence": ["SRC_Papua_LNG_FID_Status", "SRC_Port_Moresby_Security_Alerts"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "マラペ政権は『黒いキリスト教国』としてのアイデンティティを強調しつつ、資源ナショナリズム（ポルゲラ金鉱山の再交渉など）を通じて国益の最大化を図っていますが、ガバナンスの欠如が課題です。",
+        "evidence": ["SRC_Porgera_Mine_Restart_Agreement", "SRC_Transparency_International_PNG"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "金、銅、ニッケル、石油、天然ガスが豊富。未開発の資源が多く残されており、地政学的な争奪戦の対象となっています。",
+        "notable_resources": [
+          { "name": "LNG（液化天然ガス）", "role": "PNGLNGプロジェクト等。アジア市場への供給源として重要。", "evidence": ["SRC_Kumul_Petroleum_Report"], "confidence": 0.95 },
+          { "name": "金・銅", "role": "ポルゲラ、オク・テディなどの大規模鉱山。地域経済の柱。", "evidence": ["SRC_MRA_PNG_Mining_Data"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ジェームズ・マラペ首相による連立政権。議会内での不信任決議案提出が常態化しており、政権基盤は常に流動的です。ハイランド地方での部族闘争が深刻化しています。",
+        "key_actors": [
+           { "name": "ジェームズ・マラペ", "role": "首相。「世界一豊かな黒人キリスト教国」をスローガンに掲げる。", "evidence": [] },
+           { "name": "中国", "role": "インフラ投資と貿易を通じて経済的影響力を拡大。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "資源セクターと自給自足的農業の二重構造。若年失業率が高く、都市部での社会不安の要因となっています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:15:00+09:00",
+      "country_iso3": "SLB",
+      "country_name_ja": "ソロモン諸島",
+      "country_name_en": "Solomon Islands",
+      "confidence": {
+        "overall": 0.75,
+        "notes": "ソロモン諸島中央銀行、太平洋諸島フォーラム（PIF）報告書に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "中国との安全保障協定に基づき、中国警察の駐留や港湾インフラ整備が進んでおり、オーストラリアを中心とする従来の地域秩序に対する最大の挑戦者となっています。",
+        "evidence": ["SRC_China_Solomon_Policing_Plan", "SRC_Honiara_Port_Upgrade"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "2024年の総選挙後も親中路線を維持する政権が続いていますが、マライタ州など一部地域での反中感情や、経済発展の恩恵が行き渡らないことへの不満が潜在的な火種です。",
+        "evidence": ["SRC_Solomon_Election_Results_2024", "SRC_Malaita_Province_Stance"],
+        "confidence": 0.88
+      },
+      {
+        "claim": "主要輸出品である丸太（木材）資源の枯渇が迫っており、持続可能な産業への転換（観光、漁業、鉱業）が急務ですが、インフラ不足と人材不足が障壁となっています。",
+        "evidence": ["SRC_CBSI_Forestry_Decline_Warning", "SRC_World_Bank_Solomon_Economic_Update"],
+        "confidence": 0.9
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "熱帯雨林（木材）と水産資源（カツオ・マグロ）。未開発のニッケルやボーキサイト鉱床に関心が集まっています。",
+        "notable_resources": [
+          { "name": "木材（丸太）", "role": "輸出の6割以上を占めるが、乱伐により数年以内の枯渇が予測される。", "evidence": ["SRC_Global_Witness_Solomon_Logging"], "confidence": 0.95 },
+          { "name": "ニッケル", "role": "中国企業が開発に関心。環境汚染への懸念もある。", "evidence": ["SRC_Isabel_Nickel_Project"], "confidence": 0.85 }
+        ]
+      },
+      "political_stability": {
+        "summary": "エレミア・マネレ首相（または現職）の下、対中傾斜政策を継続。外交政策を巡る国内分断が激しく、2021年のような暴動再発のリスクがあります。",
+        "key_actors": [
+           { "name": "ソロモン諸島首相", "role": "「北を見て（Look North）」政策により中国との関係を深める。", "evidence": [] },
+           { "name": "マナセ・ソガバレ（前首相）", "role": "政界の実力者として依然影響力を持つ。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "木材輸出とドナー支援に依存。中国からの借款によるスタジアムやインフラ建設が経済活動を一時的に押し上げています。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:20:00+09:00",
+      "country_iso3": "TLS",
+      "country_name_ja": "東ティモール民主共和国",
+      "country_name_en": "Democratic Republic of Timor-Leste",
+      "confidence": {
+        "overall": 0.8,
+        "notes": "東ティモール財務省、石油基金（Petroleum Fund）年次報告、ASEAN事務局情報に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ASEANへの正式加盟プロセスが最終段階に入り、東南アジア経済圏への統合と政治的安定の確保を目指していますが、加盟に伴う制度整備や人的リソースの不足が課題です。",
+        "evidence": ["SRC_ASEAN_Timor_Leste_Roadmap", "SRC_Dili_Accession_Preparations"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "国家財政の生命線である『グレーター・サンライズ』ガス田の開発を巡り、パイプラインの陸揚げ先（豪州ダーウィンかティモール南部か）でオーストラリア・ウッドサイド社との交渉が難航しており、財政の崖（石油基金の枯渇）が現実味を帯びています。",
+        "evidence": ["SRC_Greater_Sunrise_Negotiation_Status", "SRC_Timor_Gap_Analysis"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "独立の英雄シャナナ・グスマン首相の下で安定を維持していますが、建国の父たちの高齢化に伴う世代交代の失敗が、将来的な政治空白のリスクとして懸念されています。",
+        "evidence": ["SRC_Lusa_Political_Report", "SRC_Crisis_Group_Timor_Transition"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "バユ・ウンダンガス田の生産終了に伴い、新たな収益源の確保が至上命題。コーヒーが非石油部門の主要輸出品です。",
+        "notable_resources": [
+          { "name": "石油・天然ガス", "role": "石油基金（SWF）の原資。GDPの大部分を支えるが、枯渇リスクに直面。", "evidence": ["SRC_Petroleum_Fund_Balance"], "confidence": 0.98 },
+          { "name": "コーヒー", "role": "オーガニック・フェアトレード市場で評価されるが、経済規模は小さい。", "evidence": ["SRC_Coffee_Association_Timor"], "confidence": 0.9 }
+        ]
+      },
+      "political_stability": {
+        "summary": "シャナナ・グスマン（CNRT）とフレティリン党の対立軸で政治が動いていますが、民主的な選挙プロセスは定着しています。大統領（ラモス＝ホルタ）が調停役として機能。",
+        "key_actors": [
+           { "name": "シャナナ・グスマン", "role": "首相。国民的英雄。ガス田開発を「第二の独立闘争」と位置づける。", "evidence": [] },
+           { "name": "ジョゼ・ラモス＝ホルタ", "role": "大統領。ノーベル平和賞受賞者。国際社会への発信を担う。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "石油基金の取り崩しに依存する公的支出主導型経済。民間セクターの育成と経済多角化（観光、農業）が進んでいません。"
+      }
+    }
+  }
+]
