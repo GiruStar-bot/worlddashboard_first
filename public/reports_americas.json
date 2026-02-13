@@ -1,1 +1,709 @@
-
+[
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:00:00+09:00",
+      "country_iso3": "USA",
+      "country_name_ja": "アメリカ合衆国",
+      "country_name_en": "United States of America",
+      "confidence": {
+        "overall": 0.95,
+        "notes": "米国商務省、国防総省、議会予算局（CBO）の2026年度報告書に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "2024年大統領選後の新政権下でも『アメリカ・ファースト』的な産業政策は継続・強化されており、CHIPS法やIRA（インフレ抑制法）に基づく国内投資が結実し、半導体・クリーンエネルギー分野での製造回帰が進んでいます。",
+        "evidence": ["SRC_DOC_Chips_Act_Impact_Report", "SRC_White_House_Industrial_Strategy"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "対中競争における優位性確保が国家戦略の核心であり、先端技術（AI、量子、バイオ）の輸出管理強化と、同盟国を巻き込んだ供給網のデカップリング（またはデリスク）を強硬に推し進めています。",
+        "evidence": ["SRC_BIS_Export_Control_Update", "SRC_Select_Committee_on_CCP"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "国内の政治的分断は依然として深く、連邦債務上限問題や南部国境の移民対策を巡る議会の膠着が、長期的な財政規律と社会的安定のリスク要因となっています。",
+        "evidence": ["SRC_CBO_Budget_Outlook", "SRC_Pew_Research_Political_Polarization"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界最大の原油・天然ガス生産国であり、食料自給率も極めて高い『資源超大国』です。レアアース等の重要鉱物の国内回帰を進めています。",
+        "notable_resources": [
+          { "name": "シェールオイル・ガス", "role": "世界最大のエネルギー生産能力。LNG輸出を通じて欧州・アジアの安保に関与。", "evidence": ["SRC_EIA_Energy_Outlook"], "confidence": 0.99 },
+          { "name": "イノベーション・エコシステム", "role": "シリコンバレー等の大学・企業連携が生む圧倒的な技術開発力。", "evidence": ["SRC_NSF_Science_Engineering_Indicators"], "confidence": 0.98 },
+          { "name": "農産物（大豆・トウモロコシ）", "role": "世界の食料庫。気候変動による干ばつリスクへの適応が課題。", "evidence": ["SRC_USDA_Crop_Production"], "confidence": 0.95 }
+        ]
+      },
+      "political_stability": {
+        "summary": "制度的な安定性は高いものの、選挙制度や司法判断を巡る党派対立が激化。連邦政府と州政府（特にテキサスやフロリダなど）の対立が先鋭化しています。",
+        "key_actors": [
+           { "name": "米国大統領", "role": "行政権の長。内向きの保護主義とグローバルな覇権維持のバランスに腐心。", "evidence": [] },
+           { "name": "連邦議会", "role": "予算権限を持つが、ねじれ現象やフリーダム・コーカス等の強硬派により機能不全に陥りやすい。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "消費主導型の巨大経済。AI主導の生産性向上と、脱炭素投資によるグリーン経済への移行が成長ドライバー。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:05:00+09:00",
+      "country_iso3": "CAN",
+      "country_name_ja": "カナダ",
+      "country_name_en": "Canada",
+      "confidence": {
+        "overall": 0.92,
+        "notes": "カナダ統計局、天然資源省のクリティカル・ミネラル戦略に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "『重要鉱物戦略』を加速させ、EVサプライチェーンにおける米国の戦略的パートナーとしての地位を確立。オンタリオ州やケベック州でのバッテリー工場建設ラッシュが続いています。",
+        "evidence": ["SRC_NRCan_Critical_Minerals_Strategy", "SRC_Automotive_Investment_Update"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "記録的な移民受け入れによる人口増加が経済成長を支える一方、住宅不足と医療システムの逼迫が深刻な社会問題化し、移民政策の厳格化へと舵を切り始めています。",
+        "evidence": ["SRC_StatCan_Population_Growth", "SRC_CMHC_Housing_Report"],
+        "confidence": 0.9 },
+      {
+        "claim": "北極圏の氷解に伴う航路・資源開発の可能性と、ロシア・中国の進出に対抗するため、NORAD（北米航空宇宙防衛司令部）の近代化と北極防衛への投資を大幅に増額しています。",
+        "evidence": ["SRC_DND_Defense_Policy_Update", "SRC_Arctic_Security_Assessment"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "エネルギー（石油サンド）、鉱物（カリウム、ウラン、ニッケル）、森林、水資源の宝庫。G7で最も資源リッチな国の一つ。",
+        "notable_resources": [
+          { "name": "重要鉱物（ニッケル・リチウム）", "role": "北米のEVバリューチェーンの源流。ESG基準の高さが強み。", "evidence": ["SRC_Mining_Association_Canada"], "confidence": 0.95 },
+          { "name": "石油・天然ガス", "role": "アルバータ州のオイルサンド。Trans Mountainパイプライン拡張によりアジア輸出を拡大。", "evidence": ["SRC_CAPP_Oil_Forecast"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "自由党政権の長期化による疲弊と、保守党の台頭により、炭素税などの環境政策を巡る分断が深まっています。ケベック州の独自性も依然として政治的変数です。",
+        "key_actors": [
+           { "name": "カナダ首相", "role": "気候変動対策と経済成長の両立を目指すが、支持率は低下傾向。", "evidence": [] },
+           { "name": "州首相連合", "role": "連邦政府の権限拡大に抵抗し、資源開発の主導権を主張。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "資源輸出と不動産・金融が柱。生産性の伸び悩みが長年の課題。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:10:00+09:00",
+      "country_iso3": "MEX",
+      "country_name_ja": "メキシコ合衆国",
+      "country_name_en": "United Mexican States",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "メキシコ銀行、INEGI（統計地理情報院）、USMCAレビュー報告に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "シェインバウム政権下で『ニアショアリング』ブームが加速し、中国企業の迂回生産拠点および米国企業の近接生産拠点として、北部国境地帯を中心に製造業への外国投資が過去最高水準で推移しています。",
+        "evidence": ["SRC_Secretariat_Economy_FDI_Data", "SRC_Banxico_Regional_Report"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "エネルギー政策において、前政権の国家主義的な路線を修正しつつも、再エネ分野への民間参入には慎重な姿勢を維持しており、電力供給不足が産業成長のボトルネックとなるリスクがあります。",
+        "evidence": ["SRC_CFE_Energy_Plan_2026", "SRC_IMCO_Competitiveness_Index"],
+        "confidence": 0.88
+      },
+      {
+        "claim": "麻薬カルテルの支配地域拡大と治安悪化が依然として深刻で、フェンタニル密輸対策を巡る米国との緊張関係や、物流ルートの安全確保が経済活動のコスト要因となっています。",
+        "evidence": ["SRC_SESNSP_Crime_Statistics", "SRC_DEA_Drug_Threat_Assessment"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "銀の世界最大生産国であり、石油、銅、リチウム（国有化）も保有。豊富な若年労働力と米国へのアクセスが最大の資産。",
+        "notable_resources": [
+          { "name": "製造業基盤（マキラドーラ）", "role": "自動車、航空宇宙、家電の輸出拠点。USMCAによる無関税アクセス。", "evidence": ["SRC_AMIA_Auto_Production"], "confidence": 0.98 },
+          { "name": "リチウム（ソノラ州）", "role": "国有企業LitioMxが管理するが、技術・資金不足で開発は遅延。", "evidence": ["SRC_LitioMx_Status_Report"], "confidence": 0.85 }
+        ]
+      },
+      "political_stability": {
+        "summary": "MORENA（国家再生運動）による支配が強固。シェインバウム大統領はロペス・オブラードル路線の継承と独自の科学的アプローチのバランスを模索。",
+        "key_actors": [
+           { "name": "クラウディア・シェインバウム", "role": "大統領。初の女性大統領。環境・エネルギー政策の転換を期待される。", "evidence": [] },
+           { "name": "麻薬カルテル（シナロア、CJNG）", "role": "事実上の並行権力として一部地域を支配。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "対米輸出依存度が極めて高い（約80%）。送金（レメサス）がGDPの重要な支え。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:15:00+09:00",
+      "country_iso3": "CUB",
+      "country_name_ja": "キューバ共和国",
+      "country_name_en": "Republic of Cuba",
+      "confidence": {
+        "overall": 0.75,
+        "notes": "独立メディア（El Toque等）、国連機関、在外キューバ人コミュニティ情報に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "経済危機が『特別時期』を超えるレベルで深刻化し、電力不足、食料・燃料の欠乏が常態化。政府は中小企業（MIPYMES）の容認など部分的改革を進めていますが、体制の硬直性が回復を阻んでいます。",
+        "evidence": ["SRC_ONEI_Economic_Indicators", "SRC_Havana_Times_Crisis_Report"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "過去最大規模の国民の国外流出（エクソダス）が続き、労働力人口の減少と高齢化が加速。社会保障制度の崩壊危機に直面しています。",
+        "evidence": ["SRC_US_CBP_Migration_Data", "SRC_Demographic_Study_Cuba"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "米国からの制裁継続を受け、ロシアや中国との軍事・経済協力を強化し、スパイ基地疑惑や海軍寄港など、地政学的な対立の最前線としての色彩を強めています。",
+        "evidence": ["SRC_Russia_Cuba_Trade_Agreements", "SRC_WSJ_China_Spy_Base_Report"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "ニッケルとコバルトの世界有数の埋蔵量を有しますが、設備老朽化で生産は低迷。観光資源（ビーチ、文化）が唯一の外貨獲得の柱。",
+        "notable_resources": [
+          { "name": "ニッケル・コバルト", "role": "中国との合弁で生産。EV需要で潜在価値は高い。", "evidence": ["SRC_Sherritt_International_Report"], "confidence": 0.9 },
+          { "name": "医療団派遣", "role": "医師・看護師の海外派遣によるサービス輸出。人権問題としての批判もある。", "evidence": ["SRC_Cuban_Medical_Missions_Data"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "共産党一党独裁。ディアス＝カネル政権に対する国民の不満は限界に達しており、2021年のような散発的な抗議デモが発生するリスクが高い。",
+        "key_actors": [
+           { "name": "ミゲル・ディアス＝カネル", "role": "大統領。カストロ兄弟後の指導者だが、カリスマ性と実績に欠ける。", "evidence": [] },
+           { "name": "軍部（GAESA）", "role": "観光業など経済の主要部門を支配する複合企業体。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "輸入依存の配給経済。観光と送金、医療サービス輸出に依存する脆弱な構造。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:20:00+09:00",
+      "country_iso3": "HTI",
+      "country_name_ja": "ハイチ共和国",
+      "country_name_en": "Republic of Haiti",
+      "confidence": {
+        "overall": 0.6,
+        "notes": "国連BINUH、人道支援団体、現地ジャーナリストの報告に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "多国籍治安支援部隊（MSS）の展開後も、首都ポルトープランスの大部分をギャング連合（G9等）が支配しており、国家機能の麻痺と人道危機が継続しています。",
+        "evidence": ["SRC_UN_Security_Council_Haiti_Report", "SRC_Gang_Control_Map"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "暫定統治評議会による選挙実施の試みは治安悪化により遅延しており、民主的な正統性を持つ政府の不在が、国際支援の適正な配分と復興を妨げています。",
+        "evidence": ["SRC_Transition_Council_Roadmap", "SRC_Electoral_Timetable_Delay"],
+        "confidence": 0.9 },
+      {
+        "claim": "極度の貧困と暴力から逃れるためのボートピープルやドミニカ国境への避難民が増加し、カリブ海地域の不安定要因となっています。",
+        "evidence": ["SRC_IOM_Displacement_Data", "SRC_Dominican_Border_Closure"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "天然資源は乏しく、森林破壊による環境劣化が深刻。農業（ベチバー、マンゴー）がわずかな輸出源。",
+        "notable_resources": [
+          { "name": "ベチバー（香料原料）", "role": "世界最大の生産国。高級香水に使用される。", "evidence": ["SRC_Haiti_Vetiver_Industry"], "confidence": 0.9 },
+          { "name": "繊維産業（Caracol）", "role": "米国の優遇税制（HOPE/HELP法）を活用した組立産業だが、治安悪化で縮小。", "evidence": ["SRC_Garment_Industry_Status"], "confidence": 0.88 }
+        ]
+      },
+      "political_stability": {
+        "summary": "事実上の無政府状態に近い。ギャングリーダー（バーベキュー等）が政治的発言力を持ち、政治家との癒着構造も指摘される。",
+        "key_actors": [
+           { "name": "ジミー・シェリジエ（バーベキュー）", "role": "ギャング連合G9のリーダー。事実上の地域支配者。", "evidence": [] },
+           { "name": "暫定統治評議会", "role": "国際社会の支援を受けて発足したが、実行力は限定的。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "海外送金（GDPの約3割）と人道支援に依存するサバイバル経済。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:25:00+09:00",
+      "country_iso3": "DOM",
+      "country_name_ja": "ドミニカ共和国",
+      "country_name_en": "Dominican Republic",
+      "confidence": {
+        "overall": 0.88,
+        "notes": "ドミニカ共和国中央銀行、世界銀行レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "カリブ海地域で最も高い経済成長率を維持し、政治的安定と親ビジネス環境を背景に、観光業、フリーゾーン（医療機器・電子部品）、物流ハブへの投資が拡大しています。",
+        "evidence": ["SRC_Central_Bank_DR_Growth_Stats", "SRC_FDI_Dominican_Republic"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "隣国ハイチの危機的状況を受け、国境の壁建設と不法移民の強制送還を強化しており、国際人権団体からの批判を受けつつも、国内の治安維持と『ドミニカ人の主権』を優先する政策を堅持しています。",
+        "evidence": ["SRC_Border_Wall_Progress", "SRC_Migration_Policy_Review"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "再生可能エネルギーへの投資を加速させ、電力セクターの改革（配電損失の削減）を進めることで、エネルギーコストの低減と競争力強化を図っています。",
+        "evidence": ["SRC_Energy_Pact_Implementation", "SRC_Renewable_Energy_Projects"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界有数の金鉱山（プエブロ・ビエホ）とニッケル資源。カリブ海随一の観光資源と肥沃な農地。",
+        "notable_resources": [
+          { "name": "金（Gold）", "role": "主要輸出品目。Barrick Goldが操業。", "evidence": ["SRC_DGM_Mining_Stats"], "confidence": 0.95 },
+          { "name": "観光インフラ", "role": "プンタ・カナを中心としたオールインクルーシブ・リゾート群。", "evidence": ["SRC_Tourism_Ministry_Arrivals"], "confidence": 0.98 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ルイス・アビナデル大統領（PRM）の再選により、安定した政権運営が継続。汚職対策と経済成長を両輪とする。",
+        "key_actors": [
+           { "name": "ルイス・アビナデル", "role": "大統領。ハイチ問題で強硬姿勢を取り、国民の支持を固める。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "観光、フリーゾーン、送金、鉱業の多角化された経済。中米・カリブ地域の経済優等生。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:30:00+09:00",
+      "country_iso3": "JAM",
+      "country_name_ja": "ジャマイカ",
+      "country_name_en": "Jamaica",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "ジャマイカ銀行、計画研究所（PIOJ）データに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "長年の財政再建努力が実を結び、公的債務比率が大幅に低下。マクロ経済の安定化により、インフラ整備や社会プログラムへの投資余力が生まれています。",
+        "evidence": ["SRC_IMF_Jamaica_Success_Story", "SRC_Debt_to_GDP_Ratio"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "高い犯罪率（殺人発生率）が経済成長と社会安定の最大の阻害要因であり、政府は非常事態宣言の頻発や警察改革を行っていますが、抜本的な解決には至っていません。",
+        "evidence": ["SRC_JCF_Crime_Statistics", "SRC_National_Security_Strategy"],
+        "confidence": 0.9 },
+      {
+        "claim": "『物流ハブ・イニシアティブ』に基づき、パナマ運河に近い立地を活かした港湾・経済特区の開発を進め、観光一本足からの産業多角化を目指しています。",
+        "evidence": ["SRC_Logistics_Hub_Master_Plan", "SRC_Kingston_Wharves_Expansion"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "高品質なボーキサイト・アルミナと、世界的に有名なブランド力を持つ観光・文化資源（レゲエ、ブルーマウンテンコーヒー）。",
+        "notable_resources": [
+          { "name": "ボーキサイト・アルミナ", "role": "伝統的な輸出産業。エネルギーコスト高が精錬の課題。", "evidence": ["SRC_Jamaica_Bauxite_Institute"], "confidence": 0.95 },
+          { "name": "文化ブランド力", "role": "音楽、スポーツ、食文化を通じた強力なソフトパワー。", "evidence": ["SRC_Brand_Jamaica_Value"], "confidence": 0.98 }
+        ]
+      },
+      "political_stability": {
+        "summary": "二大政党制（JLPとPNP）による民主主義が定着。アンドリュー・ホルネス首相（JLP）の下で共和制移行（英連邦王国からの離脱）の議論が進行中。",
+        "key_actors": [
+           { "name": "アンドリュー・ホルネス", "role": "首相。インフラ開発と治安対策を重視。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "サービス経済（観光・金融）。高い非正規雇用率とスキルミスマッチが課題。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:35:00+09:00",
+      "country_iso3": "BHS",
+      "country_name_ja": "バハマ国",
+      "country_name_en": "Commonwealth of the Bahamas",
+      "confidence": {
+        "overall": 0.88,
+        "notes": "バハマ中央銀行、気候変動リスク評価レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "気候変動による海面上昇とハリケーンの激甚化が国家存亡の危機となっており、気候ファイナンスの確保とインフラの強靭化が最優先の国家戦略です。",
+        "evidence": ["SRC_Climate_Change_Adaptation_Plan", "SRC_Hurricane_Dorian_Recovery_Review"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "観光業がGDPの半分以上を占める構造からの脱却を図り、ブルーエコノミー（海洋資源活用）やデジタル資産ハブ（FTX破綻後の規制強化を経て）としての再構築を模索しています。",
+        "evidence": ["SRC_Blue_Economy_Strategy", "SRC_DARE_Act_Regulations"],
+        "confidence": 0.9 },
+      {
+        "claim": "中国によるインフラ投資（港湾、リゾート）が増加しており、米国の近海における中国の影響力拡大として、米国の警戒感が高まっています。",
+        "evidence": ["SRC_China_Bahamas_Investment", "SRC_US_Embassy_Security_Alerts"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "美しい海洋環境とサンゴ礁が最大の資源。金融サービスのためのタックスヘイブンとしての制度的資源。",
+        "notable_resources": [
+          { "name": "海洋観光資源", "role": "クルーズ船の主要寄港地。高級リゾート。", "evidence": ["SRC_Tourism_Development_Corp"], "confidence": 0.98 },
+          { "name": "金融オフショア機能", "role": "富裕層向けの資産管理・信託サービス。", "evidence": ["SRC_BFSB_Industry_Report"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "安定した議会制民主主義。二大政党（PLPとFNM）が政権交代を繰り返す。",
+        "key_actors": [
+           { "name": "フィリップ・デイビス", "role": "首相。気候変動問題で小島嶼国のリーダー的役割を果たす。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "高所得国だが所得格差が大きい。観光と金融の二重構造。食料・エネルギーの輸入依存度が高い。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:40:00+09:00",
+      "country_iso3": "GTM",
+      "country_name_ja": "グアテマラ共和国",
+      "country_name_en": "Republic of Guatemala",
+      "confidence": {
+        "overall": 0.82,
+        "notes": "グアテマラ銀行、国際透明性機構、米国務省レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "アレバロ政権の発足により、長年続いた組織的な汚職構造（『腐敗の盟約』）への対抗が試みられていますが、司法や検察に残る旧体制派との激しい権力闘争が改革を阻んでいます。",
+        "evidence": ["SRC_Arevalo_Anti_Corruption_Agenda", "SRC_MP_Actions_Against_Government"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "中米最大の経済規模を持ちますが、農村部の貧困と食料不安が深刻で、米国への不法移民の主要な送出国となっており、根本的な開発課題の解決が急務です。",
+        "evidence": ["SRC_USAID_Guatemala_Migration_Root_Causes", "SRC_Food_Insecurity_Index"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "台湾との外交関係を維持する数少ない国の一つとして、中国からの経済的誘惑と米国・台湾からの支援の間で、外交的な綱引きの舞台となっています。",
+        "evidence": ["SRC_Taiwan_Guatemala_Cooperation", "SRC_China_Trade_Influence_Central_America"],
+        "confidence": 0.9 }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "肥沃な火山灰土壌による農業資源と、ニッケルなどの鉱物資源。マヤ遺跡などの観光資源。",
+        "notable_resources": [
+          { "name": "農産物（コーヒー・砂糖・バナナ）", "role": "主要輸出品。気候変動（さび病、干ばつ）の影響を受けやすい。", "evidence": ["SRC_Agexport_Data"], "confidence": 0.95 },
+          { "name": "ニッケル（フェニックス鉱山）", "role": "ロシア・スイス系企業による開発。環境汚染を巡る先住民との対立。", "evidence": ["SRC_Extractive_Industries_Report"], "confidence": 0.88 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ベルナルド・アレバロ大統領（セミージャ運動）は民主主義の回復を目指すが、議会での基盤は弱く、司法クーデターのリスクと常に隣り合わせ。",
+        "key_actors": [
+           { "name": "ベルナルド・アレバロ", "role": "大統領。反腐敗を掲げる改革派。", "evidence": [] },
+           { "name": "コンスエロ・ポラス", "role": "検事総長。旧体制派の守護者として大統領と対立。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "海外送金（GDPの約2割）が消費を支える構造。極端な富の偏在と低い税収比率。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:45:00+09:00",
+      "country_iso3": "HND",
+      "country_name_ja": "ホンジュラス共和国",
+      "country_name_en": "Republic of Honduras",
+      "confidence": {
+        "overall": 0.8,
+        "notes": "ホンジュラス中央銀行、人権団体レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "カストロ政権による台湾断交・中国国交樹立後、巨大インフラ投資（鉄道、ダム）への期待が高まりましたが、実際のプロジェクト進捗は遅く、対米関係の悪化による経済的デメリット（FTAの見直し懸念等）も浮上しています。",
+        "evidence": ["SRC_China_Honduras_FTA_Negotiations", "SRC_US_Honduras_Relations_Review"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "エルサルバドルに倣った『例外状態』によるギャング掃討作戦を展開していますが、人権侵害への批判とともに、治安改善の実感と法の支配の悪化というジレンマに直面しています。",
+        "evidence": ["SRC_State_of_Exception_Impact", "SRC_Human_Rights_Watch_Honduras"],
+        "confidence": 0.88
+      },
+      {
+        "claim": "エネルギー危機の常態化（停電頻発）が経済活動を阻害しており、電力セクターの国営化強化と再建が政権の最重要課題となっています。",
+        "evidence": ["SRC_ENEE_Crisis_Plan", "SRC_Private_Sector_Energy_Complaints"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "繊維産業（マキラドーラ）と農業（コーヒー、バナナ、パーム油）。水力発電のポテンシャル。",
+        "notable_resources": [
+          { "name": "繊維・アパレル", "role": "米国向け輸出の主力。雇用創出源。", "evidence": ["SRC_Maquila_Industry_Association"], "confidence": 0.95 },
+          { "name": "コーヒー", "role": "中米最大の生産国。小規模農家が多く、価格変動に脆弱。", "evidence": ["SRC_IHCAFE_Report"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "シオマラ・カストロ大統領（LIBRE）は、夫であるセラヤ元大統領の影響下で左派ポピュリズム政策を推進。党内対立や汚職スキャンダルにより支持率は低下傾向。",
+        "key_actors": [
+           { "name": "シオマラ・カストロ", "role": "大統領。初の女性大統領。「民主社会主義」を標榜。", "evidence": [] },
+           { "name": "マヌエル・セラヤ", "role": "元大統領、大統領顧問。政権の実質的な戦略家。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "北米市場と海外送金に依存。低スキル労働集約型産業が中心。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:50:00+09:00",
+      "country_iso3": "BLZ",
+      "country_name_ja": "ベリーズ",
+      "country_name_en": "Belize",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "ベリーズ中央銀行、TNC（ザ・ネイチャー・コンサーバンシー）レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "世界最大規模の『ブルーボンド（債務の自然スワップ）』による海洋保護区の拡大と債務削減を成功させ、気候ファイナンスを活用した環境立国モデルとして国際的な注目を集めています。",
+        "evidence": ["SRC_Blue_Bond_Impact_Report", "SRC_Conservation_Commitments"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "グアテマラとの領土問題（ICJでの審理）が最終解決に向けたプロセスにあり、これが解決すれば投資リスクの低減と国境地域の開発促進が期待されます。",
+        "evidence": ["SRC_ICJ_Belize_Guatemala_Case", "SRC_Border_Development_Potential"],
+        "confidence": 0.9 },
+      {
+        "claim": "観光業（サンゴ礁、マヤ遺跡）への依存度が高く、気候変動によるサンゴの白化やハリケーン被害が経済の最大のリスク要因です。",
+        "evidence": ["SRC_BTB_Tourism_Statistics", "SRC_Climate_Vulnerability_Assessment"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "世界第2位の堡礁（バリアリーフ）と豊かな生物多様性。砂糖、バナナ、柑橘類の農業。",
+        "notable_resources": [
+          { "name": "ベリーズ堡礁", "role": "世界遺産。観光収入と漁業資源の源。", "evidence": ["SRC_UNESCO_World_Heritage"], "confidence": 0.98 },
+          { "name": "農産物", "role": "砂糖とバナナが輸出の柱。EU・英国市場へのアクセス。", "evidence": ["SRC_SIB_Trade_Data"], "confidence": 0.9 }
+        ]
+      },
+      "political_stability": {
+        "summary": "安定した議会制民主主義。PUP（人民統一党）政権下で経済回復が進む。",
+        "key_actors": [
+           { "name": "ジョニー・ブリセーニョ", "role": "首相。財政再建と環境政策を推進。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "小規模開放経済。観光と農業が二本柱。英語圏であり、BPO産業も成長中。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T20:55:00+09:00",
+      "country_iso3": "SLV",
+      "country_name_ja": "エルサルバドル共和国",
+      "country_name_en": "Republic of El Salvador",
+      "confidence": {
+        "overall": 0.88,
+        "notes": "エルサルバドル中央銀行、人権団体、IMFレポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "ブケレ大統領の強権的な治安対策により殺人発生率が劇的に低下し、治安の良さを売りにした観光客の増加や投資誘致が進んでいますが、人権侵害や民主主義の後退への懸念は払拭されていません。",
+        "evidence": ["SRC_Homicide_Rate_Decline", "SRC_Tourism_Boom_El_Salvador"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "ビットコインの法定通貨化実験は、普及率こそ限定的ですが、暗号資産関連企業の誘致や『ビットコイン・シティ』構想を通じて、国のブランディングと新たな資金調達手段として機能し続けています。",
+        "evidence": ["SRC_Bitcoin_Adoption_Study", "SRC_Volcano_Bond_Issuance"],
+        "confidence": 0.9 },
+      {
+        "claim": "対外債務の借り換えリスクに対し、IMFとの交渉と並行して中国との経済協力を強化しており、地政学的なバランスを利用した財政運営を行っています。",
+        "evidence": ["SRC_China_Library_Stadium_Projects", "SRC_Fiscal_Sustainability_Analysis"],
+        "confidence": 0.88
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "天然資源は乏しいですが、地熱エネルギーが豊富。勤勉な労働力と改善された治安が新たな資源。",
+        "notable_resources": [
+          { "name": "地熱エネルギー", "role": "電力供給の柱であり、ビットコイン・マイニングにも活用。", "evidence": ["SRC_Lageotype_Geothermal"], "confidence": 0.95 },
+          { "name": "観光資源（サーフ・シティ）", "role": "太平洋岸のサーフィンスポットを開発し、国際大会を誘致。", "evidence": ["SRC_Surf_City_Project"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ナジブ・ブケレ大統領（ニューアイディア党）が圧倒的な支持率で再選し、議会・司法を掌握。一党優位体制が確立。",
+        "key_actors": [
+           { "name": "ナジブ・ブケレ", "role": "大統領。「世界一クールな独裁者」を自称。強力なリーダーシップとSNS活用。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "ドル化経済。海外送金（GDPの2割超）と輸出（繊維・プラスチック）が柱。治安改善による内需拡大が成長要因。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:00:00+09:00",
+      "country_iso3": "NIC",
+      "country_name_ja": "ニカラグア共和国",
+      "country_name_en": "Republic of Nicaragua",
+      "confidence": {
+        "overall": 0.7,
+        "notes": "独立メディア（Confidencial等）、国連人権高等弁務官事務所、世界銀行データに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "オルテガ・ムリージョ政権による反対派、教会、NGOへの弾圧が完了し、全体主義的な支配体制が固定化。国際的な孤立が深まる中、ロシア・中国・イランとの『反米同盟』関係を強化しています。",
+        "evidence": ["SRC_UN_Human_Rights_Nicaragua", "SRC_Russia_Military_Access"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "中国とのFTA発効や大規模インフラプロジェクト（運河構想の再燃や空港建設）の発表を通じて経済的恩恵をアピールしていますが、実質的な経済効果は限定的で、米国への輸出依存構造は変わっていません。",
+        "evidence": ["SRC_China_Nicaragua_FTA_Trade_Data", "SRC_US_Trade_Dependency"],
+        "confidence": 0.9 },
+      {
+        "claim": "移民を『政治的武器』として利用し、ビザ免除政策を通じてアフリカやアジアからの移民を呼び込み、米国国境への通過ルートを提供することで米国に圧力をかけています。",
+        "evidence": ["SRC_Migration_Weaponization_Report", "SRC_Charter_Flights_Managua"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "中米最大の面積と豊かな水資源、農地。金鉱山が主要な外貨獲得源。",
+        "notable_resources": [
+          { "name": "金（Gold）", "role": "輸出のトップ。米国およびカナダ企業が採掘するが、制裁リスクあり。", "evidence": ["SRC_Gold_Export_Statistics"], "confidence": 0.95 },
+          { "name": "農産物（牛肉・コーヒー）", "role": "主要輸出品。米国市場向けが中心。", "evidence": ["SRC_CETREX_Export_Data"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ダニエル・オルテガ大統領とロサリオ・ムリージョ副大統領（夫婦）による家族独裁。後継者として息子（ラウレアーノ）が浮上。",
+        "key_actors": [
+           { "name": "ダニエル・オルテガ", "role": "大統領。サンディニスタ革命の指導者から独裁者へ。", "evidence": [] },
+           { "name": "ロサリオ・ムリージョ", "role": "副大統領。政権の実務とプロパガンダを統括。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "農業と鉱業、フリーゾーン（繊維）に依存。制裁下でもマクロ経済は比較的安定しているが、貧困率は高い。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:05:00+09:00",
+      "country_iso3": "CRI",
+      "country_name_ja": "コスタリカ共和国",
+      "country_name_en": "Republic of Costa Rica",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "コスタリカ中央銀行、PROCOMER（貿易振興機構）レポートに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "かつて『中米のスイス』と呼ばれた治安が悪化し、国際的な麻薬密輸ルートのハブ化したことで殺人率が急増。チャベス政権は強硬な治安対策を打ち出していますが、根本解決には至っていません。",
+        "evidence": ["SRC_Homicide_Rate_Surge", "SRC_Drug_Trafficking_Hub_Report"],
+        "confidence": 0.92
+      },
+      {
+        "claim": "米国のCHIPS法支援対象国として、Intelの組み立て・テスト工場を中心に、西半球における半導体パッケージングの主要拠点としての地位を固め、高度技術産業へのシフトを進めています。",
+        "evidence": ["SRC_US_Costa_Rica_Chips_Act_Partnership", "SRC_Intel_Expansion_News"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "環境先進国としてのブランドを維持しつつ、財政規律の遵守とOECD加盟国としての改革を継続し、周辺国の不安定さとは対照的な経済的安定を保っています。",
+        "evidence": ["SRC_OECD_Economic_Survey_Costa_Rica", "SRC_Green_Growth_Strategy"],
+        "confidence": 0.9
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "豊かな生物多様性（エコツーリズム）と水力・地熱などの再生可能エネルギー（電力の99%）。人的資源（教育水準）が高い。",
+        "notable_resources": [
+          { "name": "医療機器・半導体製造", "role": "主要輸出品目。高付加価値産業の集積。", "evidence": ["SRC_PROCOMER_Export_Breakdown"], "confidence": 0.98 },
+          { "name": "自然資本", "role": "国土の25%が保護区。観光業の基盤。", "evidence": ["SRC_ICT_Tourism_Report"], "confidence": 0.95 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ロドリゴ・チャベス大統領はポピュリスト的な手法で高い支持を得ているが、議会や司法との対立が多い。民主主義制度自体は強固。",
+        "key_actors": [
+           { "name": "ロドリゴ・チャベス", "role": "大統領。元世界銀行エコノミスト。既存エリート批判で台頭。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "中米で最も先進的な経済構造。医療機器、ITサービス、観光が柱。二重経済（輸出部門と国内部門の格差）が課題。", "evidence": [] }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T21:10:00+09:00",
+      "country_iso3": "PAN",
+      "country_name_ja": "パナマ共和国",
+      "country_name_en": "Republic of Panama",
+      "confidence": {
+        "overall": 0.88,
+        "notes": "パナマ運河庁（ACP）、パナマ会計検査院データに基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "気候変動による干ばつでパナマ運河の水位低下が常態化しており、通航制限による物流への影響と運河収入の変動リスクに対応するため、新たな水源確保（リオ・インディオ貯水池計画等）が国家の至上命題となっています。",
+        "evidence": ["SRC_ACP_Water_Management_Plan", "SRC_Canal_Revenue_Impact"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "大規模な抗議デモの結果、主要な銅鉱山（Cobre Panamá）が閉鎖され、GDPの数パーセントを失う経済的打撃を受けており、鉱業に代わる成長エンジンの模索と財政の立て直しが急務です。",
+        "evidence": ["SRC_Mining_Moratorium_Law", "SRC_Economic_Impact_Mine_Closure"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "ダリエン地峡を通る不法移民の急増が続き、人道的対応と国境管理の負担が増大。米国との連携による管理強化が進められていますが、南米からの流入圧力は止まりません。",
+        "evidence": ["SRC_Darien_Gap_Migration_Stats", "SRC_US_Panama_Migration_Agreement"],
+        "confidence": 0.92
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "パナマ運河という地政学的・物流的独占資産が最大の資源。銅資源も豊富だが、環境保護の観点から開発は凍結状態。",
+        "notable_resources": [
+          { "name": "パナマ運河", "role": "世界貿易の要衝。水資源管理が存続の鍵。", "evidence": ["SRC_ACP_Annual_Report"], "confidence": 0.99 },
+          { "name": "金融・物流ハブ", "role": "コロン・フリーゾーンと国際金融センター。", "evidence": ["SRC_Logistics_Performance_Index"], "confidence": 0.92 }
+        ]
+      },
+      "political_stability": {
+        "summary": "ホセ・ラウル・ムリーノ大統領（2024年選出）の下、鉱山閉鎖後の経済混乱収拾と社会的不満の鎮静化に取り組むが、政治不信は根強い。",
+        "key_actors": [
+           { "name": "ホセ・ラウル・ムリーノ", "role": "大統領。マルティネリ元大統領の代役として当選。親ビジネス路線。", "evidence": [] },
+           { "name": "環境保護運動・労組", "role": "鉱山閉鎖を勝ち取った強力な社会勢力。", "evidence": [] }
+        ]
+      },
+      "economic_structure": {
+        "summary": "運河関連サービス、建設、金融に依存するサービス経済。鉱業停止による穴埋めが必要。", "evidence": [] }
+    }
+  }
+]
