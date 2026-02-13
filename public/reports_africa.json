@@ -52,3 +52,71 @@
     }
   }
 ]
+[
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T11:10:00+09:00",
+      "country_iso3": "SSD",
+      "country_name_ja": "南スーダン共和国",
+      "country_name_en": "Republic of South Sudan",
+      "confidence": {
+        "overall": 0.65,
+        "notes": "スーダン内戦の影響により石油輸出データに変動あり。政治日程は2024年9月の選挙延期決定に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "主要な石油パイプラインがスーダン内戦の影響で停止・破損し、国家歳入の約90%が喪失したことで、ハイパーインフレと公務員給与の長期未払い（12ヶ月以上）が発生しています。",
+        "evidence": ["SRC_Oil_Shutdown_2024", "SRC_WB_Economic_Monitor_2025"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "2024年12月に予定されていた初の総選挙は2026年12月まで延期され、R-ARCSS（再活性化された和平合意）の完全履行と政治的移行プロセスは依然として停滞しています。",
+        "evidence": ["SRC_UN_Report_2025", "SRC_Election_Delay_Announcement"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "気候変動による記録的な洪水と紛争により、人口の約70%にあたる900万人以上が人道支援を必要としており、一部地域では飢饉のリスクが高まっています。",
+        "evidence": ["SRC_OCHA_HRP_2025", "SRC_IPC_Analysis"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "サハラ以南アフリカ有数の原油埋蔵量を誇りますが、輸出ルート（パイプライン）を完全に隣国スーダンに依存していることが最大の地政学的脆弱性となっています。",
+        "notable_resources": [
+          {
+            "name": "原油",
+            "role": "国家経済の唯一の柱（GDPの大部分、輸出の98%以上）。ダール・ブレンドおよびナイル・ブレンドが主力。",
+            "evidence": ["SRC_Oil_Ministry"],
+            "confidence": 0.95
+          },
+          {
+            "name": "水資源（ナイル川）",
+            "role": "白ナイル川流域の広大な湿地帯（スッド）を有し、農業および漁業の潜在力が高いが未開発。",
+            "evidence": ["SRC_FAO_Water"],
+            "confidence": 0.8
+          },
+          {
+            "name": "チーク材・金",
+            "role": "小規模な採掘と伐採が行われているが、密輸が多く正規の経済貢献は限定的。",
+            "evidence": ["SRC_Resource_Trade"],
+            "confidence": 0.6
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "キール大統領とマシャル第一副大統領の権力分有は継続しているものの、選挙延期や統合軍（NUF）の展開遅れにより、政治的緊張と地方レベルでの武力衝突リスクが高い状態です。",
+        "key_actors": [
+          { "name": "SPLM (スーダン人民解放運動)", "role": "キール大統領率いる与党勢力。政府軍(SSPDF)を掌握。" },
+          { "name": "SPLM-IO (反対派)", "role": "マシャル第一副大統領率いる主要野党勢力。和平合意のパートナー。" },
+          { "name": "NAS (救国戦線)", "role": "和平合意に参加していない反政府勢力（シルロ中将率いる）。エクアトリア地方で活動。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "世界で最も石油依存度の高い経済の一つであり、国内産業はほぼ皆無です。食料や生活必需品の大部分を近隣諸国（ウガンダ、ケニア）からの輸入に依存しているため、通貨安が直ちに生活危機に直結する構造です。"
+      }
+    }
+  }
+]
