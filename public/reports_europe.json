@@ -1672,5 +1672,185 @@
       "economic_structure": {
         "summary": "医薬品、海運（Maersk）、再エネ技術、農業食品が強い。極めて健全な財政と経常黒字。", "evidence": [] }
     }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T15:10:00+09:00",
+      "country_iso3": "KOS",
+      "country_name_ja": "コソボ共和国",
+      "country_name_en": "Republic of Kosovo",
+      "confidence": {
+        "overall": 0.85,
+        "notes": "セルビアとの緊張関係およびEU仲介の対話進進捗を反映。経済データはIMFおよびコソボ統計局に基づく。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "北部コソボにおけるセルビア系住民との対立およびセルビアとの関係正常化交渉が停滞しており、NATO主導のKFOR（コソボ部隊）による治安維持が引き続き不可欠な状況にあります。",
+        "evidence": ["SRC_UNSC_Kosovo_Briefing_2025", "SRC_EU_Belgrade_Pristina_Dialogue"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "EU加盟候補国としての地位を目指し、法の支配の強化と汚職撲滅を推進していますが、国際的な国家承認が完全でないことが経済発展と国際機関への加盟の障壁となっています。",
+        "evidence": ["SRC_EC_Kosovo_Report_2025"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "世界有数の埋蔵量を誇る褐炭（リグナイト）と、亜鉛・鉛などの鉱物資源を有していますが、エネルギー転換の圧力とインフラの老朽化により、電力供給の不安定さが課題です。",
+        "evidence": ["SRC_World_Bank_Kosovo_Energy_Review"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "欧州有数の褐炭埋蔵量を誇りますが、環境規制により活用が制限されつつあります。トレプチャ鉱山などの豊かな鉱物資源が経済再生の鍵を握っています。",
+        "notable_resources": [
+          { 
+            "name": "褐炭 (Lignite)", 
+            "role": "世界第5位の埋蔵量。国内電力の大部分を担うが、CO2排出が多いため、次世代エネルギーへの転換が急務。", 
+            "evidence": ["SRC_Kosovo_Energy_Strategy_2022-2031"], 
+            "confidence": 0.98 
+          },
+          { 
+            "name": "亜鉛・鉛・銀", 
+            "role": "トレプチャ（Trepča）鉱山。かつてのユーゴスラビア最大の鉱山コンビナート。再建が進めば主要な輸出産業となるポテンシャルを持つ。", 
+            "evidence": ["SRC_Independent_Commission_for_Mines_KOS"], 
+            "confidence": 0.85 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "アルビン・クルティ政権の下、主権の完全行使を目指していますが、北部の自治権を巡るセルビアとの対立が最大の不安定要因。欧米諸国との関係維持が国家存立の生命線です。",
+        "key_actors": [
+          { "name": "アルビン・クルティ", "role": "首相。対セルビア強硬派として知られ、国内の改革と国家主権の確立を最優先する。" },
+          { "name": "KFOR (NATO)", "role": "治安維持の最終的な保証人。数千人規模の部隊を駐留させ、武力衝突を抑止。" },
+          { "name": "コソボ・セルビア系住民", "role": "北部4自治体に集中。セルビア本国の支持を受け、コソボ政府の行政権行使に抵抗。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "海外居住者からの送金（レミッタンス）がGDPの約15%を占めるなど、ディアスポラ経済に依存。若年層の失業率が高く、ITアウトソーシングやサービス業の育成による雇用創出が急務です。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T15:10:00+09:00",
+      "country_iso3": "GRL",
+      "country_name_ja": "グリーンランド",
+      "country_name_en": "Greenland",
+      "confidence": {
+        "overall": 0.8,
+        "notes": "デンマーク王国の一構成国としての自治状況と、北極圏の地政学的重要性を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "気候変動による氷床の融解が、漁業資源の変化をもたらす一方で、これまで困難だった地下資源（レアアース、ウラン等）の採掘を可能にするという二面性を抱えています。",
+        "evidence": ["SRC_Arctic_Council_Assessment_2025", "SRC_GEUS_Report"],
+        "confidence": 0.9
+      },
+      {
+        "claim": "デンマークからの完全独立を最終目標に掲げつつ、経済的自立のために外資（特に米欧）による大規模な鉱山開発と観光インフラ整備を天秤にかけています。",
+        "evidence": ["SRC_Greenland_Economy_Council_2025"],
+        "confidence": 0.85
+      },
+      {
+        "claim": "米国のトゥーレ空軍基地（現ピトゥフィク宇宙基地）に加え、北極航路の要衝としての価値が急騰。米中露のパワーゲームの舞台となっています。",
+        "evidence": ["SRC_Pentagon_Arctic_Strategy_Update"],
+        "confidence": 0.95
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "未開発の重要鉱物が眠る『最後のフロンティア』。漁業（エビ、カラスガレイ）が現在の輸出の9割を占めますが、将来の柱は鉱業にあります。",
+        "notable_resources": [
+          { 
+            "name": "レアアース・重要鉱物", 
+            "role": "クバネルフィエルド（Kvanefjeld）等に世界級の埋蔵。放射性物質の管理を巡る環境論争が開発の焦点。", 
+            "evidence": ["SRC_Ministry_of_Mineral_Resources_GRL"], 
+            "confidence": 0.9 
+          },
+          { 
+            "name": "水産資源", 
+            "role": "冷水エビの輸出。海水温上昇により生息域が北上しており、新たな漁場管理が必要な局面。", 
+            "evidence": ["SRC_Royal_Greenland_Market_Review"], 
+            "confidence": 0.95 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "ムーテ・エゲデ首相率いる親環境・独立派政権。環境保護と経済開発のジレンマの中で、デンマーク政府との関係を維持しつつ、独自外交を強化中。",
+        "key_actors": [
+          { "name": "ムーテ・B・エゲデ", "role": "首相（イヌイット共同体党）。環境重視の姿勢を保ちつつ、国家の経済自立を主導。" },
+          { "name": "デンマーク政府", "role": "外交・防衛権限を保持。多額の財政補助金（ブロック・グラント）を提供し、独立を緩やかに管理。" },
+          { "name": "米国政府", "role": "安保上の理由からグリーンランドの安定に多額の投資と関心を寄せている。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "デンマークからの補助金への依存（歳入の約半分）からの脱却が課題。新空港建設による観光客増と、重要鉱物の供給拠点化が二大戦略です。"
+      }
+    }
+  },
+  {
+    "meta": {
+      "schema_version": "1.0",
+      "generated_at": "2026-02-13T15:10:00+09:00",
+      "country_iso3": "ATA",
+      "country_name_ja": "南極大陸",
+      "country_name_en": "Antarctica",
+      "confidence": {
+        "overall": 0.9,
+        "notes": "南極条約体系（ATS）に基づく国際管理下にあるため、公式な条約協議の結果と科学的報告を反映。"
+      }
+    },
+    "key_takeaways": [
+      {
+        "claim": "いかなる国も領有権を主張できない（既存の主張は凍結）南極条約が維持されていますが、2041年の見直しを前に、中国やロシアによる観測拠点の拡大と軍民両用利用への警戒が強まっています。",
+        "evidence": ["SRC_Antarctic_Treaty_Consultative_Meeting_2025"],
+        "confidence": 0.95
+      },
+      {
+        "claim": "気候変動の最前線として、西南極氷床の崩壊リスクが世界的な海面上昇の懸念材料。科学調査の最優先課題となっています。",
+        "evidence": ["SRC_IPCC_Special_Report_Oceans_Cryosphere"],
+        "confidence": 0.98
+      },
+      {
+        "claim": "鉱物資源の採掘は条約で禁止されていますが、オキアミ（クリル）等の海洋資源の商業利用や、宇宙通信・衛星監視の拠点としての価値が非公式な戦略的対立を生んでいます。",
+        "evidence": ["SRC_CCAMLR_Fisheries_Review"],
+        "confidence": 0.85
+      }
+    ],
+    "analysis": {
+      "resource_endowment": {
+        "summary": "鉱物・石油資源の存在は確実視されていますが、環境保護のため商業開発は不可能。現在は『科学的知識』と『海洋生物資源』が実質的な資源です。",
+        "notable_resources": [
+          { 
+            "name": "海洋生物資源 (オキアミ等)", 
+            "role": "健康食品や養殖飼料としての需要が急増。乱獲を防ぐための国際的な漁獲枠管理が激化。", 
+            "evidence": ["SRC_ASOC_Antarctic_Krill_Conservation"], 
+            "confidence": 0.95 
+          },
+          { 
+            "name": "淡水資源", 
+            "role": "世界の淡水の約90%を氷として保有。将来的な水不足対策としての活用が理論上議論されることもあるが、現実は調査対象。", 
+            "evidence": ["SRC_SCAR_Antarctic_Science"], 
+            "confidence": 0.98 
+          }
+        ]
+      },
+      "political_stability": {
+        "summary": "主権国家が存在しない唯一の大陸。南極条約体系（ATS）を通じた国際協調が基本ですが、実態は科学拠点の数と配置による『静かなるプレゼンス争い』の状態です。",
+        "key_actors": [
+          { "name": "南極条約協議国 (ATCP)", "role": "日本を含む29か国の意思決定グループ。全会一致方式で南極の管理を決定。" },
+          { "name": "COMNAP (各国南極プログラム責任者会議)", "role": "実務的な観測拠点の運営とロジスティクスを調整する国際組織。" },
+          { "name": "主要観測国 (米・中・露・豪等)", "role": "巨大な予算を投じて拠点（マクマード、中山、ボストーク等）を維持し、将来的な権利確保を狙う。" }
+        ]
+      },
+      "economic_structure": {
+        "summary": "通常の経済活動は禁止。主な資金流入は各国の科学予算と、制限された観光業（南極クルーズ）によるもの。観光客の増加に伴う環境負荷が新たな規制対象となっています。"
+      }
+    }
   }
 ]
