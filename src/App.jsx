@@ -37,9 +37,7 @@ export default function App() {
 
   // ── データ取得 ────────────────────────────────────────────
   useEffect(() => {
-    const baseUrl = window.location.hostname.includes('github.io')
-      ? "/worlddashboard_2/"
-      : "/";
+    const baseUrl = import.meta.env.BASE_URL;
 
     // マスタデータ
     const loadMaster = fetch(`${baseUrl}worlddash_global_master.json`)
@@ -156,7 +154,7 @@ export default function App() {
             <h1 className="text-xl font-bold tracking-[0.3em] text-white flex items-center gap-2 uppercase tracking-tighter">
               WORLD<span className="text-cyan-400 opacity-90">DASH</span>
             </h1>
-            <div className="text-[8px] text-slate-500 font-semibold uppercase tracking-[0.5em] mt-0.5 opacity-70">
+            <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-[0.3em] mt-0.5 opacity-80">
               Global_Intelligence_Nexus_v6.3
             </div>
           </div>
@@ -170,7 +168,7 @@ export default function App() {
               onClick={() => setIsLayerMenuOpen(prev => !prev)}
               aria-expanded={isLayerMenuOpen}
               aria-haspopup="menu"
-              className="px-4 py-1.5 rounded-full uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95 bg-white/[0.04] border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]"
+              className="px-4 py-1.5 rounded-full uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95 bg-white/[0.04] border-white/10 text-slate-300 hover:text-cyan-400 hover:bg-white/[0.08]"
             >
               Layers
             </button>
@@ -181,7 +179,7 @@ export default function App() {
                   role="menuitemradio"
                   aria-checked={activeLayer === "fsi"}
                   onClick={() => { setActiveLayer("fsi"); setIsLayerMenuOpen(false); }}
-                  className={`w-full text-left px-3 py-2 rounded-lg uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+                  className={`w-full text-left px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
                     ${activeLayer === "fsi"
                       ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.2)]"
                       : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]"}`}
@@ -192,7 +190,7 @@ export default function App() {
                   role="menuitemradio"
                   aria-checked={activeLayer === "china"}
                   onClick={() => { setActiveLayer("china"); setIsLayerMenuOpen(false); }}
-                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
                     ${activeLayer === "china"
                       ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.2)]"
                       : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/[0.08]"}`}
@@ -203,7 +201,7 @@ export default function App() {
                   role="menuitemradio"
                   aria-checked={activeLayer === "resources"}
                   onClick={() => { setActiveLayer("resources"); setIsLayerMenuOpen(false); }}
-                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
                     ${activeLayer === "resources"
                       ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(80,200,120,0.2)]"
                       : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/[0.08]"}`}
@@ -215,7 +213,7 @@ export default function App() {
           </div>
           <button
             onClick={() => setIsAnalyticsPanelOpen(!isAnalyticsPanelOpen)}
-            className={`transition-all flex items-center gap-2 border px-5 py-2 rounded-full text-[10px] font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.2em]
+            className={`transition-all flex items-center gap-2 border px-5 py-2 rounded-full text-xs font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.15em]
               ${isAnalyticsPanelOpen
                 ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300'
                 : 'bg-white/[0.04] border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]'}`}
@@ -225,7 +223,7 @@ export default function App() {
           </button>
           <button
             onClick={toggleFs}
-            className="text-slate-400 hover:text-cyan-400 transition-all flex items-center gap-2 border border-white/10 px-5 py-2 rounded-full bg-white/[0.04] text-[10px] font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.2em]"
+            className="text-slate-400 hover:text-cyan-400 transition-all flex items-center gap-2 border border-white/10 px-5 py-2 rounded-full bg-white/[0.04] text-xs font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.15em]"
           >
             {isFullscreen ? <Minimize size={14} /> : <Maximize size={14} />}
             {isFullscreen ? 'EXIT_LINK' : 'FULL_DEEP'}
@@ -277,18 +275,18 @@ export default function App() {
                 <div className={`w-2 h-2 rounded-full ${tooltipDot} animate-ping`} />
                 {allCountries.find(c => c.master.iso3 === hoverInfo.iso3)?.master.name || hoverInfo.iso3}
               </div>
-              <div className="opacity-60 text-[9px] tracking-[0.4em] flex justify-between gap-8 font-medium">
+              <div className="opacity-70 text-xs tracking-[0.25em] flex justify-between gap-8 font-medium">
                 <span>NODE</span>
                 <span className="text-white">{hoverInfo.iso3}</span>
               </div>
               {layerScore != null && (
-                <div className="mt-1.5 pt-1.5 border-t border-white/5 text-[9px] tracking-[0.3em] flex justify-between gap-8 font-medium">
+                <div className="mt-1.5 pt-1.5 border-t border-white/5 text-xs tracking-[0.2em] flex justify-between gap-8 font-medium">
                   <span className="opacity-60">{layerLabel}</span>
                   <span className={tooltipAccent}>{layerScore.toFixed(1)}</span>
                 </div>
               )}
               {resMetric && (
-                <div className="mt-1 text-[8px] tracking-[0.2em] text-emerald-400/70 truncate max-w-[200px]">
+                <div className="mt-1 text-[11px] tracking-[0.12em] text-emerald-400/80 truncate max-w-[200px]">
                   {resMetric}
                 </div>
               )}
@@ -333,7 +331,7 @@ export default function App() {
         >
           <button
             onClick={() => setIsStreamPanelOpen(!isStreamPanelOpen)}
-            className={`h-12 w-full flex items-center justify-center gap-4 text-[10px] font-semibold tracking-[0.8em] transition-all shrink-0 pointer-events-auto uppercase font-mono
+            className={`h-12 w-full flex items-center justify-center gap-4 text-xs font-semibold tracking-[0.4em] transition-all shrink-0 pointer-events-auto uppercase font-mono
               ${isStreamPanelOpen
                 ? 'text-cyan-400/60 hover:text-cyan-400 border-b border-white/5'
                 : 'text-cyan-400/80 hover:text-cyan-300'}`}

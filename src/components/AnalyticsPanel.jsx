@@ -42,7 +42,7 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
         {/* ヘッダー */}
         <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
           <div className="space-y-1.5">
-            <div className="text-[9px] text-emerald-400 animate-pulse tracking-[0.4em] font-semibold uppercase font-mono">
+            <div className="text-xs text-emerald-400 animate-pulse tracking-[0.25em] font-semibold uppercase font-mono">
               GLOBAL_METRICS
             </div>
             <h2 className="text-2xl font-bold text-slate-100 tracking-tight leading-snug uppercase">ANALYTICS</h2>
@@ -58,7 +58,7 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`py-3 text-[9px] font-bold tracking-[0.1em] uppercase font-mono transition-colors border-white/5
+              className={`py-3 text-xs font-bold tracking-[0.08em] uppercase font-mono transition-colors border-white/5
                 ${i % 2 === 0 ? 'border-r' : ''}
                 ${i < 2 ? 'border-b' : ''}
                 ${activeTab === tab.key
@@ -110,11 +110,11 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
               >
                 <div className="flex items-center justify-between mb-2 gap-2">
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="text-[10px] font-mono text-slate-500 font-bold w-4 text-right shrink-0">{i + 1}.</span>
-                    <span className={`text-xs font-bold uppercase tracking-wide transition-colors truncate max-w-[120px] ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                    <span className="text-xs font-mono text-slate-400 font-bold w-5 text-right shrink-0">{i + 1}.</span>
+                    <span className={`text-sm font-bold uppercase tracking-wide transition-colors truncate max-w-[120px] ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
                       {c.master.name}
                     </span>
-                    <span className="text-[9px] font-mono text-slate-500 px-1.5 py-0.5 border border-white/10 rounded-full shrink-0">
+                    <span className="text-[11px] font-mono text-slate-400 px-1.5 py-0.5 border border-white/10 rounded-full shrink-0">
                       {iso}
                     </span>
                   </div>

@@ -7,7 +7,7 @@ import { X, Users, Activity, TrendingUp, AlertTriangle, Database } from 'lucide-
 // メトリクス表示用サブコンポーネント
 const Metric = ({ label, value, icon: Icon, color = "text-cyan-400" }) => (
   <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl hover:bg-white/[0.08] hover:border-cyan-500/30 transition-all duration-300 flex flex-col items-start group shadow-lg">
-    <div className="text-[9px] text-slate-400 mb-1.5 flex items-center gap-1.5 uppercase font-semibold tracking-wider group-hover:text-slate-200">
+    <div className="text-xs text-slate-400 mb-1.5 flex items-center gap-1.5 uppercase font-semibold tracking-wide group-hover:text-slate-200">
       {Icon && <Icon size={12} className="opacity-70 group-hover:opacity-100 transition-opacity" />}
       {label}
     </div>
@@ -50,14 +50,14 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
       {/* ヘッダー */}
       <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
         <div className="space-y-1.5 flex-1 pr-4">
-          <div className="text-[9px] text-cyan-400 animate-pulse tracking-[0.5em] font-semibold uppercase font-mono">
+          <div className="text-xs text-cyan-400 animate-pulse tracking-[0.3em] font-semibold uppercase font-mono">
             TARGET_ACQUIRED
           </div>
           <h2 className="text-xl md:text-2xl font-bold text-slate-100 tracking-tight leading-tight uppercase break-words">
             {master.name}
           </h2>
           <div className="flex flex-wrap gap-2 pt-1 font-mono">
-            <span className="bg-cyan-500/10 text-cyan-400 text-[9px] px-2.5 py-0.5 rounded-full border border-cyan-500/20 uppercase font-semibold tracking-wider">
+            <span className="bg-cyan-500/10 text-cyan-400 text-xs px-2.5 py-0.5 rounded-full border border-cyan-500/20 uppercase font-semibold tracking-wide">
               {master.iso3}
             </span>
           </div>
@@ -80,14 +80,14 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
             className="w-full py-3 px-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:bg-amber-500/20 transition-all flex items-center justify-center gap-2 group shadow-lg"
           >
             <Database size={16} className="group-hover:rotate-12 transition-transform" />
-            <span className="text-xs font-bold tracking-widest uppercase">Open Deep Dive Report</span>
+            <span className="text-sm font-bold tracking-wide uppercase">Open Deep Dive Report</span>
           </button>
         )}
 
         {/* ヘッドライン（タイプライター） */}
         <div
           ref={headlineRef}
-          className="p-4 rounded-2xl bg-cyan-500/[0.03] border border-cyan-500/10 font-sans text-xs text-slate-300 leading-relaxed min-h-[3.5rem]"
+          className="p-4 rounded-2xl bg-cyan-500/[0.03] border border-cyan-500/10 font-sans text-sm text-slate-300 leading-relaxed min-h-[3.5rem]"
         />
 
         {/* メトリクスグリッド */}
@@ -100,7 +100,7 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
 
         {/* レーダーチャート */}
         <div className="space-y-3">
-          <h3 className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-semibold">
+          <h3 className="text-xs text-slate-400 uppercase tracking-wide font-mono font-semibold">
             Neural_Parameter_Map
           </h3>
           <div className="h-56 border border-white/5 rounded-2xl bg-slate-800/20 p-2 shadow-lg">
