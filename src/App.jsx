@@ -28,6 +28,7 @@ export default function App() {
   const [isFullscreen,          setIsFullscreen]          = useState(false);
   const [activeLayer,           setActiveLayer]           = useState("fsi");
   const [chinaInfluenceData,    setChinaInfluenceData]    = useState(null);
+  const [resourcesData,         setResourcesData]         = useState(null);
 
   // ── データ取得 ────────────────────────────────────────────
   useEffect(() => {
@@ -44,6 +45,11 @@ export default function App() {
     const loadChinaInfluence = fetch(`${baseUrl}china_influence_index.json`)
       .then(res => res.json())
       .catch(e => { console.warn("China influence data load failed", e); return null; });
+
+    // 天然資源インデックス (GNR-PRI)
+    const loadResources = fetch(`${baseUrl}natural_resources_index.json`)
+      .then(res => res.json())
+      .catch(e => { console.warn("Natural resources data load failed", e); return null; });
 
     // 分割レポートファイル（並列取得・エラー時は空配列）
     const loadReports = Promise.all(
@@ -63,10 +69,11 @@ export default function App() {
       return merged;
     });
 
-    Promise.all([loadMaster, loadReports, loadChinaInfluence]).then(([masterData, mergedReports, chinaData]) => {
+    Promise.all([loadMaster, loadReports, loadChinaInfluence, loadResources]).then(([masterData, mergedReports, chinaData, resData]) => {
       if (masterData) setData(masterData);
       setReports(mergedReports);
       if (chinaData) setChinaInfluenceData(chinaData);
+      if (resData) setResourcesData(resData);
     });
   }, []);
 
@@ -130,13 +137,13 @@ export default function App() {
 
         {/* ステータス + レイヤー選択 */}
         <div className="hidden md:flex flex-1 items-center justify-center">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] opacity-70 pointer-events-none">
               Worldview_Layer:
             </span>
             <button
               onClick={() => setActiveLayer("fsi")}
-              className={`px-4 py-1.5 rounded-full uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+              className={`px-3 py-1.5 rounded-full uppercase text-[9px] font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
                 ${activeLayer === "fsi"
                   ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.2)]"
                   : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]"}`}
@@ -145,12 +152,21 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveLayer("china")}
-              className={`px-4 py-1.5 rounded-full uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+              className={`px-3 py-1.5 rounded-full uppercase text-[9px] font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
                 ${activeLayer === "china"
                   ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.2)]"
                   : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/[0.08]"}`}
             >
               China Influence
+            </button>
+            <button
+              onClick={() => setActiveLayer("resources")}
+              className={`px-3 py-1.5 rounded-full uppercase text-[9px] font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
+                ${activeLayer === "resources"
+                  ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(80,200,120,0.2)]"
+                  : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/[0.08]"}`}
+            >
+              Natural Resources
             </button>
           </div>
         </div>
@@ -186,6 +202,7 @@ export default function App() {
             data={data}
             activeLayer={activeLayer}
             chinaInfluenceData={chinaInfluenceData}
+            resourcesData={resourcesData}
             onCountryClick={handleCountryClick}
             onHover={handleHover}
             selectedIso={selectedIso}
@@ -193,21 +210,51 @@ export default function App() {
         </div>
 
         {/* ホバーツールチップ */}
-        {hoverInfo && (
-          <div
-            className="fixed z-[120] px-5 py-3 bg-slate-900/90 backdrop-blur-[20px] border border-white/20 text-slate-100 font-mono pointer-events-none shadow-[0_0_20px_rgba(0,0,0,0.8)] rounded-xl animate-in fade-in zoom-in-95 duration-200"
-            style={{ left: hoverInfo.x + 20, top: hoverInfo.y + 20 }}
-          >
-            <div className="font-semibold text-cyan-400 text-sm border-b border-white/10 mb-2 pb-2 flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-              {allCountries.find(c => c.master.iso3 === hoverInfo.iso3)?.master.name || hoverInfo.iso3}
+        {hoverInfo && (() => {
+          const tooltipAccent =
+            activeLayer === "china" ? "text-amber-400" :
+            activeLayer === "resources" ? "text-emerald-400" :
+            "text-cyan-400";
+          const tooltipDot =
+            activeLayer === "china" ? "bg-amber-400" :
+            activeLayer === "resources" ? "bg-emerald-400" :
+            "bg-cyan-400";
+          const layerScore =
+            activeLayer === "china" ? chinaInfluenceData?.countries?.[hoverInfo.iso3]?.score :
+            activeLayer === "resources" ? resourcesData?.countries?.[hoverInfo.iso3]?.score :
+            null;
+          const layerLabel =
+            activeLayer === "china" ? "CHINA_INF" :
+            activeLayer === "resources" ? "GNR-PRI" :
+            null;
+          const resMetric = activeLayer === "resources" ? resourcesData?.countries?.[hoverInfo.iso3]?.metric : null;
+          return (
+            <div
+              className="fixed z-[120] px-5 py-3 bg-slate-900/90 backdrop-blur-[20px] border border-white/20 text-slate-100 font-mono pointer-events-none shadow-[0_0_20px_rgba(0,0,0,0.8)] rounded-xl animate-in fade-in zoom-in-95 duration-200"
+              style={{ left: hoverInfo.x + 20, top: hoverInfo.y + 20 }}
+            >
+              <div className={`font-semibold ${tooltipAccent} text-sm border-b border-white/10 mb-2 pb-2 flex items-center gap-3`}>
+                <div className={`w-2 h-2 rounded-full ${tooltipDot} animate-ping`} />
+                {allCountries.find(c => c.master.iso3 === hoverInfo.iso3)?.master.name || hoverInfo.iso3}
+              </div>
+              <div className="opacity-60 text-[9px] tracking-[0.4em] flex justify-between gap-8 font-medium">
+                <span>NODE</span>
+                <span className="text-white">{hoverInfo.iso3}</span>
+              </div>
+              {layerScore != null && (
+                <div className="mt-1.5 pt-1.5 border-t border-white/5 text-[9px] tracking-[0.3em] flex justify-between gap-8 font-medium">
+                  <span className="opacity-60">{layerLabel}</span>
+                  <span className={tooltipAccent}>{layerScore.toFixed(1)}</span>
+                </div>
+              )}
+              {resMetric && (
+                <div className="mt-1 text-[8px] tracking-[0.2em] text-emerald-400/70 truncate max-w-[200px]">
+                  {resMetric}
+                </div>
+              )}
             </div>
-            <div className="opacity-60 text-[9px] tracking-[0.4em] flex justify-between gap-8 font-medium">
-              <span>NODE</span>
-              <span className="text-white">{hoverInfo.iso3}</span>
-            </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* 左パネル: Analytics */}
         <AnalyticsPanel
