@@ -9,9 +9,9 @@
       "politics": "V-Dem Democracy Report 2024",
       "risk": "Fragile States Index (FSI) 2024"
     },
-    "last_changes": "Added 16 missing entities (AUT, BGR, CZE, DNK, FIN, GRC, HRV, LVA, SVK, SVN, VAT, LBY, TUN, ESH, SOM, NIC) and recomputed meta.stats.total_countries.",
+    "last_changes": "Added 6 missing territories (GRL, ATA, PRI, FLK, ATF, NCL) to complete the territorial coverage requested. Updated from 198 to 204 entities.",
     "stats": {
-      "total_countries": 198,
+      "total_countries": 204,
       "regions_count": 8
     }
   },
@@ -1248,6 +1248,44 @@
             "stability_score": 75
           }
         }
+      },
+      {
+        "master": {
+          "iso3": "NCL",
+          "name": "ニューカレドニア"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 9300000000
+            },
+            "gdp_growth": {
+              "value": -2.0
+            }
+          },
+          "society": {
+            "population": {
+              "value": 293000
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 35.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "ニューカレドニアはニッケル資源が豊富なフランス領で、独立の是非を巡る対立があります。",
+          "tags": [
+            "Nickel Resources",
+            "French Territory",
+            "Independence Issue"
+          ],
+          "scores": {
+            "economy_score": 65,
+            "stability_score": 70
+          }
+        }
       }
     ],
     "North America": [
@@ -1371,6 +1409,44 @@
           "scores": {
             "economy_score": 98,
             "stability_score": 88
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "GRL",
+          "name": "グリーンランド"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 3330000000
+            },
+            "gdp_growth": {
+              "value": 1.77
+            }
+          },
+          "society": {
+            "population": {
+              "value": 56000
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 25.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "グリーンランドは北極圏の重要鉱物資源を持つデンマーク領で、気候変動と地政学的関心が高まっています。",
+          "tags": [
+            "Arctic",
+            "Critical Minerals",
+            "Denmark Territory"
+          ],
+          "scores": {
+            "economy_score": 55,
+            "stability_score": 80
           }
         }
       }
@@ -7867,6 +7943,158 @@
           "scores": {
             "economy_score": 20,
             "stability_score": 15
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "PRI",
+          "name": "プエルトリコ"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 126550000000
+            },
+            "gdp_growth": {
+              "value": -0.8
+            }
+          },
+          "society": {
+            "population": {
+              "value": 3230000
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 40.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "プエルトリコは先進的な製造業と観光業を持つアメリカ自治領ですが、財政問題に直面しています。",
+          "tags": [
+            "US Territory",
+            "Manufacturing",
+            "Fiscal Challenges"
+          ],
+          "scores": {
+            "economy_score": 72,
+            "stability_score": 65
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "FLK",
+          "name": "フォークランド諸島"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 365000000
+            },
+            "gdp_growth": {
+              "value": 3.6
+            }
+          },
+          "society": {
+            "population": {
+              "value": 3000
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 20.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "フォークランド諸島は漁業で繁栄するイギリス領ですが、アルゼンチンとの領有権問題が続いています。",
+          "tags": [
+            "UK Territory",
+            "Fishing Industry",
+            "Territorial Dispute"
+          ],
+          "scores": {
+            "economy_score": 75,
+            "stability_score": 85
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "ATA",
+          "name": "南極大陸"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 0
+            },
+            "gdp_growth": {
+              "value": 0
+            }
+          },
+          "society": {
+            "population": {
+              "value": 400
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "南極大陸は南極条約により国際管理下にあり、科学研究と環境保全が最優先されています。",
+          "tags": [
+            "International Territory",
+            "Scientific Research",
+            "Climate Priority"
+          ],
+          "scores": {
+            "economy_score": 0,
+            "stability_score": 90
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "ATF",
+          "name": "フランス領南方・南極地域"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 0
+            },
+            "gdp_growth": {
+              "value": 0
+            }
+          },
+          "society": {
+            "population": {
+              "value": 300
+            }
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 15.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "フランス領南方・南極地域は科学研究基地のみが存在するフランスの海外領土で、豊かな海洋生物資源があります。",
+          "tags": [
+            "French Territory",
+            "Scientific Stations",
+            "Marine Resources"
+          ],
+          "scores": {
+            "economy_score": 0,
+            "stability_score": 95
           }
         }
       }
