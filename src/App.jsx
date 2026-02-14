@@ -155,9 +155,9 @@ export default function App() {
           </div>
         </div>
 
-        {/* ステータス + レイヤー選択 */}
-        <div className="hidden md:flex flex-1 items-center justify-center">
-          <div className="relative" ref={layerMenuRef}>
+        {/* アクションボタン */}
+        <div className="flex items-center gap-4">
+          <div className="relative hidden md:block" ref={layerMenuRef}>
             <button
               ref={layerMenuButtonRef}
               onClick={() => setIsLayerMenuOpen(prev => !prev)}
@@ -195,10 +195,6 @@ export default function App() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* アクションボタン */}
-        <div className="flex items-center gap-4">
           <button
             onClick={() => setIsAnalyticsPanelOpen(!isAnalyticsPanelOpen)}
             className={`transition-all flex items-center gap-2 border px-5 py-2 rounded-full text-[10px] font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.2em]
