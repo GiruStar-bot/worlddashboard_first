@@ -9,9 +9,9 @@
       "politics": "V-Dem Democracy Report 2024",
       "risk": "Fragile States Index (FSI) 2024"
     },
-    "last_changes": "Added 16 missing entities (AUT, BGR, CZE, DNK, FIN, GRC, HRV, LVA, SVK, SVN, VAT, LBY, TUN, ESH, SOM, NIC) and recomputed meta.stats.total_countries.",
+    "last_changes": "Added Greenland (GRL) and Antarctica (ATA) data, plus Kosovo (XKX) ISO mapping for complete world coverage",
     "stats": {
-      "total_countries": 198,
+      "total_countries": 200,
       "regions_count": 8
     }
   },
@@ -1371,6 +1371,88 @@
           "scores": {
             "economy_score": 98,
             "stability_score": 88
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "GRL",
+          "name": "グリーンランド"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 3000000000
+            },
+            "gdp_growth": {
+              "value": 1.5
+            }
+          },
+          "society": {
+            "population": {
+              "value": 56000
+            }
+          },
+          "politics": {
+            "regime_type": "Territory (Denmark)"
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 20.0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "グリーンランドはデンマークの自治領であり、世界最大の島として豊富な天然資源を有しています。",
+          "tags": [
+            "Autonomous Territory",
+            "Arctic",
+            "Natural Resources"
+          ],
+          "scores": {
+            "economy_score": 60,
+            "stability_score": 90
+          }
+        }
+      },
+      {
+        "master": {
+          "iso3": "ATA",
+          "name": "南極大陸"
+        },
+        "canonical": {
+          "economy": {
+            "gdp_nominal": {
+              "value": 0
+            },
+            "gdp_growth": {
+              "value": 0
+            }
+          },
+          "society": {
+            "population": {
+              "value": 1000
+            }
+          },
+          "politics": {
+            "regime_type": "International Territory"
+          },
+          "risk": {
+            "fsi_total": {
+              "value": 0
+            }
+          }
+        },
+        "ui_view": {
+          "headline": "南極大陸は国際条約により平和的利用と科学研究のための地域として管理されています。",
+          "tags": [
+            "International Territory",
+            "Research",
+            "Antarctic Treaty"
+          ],
+          "scores": {
+            "economy_score": 0,
+            "stability_score": 100
           }
         }
       }
