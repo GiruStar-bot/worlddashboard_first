@@ -7,6 +7,7 @@ import CountryDetails  from './components/CountryDetails';
 import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
 import GlobalStreamPanel from './components/GlobalStreamPanel';
+import LayerTextReportPanel from './components/LayerTextReportPanel';
 
 // 定数
 import { REPORT_FILES } from './constants/isoMap';
@@ -28,6 +29,7 @@ export default function App() {
   const [isFullscreen,          setIsFullscreen]          = useState(false);
   const [activeLayer,           setActiveLayer]           = useState("fsi");
   const [chinaInfluenceData,    setChinaInfluenceData]    = useState(null);
+  const [textReports,           setTextReports]           = useState({ fsi: null, china: null });
   const [isLayerMenuOpen,       setIsLayerMenuOpen]       = useState(false);
   const layerMenuRef = useRef(null);
   const layerMenuButtonRef = useRef(null);
@@ -50,6 +52,11 @@ export default function App() {
       .then(res => res.json())
       .catch(e => { console.warn("China influence data load failed", e); return null; });
 
+    const loadTextReports = Promise.all([
+      fetch(`${baseUrl}Geopolitical_Risk_Report.json`).then(res => res.ok ? res.json() : null).catch(() => null),
+      fetch(`${baseUrl}China_influence_Report.json`).then(res => res.ok ? res.json() : null).catch(() => null),
+    ]).then(([fsiReport, chinaReport]) => ({ fsi: fsiReport, china: chinaReport }));
+
     // 分割レポートファイル（並列取得・エラー時は空配列）
     const loadReports = Promise.all(
       REPORT_FILES.map(filename =>
@@ -68,10 +75,11 @@ export default function App() {
       return merged;
     });
 
-    Promise.all([loadMaster, loadReports, loadChinaInfluence]).then(([masterData, mergedReports, chinaData]) => {
+    Promise.all([loadMaster, loadReports, loadChinaInfluence, loadTextReports]).then(([masterData, mergedReports, chinaData, textual]) => {
       if (masterData) setData(masterData);
       setReports(mergedReports);
       if (chinaData) setChinaInfluenceData(chinaData);
+      setTextReports(textual);
     });
   }, []);
 
@@ -130,6 +138,7 @@ export default function App() {
   const allCountries    = data?.regions ? Object.values(data.regions).flat() : [];
   const selectedCountry = allCountries.find(c => c.master.iso3 === selectedIso) || null;
   const selectedReport  = selectedIso ? reports[selectedIso] : null;
+  const activeTextReport = selectedIso ? textReports[activeLayer]?.countries?.[selectedIso] : null;
 
   // ── レンダリング ──────────────────────────────────────────
   return (
@@ -264,6 +273,14 @@ export default function App() {
               onClose={() => setIsReportOpen(false)}
             />
           </aside>
+        )}
+
+        {selectedIso && (
+          <LayerTextReportPanel
+            activeLayer={activeLayer}
+            countryName={selectedCountry?.master?.name}
+            report={activeTextReport}
+          />
         )}
 
         {/* 右パネル: 国別詳細 */}

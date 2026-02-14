@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "version": "0.1-sample",
+    "date": "2026-02-14",
+    "methodology": "Weaponized Power & Coercion Potential index. score = 0.25*military_power + 0.20*strategic_resources + 0.20*industrial_tech + 0.20*financial_power + 0.15*wielding_behavior.",
+    "source_note": "Sample values based on the accompanying Non-Destructive Textual Geopolitical Reports reference document."
+  },
+  "countries": {
+    "CHN": {
+      "score": 87.3,
+      "narrative": "China combines military modernization, industrial depth, and strategic resource leverage, including strong rare-earth positioning. Domestic structural stress exists but does not erase near-term coercive capacity.",
+      "indicators": { "military_power": 90, "strategic_resources": 85, "industrial_tech": 90, "financial_power": 85, "wielding_behavior": 85, "bri_exposure": 100, "domestic_risks": 70, "rare_earth_share": 69.2, "ev_tech_strength": 95, "taiwan_risk": 90, "logistics_exposure": 90 },
+      "raw_values": { "rare_earth_share_percent_2024": 69.23 }
+    },
+    "USA": {
+      "score": 85.8,
+      "narrative": "The U.S. retains top-tier power projection and financial leverage with broad sanctions and technology-control tools. Its coercive toolkit is diversified across military, industrial, and financial domains.",
+      "indicators": { "military_power": 95, "strategic_resources": 60, "industrial_tech": 92, "financial_power": 98, "wielding_behavior": 80, "bri_exposure": 0, "domestic_risks": 35, "rare_earth_share": 11.5, "ev_tech_strength": 80, "taiwan_risk": 70, "logistics_exposure": 55 },
+      "raw_values": { "aiib_member": false }
+    },
+    "RUS": {
+      "score": 72.5,
+      "narrative": "Russia’s leverage remains resource- and military-centric. Sanctions and financial constraints reduce breadth, but coercive signaling and export-linked influence remain significant.",
+      "indicators": { "military_power": 80, "strategic_resources": 80, "industrial_tech": 60, "financial_power": 55, "wielding_behavior": 90, "bri_exposure": 35, "domestic_risks": 55, "rare_earth_share": 0.6, "ev_tech_strength": 30, "taiwan_risk": 35, "logistics_exposure": 45 },
+      "raw_values": { "aiib_member": true }
+    },
+    "IND": {
+      "score": 61.8,
+      "narrative": "India is rising in military and industrial capability but with more regionally bounded coercive reach. Financial and external instrument depth is improving but still selective.",
+      "indicators": { "military_power": 70, "strategic_resources": 55, "industrial_tech": 65, "financial_power": 60, "wielding_behavior": 55, "bri_exposure": 10, "domestic_risks": 50, "rare_earth_share": 0.7, "ev_tech_strength": 45, "taiwan_risk": 25, "logistics_exposure": 45 },
+      "raw_values": { "aiib_member": true }
+    },
+    "AUS": {
+      "score": 58.3,
+      "narrative": "Australia’s leverage is strongest in strategic resources and alliance-enabled policy coordination. Its coercive profile is more resilience and supply security than direct pressure.",
+      "indicators": { "military_power": 45, "strategic_resources": 80, "industrial_tech": 55, "financial_power": 70, "wielding_behavior": 40, "bri_exposure": 15, "domestic_risks": 25, "rare_earth_share": 3.3, "ev_tech_strength": 35, "taiwan_risk": 40, "logistics_exposure": 60 },
+      "raw_values": { "aiib_member": true }
+    },
+    "BRA": {
+      "score": 53.3,
+      "narrative": "Brazil’s strategic weight is driven by commodity breadth and regional influence. Its external coercive toolkit is comparatively limited and used selectively through economic diplomacy.",
+      "indicators": { "military_power": 40, "strategic_resources": 75, "industrial_tech": 55, "financial_power": 60, "wielding_behavior": 35, "bri_exposure": 25, "domestic_risks": 45, "rare_earth_share": 0.0, "ev_tech_strength": 30, "taiwan_risk": 20, "logistics_exposure": 35 },
+      "raw_values": { "aiib_member": true }
+    },
+    "ZAF": {
+      "score": 38.8,
+      "narrative": "South Africa’s profile is resource- and diplomacy-oriented with moderate industrial and financial depth. In this lens, exposure to external pressure is more pronounced than pressure projection.",
+      "indicators": { "military_power": 25, "strategic_resources": 60, "industrial_tech": 35, "financial_power": 45, "wielding_behavior": 30, "bri_exposure": 40, "domestic_risks": 55, "rare_earth_share": 0.0, "ev_tech_strength": 20, "taiwan_risk": 15, "logistics_exposure": 30 },
+      "raw_values": { "aiib_member": true }
+    },
+    "KEN": {
+      "score": 26.8,
+      "narrative": "Kenya’s profile reflects strategic-location relevance and external infrastructure-finance sensitivity more than coercive power. In this framing it is more exposed to external instruments than a primary wielder.",
+      "indicators": { "military_power": 20, "strategic_resources": 35, "industrial_tech": 25, "financial_power": 30, "wielding_behavior": 25, "bri_exposure": 75, "domestic_risks": 50, "rare_earth_share": 0.0, "ev_tech_strength": 15, "taiwan_risk": 10, "logistics_exposure": 40 },
+      "raw_values": { "aiib_member": true }
+    }
+  }
+}

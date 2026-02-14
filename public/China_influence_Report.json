@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "version": "0.1-sample",
+    "date": "2026-02-14",
+    "methodology": "China Entanglement & Spillover Exposure index. score = 0.30*bri_exposure + 0.20*trade_exposure_to_china_norm + 0.20*aiddata_exposure_norm + 0.10*aiib_member_flag + 0.10*logistics_exposure + 0.10*domestic_risks_spillover.",
+    "source_note": "Sample values based on the accompanying Non-Destructive Textual Geopolitical Reports reference document."
+  },
+  "countries": {
+    "CHN": {
+      "score": 100.0,
+      "narrative": "China’s outward influence is amplified by economic scale, EV/battery concentration, and critical-mineral leverage. Domestic headwinds can increase external spillover volatility through trade and confidence channels.",
+      "indicators": { "military_power": 90, "strategic_resources": 90, "industrial_tech": 95, "financial_power": 85, "wielding_behavior": 85, "bri_exposure": 100, "domestic_risks": 70, "rare_earth_share": 69.2, "ev_tech_strength": 95, "taiwan_risk": 90, "logistics_exposure": 90 },
+      "raw_values": { "aiib_member": true }
+    },
+    "USA": {
+      "score": 35.0,
+      "narrative": "The United States has limited direct BRI/AIIB integration but remains exposed through strategic competition, East-Asia logistics chokepoints, and supply-chain dependencies.",
+      "indicators": { "military_power": 95, "strategic_resources": 60, "industrial_tech": 90, "financial_power": 98, "wielding_behavior": 85, "bri_exposure": 0, "domestic_risks": 35, "rare_earth_share": 11.5, "ev_tech_strength": 80, "taiwan_risk": 75, "logistics_exposure": 55 },
+      "raw_values": { "aiib_member": false }
+    },
+    "RUS": {
+      "score": 65.0,
+      "narrative": "Russia’s economic options are increasingly shaped by China-linked trade, technology access, and market channels, creating indirect leverage despite strategic coordination.",
+      "indicators": { "military_power": 80, "strategic_resources": 80, "industrial_tech": 55, "financial_power": 50, "wielding_behavior": 70, "bri_exposure": 35, "domestic_risks": 55, "rare_earth_share": 0.6, "ev_tech_strength": 25, "taiwan_risk": 30, "logistics_exposure": 45 },
+      "raw_values": { "aiib_member": true }
+    },
+    "IND": {
+      "score": 40.0,
+      "narrative": "India’s China exposure is meaningful in trade and supply chains but constrained by strategic rivalry and policy de-risking. Maritime/logistics disruption remains a key vulnerability channel.",
+      "indicators": { "military_power": 70, "strategic_resources": 55, "industrial_tech": 65, "financial_power": 60, "wielding_behavior": 45, "bri_exposure": 10, "domestic_risks": 50, "rare_earth_share": 0.7, "ev_tech_strength": 45, "taiwan_risk": 30, "logistics_exposure": 50 },
+      "raw_values": { "aiib_member": true }
+    },
+    "AUS": {
+      "score": 60.0,
+      "narrative": "Australia’s China linkage is primarily trade and commodity-cycle driven rather than debt dependence. Taiwan Strait disruption would materially affect regional logistics and risk pricing.",
+      "indicators": { "military_power": 45, "strategic_resources": 80, "industrial_tech": 55, "financial_power": 70, "wielding_behavior": 35, "bri_exposure": 15, "domestic_risks": 25, "rare_earth_share": 3.3, "ev_tech_strength": 35, "taiwan_risk": 45, "logistics_exposure": 65 },
+      "raw_values": { "aiib_member": true }
+    },
+    "KEN": {
+      "score": 75.0,
+      "narrative": "Kenya is a high-entanglement case through China-linked infrastructure finance and project footprint. Influence channels are strongest via debt servicing, contracts, and growth-cycle sensitivity.",
+      "indicators": { "military_power": 20, "strategic_resources": 35, "industrial_tech": 25, "financial_power": 30, "wielding_behavior": 20, "bri_exposure": 85, "domestic_risks": 50, "rare_earth_share": 0.0, "ev_tech_strength": 15, "taiwan_risk": 15, "logistics_exposure": 45 },
+      "raw_values": { "aiib_member": true }
+    },
+    "ZAF": {
+      "score": 55.0,
+      "narrative": "South Africa is moderately entangled through trade and political-economic channels, with influence risk intensifying during commodity or supply-chain stress periods.",
+      "indicators": { "military_power": 25, "strategic_resources": 60, "industrial_tech": 35, "financial_power": 45, "wielding_behavior": 25, "bri_exposure": 45, "domestic_risks": 55, "rare_earth_share": 0.0, "ev_tech_strength": 20, "taiwan_risk": 15, "logistics_exposure": 35 },
+      "raw_values": { "aiib_member": true }
+    },
+    "BRA": {
+      "score": 50.0,
+      "narrative": "Brazil’s China exposure is trade-heavy and commodity-linked, with institutional proximity through AIIB but limited domestic BRI-style debt concentration.",
+      "indicators": { "military_power": 40, "strategic_resources": 75, "industrial_tech": 55, "financial_power": 60, "wielding_behavior": 25, "bri_exposure": 25, "domestic_risks": 45, "rare_earth_share": 0.0, "ev_tech_strength": 30, "taiwan_risk": 15, "logistics_exposure": 35 },
+      "raw_values": { "aiib_member": true }
+    }
+  }
+}
