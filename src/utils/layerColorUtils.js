@@ -11,7 +11,7 @@ const CHINA_HIGH = hexToRgb('#dc2626'); // Crimson     (high influence)
  * Returns dark slate for null/undefined scores.
  */
 export function getChinaColour(score) {
-  if (score == null) return '#1e293b';
+  if (!Number.isFinite(score)) return '#1e293b';
   const t = Math.max(0, Math.min(1, score / 100));
   if (t < 0.5) return mixColours(CHINA_LOW, CHINA_MID, t / 0.5);
   return mixColours(CHINA_MID, CHINA_HIGH, (t - 0.5) / 0.5);

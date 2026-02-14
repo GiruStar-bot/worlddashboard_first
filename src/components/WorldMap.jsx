@@ -20,6 +20,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, onCountryC
   const influenceByIso = useMemo(() => {
     return chinaInfluenceData?.countries || {};
   }, [chinaInfluenceData]);
+  const hasChinaLayerData = useMemo(() => Object.keys(influenceByIso).length > 0, [influenceByIso]);
 
   const [minR, maxR] = useMemo(() => {
     const values = Object.values(riskByIso).filter((v) => v != null);
@@ -49,7 +50,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, onCountryC
               geographies.map((geo) => {
                 const isoAlpha3 = ISO_MAP[geo.id];
                 const iso = isoAlpha3 || geo.id;
-                const fill = activeLayer === 'china'
+                const fill = activeLayer === 'china' && hasChinaLayerData
                   ? getChinaColour(influenceByIso[iso]?.score)
                   : getColour(riskByIso[iso]);
                 const isSelected = iso === selectedIso;

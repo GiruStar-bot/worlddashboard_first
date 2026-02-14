@@ -31,9 +31,7 @@ export default function App() {
 
   // ── データ取得 ────────────────────────────────────────────
   useEffect(() => {
-    const baseUrl = window.location.hostname.includes('github.io')
-      ? "/worlddashboard_2/"
-      : "/";
+    const baseUrl = import.meta.env.BASE_URL || "/";
 
     // マスタデータ
     const loadMaster = fetch(`${baseUrl}worlddash_global_master.json`)
