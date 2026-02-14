@@ -26,6 +26,8 @@ export default function App() {
   const [isAnalyticsPanelOpen,  setIsAnalyticsPanelOpen]  = useState(false);
   const [isReportOpen,          setIsReportOpen]          = useState(false);
   const [isFullscreen,          setIsFullscreen]          = useState(false);
+  const [activeLayer,           setActiveLayer]           = useState("fsi");
+  const [chinaInfluenceData,    setChinaInfluenceData]    = useState(null);
 
   // ── データ取得 ────────────────────────────────────────────
   useEffect(() => {
@@ -37,6 +39,11 @@ export default function App() {
     const loadMaster = fetch(`${baseUrl}worlddash_global_master.json`)
       .then(res => res.json())
       .catch(e => { console.error("Master data load failed", e); return null; });
+
+    // 中国影響力インデックス
+    const loadChinaInfluence = fetch(`${baseUrl}china_influence_index.json`)
+      .then(res => res.json())
+      .catch(e => { console.warn("China influence data load failed", e); return null; });
 
     // 分割レポートファイル（並列取得・エラー時は空配列）
     const loadReports = Promise.all(
@@ -56,9 +63,10 @@ export default function App() {
       return merged;
     });
 
-    Promise.all([loadMaster, loadReports]).then(([masterData, mergedReports]) => {
+    Promise.all([loadMaster, loadReports, loadChinaInfluence]).then(([masterData, mergedReports, chinaData]) => {
       if (masterData) setData(masterData);
       setReports(mergedReports);
+      if (chinaData) setChinaInfluenceData(chinaData);
     });
   }, []);
 
@@ -120,13 +128,30 @@ export default function App() {
           </div>
         </div>
 
-        {/* ステータス */}
-        <div className="hidden md:flex flex-1 items-center justify-center pointer-events-none">
-          <div className="px-6 py-1.5 rounded-full bg-white/[0.02] border border-white/5 flex items-center gap-3 shadow-inner">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
-            <span className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.4em]">
-              System_Status: Online
+        {/* ステータス + レイヤー選択 */}
+        <div className="hidden md:flex flex-1 items-center justify-center">
+          <div className="flex items-center gap-3">
+            <span className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] opacity-70 pointer-events-none">
+              Worldview_Layer:
             </span>
+            <button
+              onClick={() => setActiveLayer("fsi")}
+              className={`px-4 py-1.5 rounded-full uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+                ${activeLayer === "fsi"
+                  ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.2)]"
+                  : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]"}`}
+            >
+              FSI Risk
+            </button>
+            <button
+              onClick={() => setActiveLayer("china")}
+              className={`px-4 py-1.5 rounded-full uppercase text-[10px] font-semibold tracking-[0.2em] border transition-all duration-300 active:scale-95
+                ${activeLayer === "china"
+                  ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.2)]"
+                  : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-amber-400 hover:bg-white/[0.08]"}`}
+            >
+              China Influence
+            </button>
           </div>
         </div>
 
@@ -159,6 +184,8 @@ export default function App() {
         <div className="absolute inset-0 z-10">
           <WorldMap
             data={data}
+            activeLayer={activeLayer}
+            chinaInfluenceData={chinaInfluenceData}
             onCountryClick={handleCountryClick}
             onHover={handleHover}
             selectedIso={selectedIso}

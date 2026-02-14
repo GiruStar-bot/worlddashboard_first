@@ -2,8 +2,9 @@ import React, { useMemo, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { GEO_URL, ISO_MAP } from '../constants/isoMap';
 import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorUtils';
+import { getChinaColour } from '../utils/layerColorUtils';
 
-const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => {
+const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, onCountryClick, onHover, selectedIso }) => {
   const riskByIso = useMemo(() => {
     const map = {};
     if (data && data.regions) {
@@ -15,6 +16,10 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
     }
     return map;
   }, [data]);
+
+  const influenceByIso = useMemo(() => {
+    return chinaInfluenceData?.countries || {};
+  }, [chinaInfluenceData]);
 
   const [minR, maxR] = useMemo(() => {
     const values = Object.values(riskByIso).filter((v) => v != null);
@@ -44,8 +49,9 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
               geographies.map((geo) => {
                 const isoAlpha3 = ISO_MAP[geo.id];
                 const iso = isoAlpha3 || geo.id;
-                const risk = riskByIso[iso];
-                const fill = getColour(risk);
+                const fill = activeLayer === 'china'
+                  ? getChinaColour(influenceByIso[iso]?.score)
+                  : getColour(riskByIso[iso]);
                 const isSelected = iso === selectedIso;
 
                 return (
