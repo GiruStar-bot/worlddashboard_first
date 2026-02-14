@@ -42,10 +42,7 @@ const WorldMap = React.memo(({ data, onCountryClick, onHover, selectedIso }) => 
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const rawId = String(geo.id);
-                const normalizedId = /^\d+$/.test(rawId) ? rawId.padStart(3, '0') : rawId;
-                const isKosovoByName = geo.properties?.name === 'Kosovo' || geo.properties?.name_long === 'Kosovo';
-                const isoAlpha3 = ISO_MAP[rawId] || ISO_MAP[normalizedId] || (isKosovoByName ? 'XKX' : undefined);
+                const isoAlpha3 = ISO_MAP[geo.id];
                 const iso = isoAlpha3 || geo.id;
                 const risk = riskByIso[iso];
                 const fill = getColour(risk);
