@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.1",
     "as_of": "2026-02-15",
-    "methodology": "GNR-PRI v1.1 (0-100), refreshed from existing production/dependence/resilience fields with bounded normalization and strategic weighting.",
+    "methodology": "GNR-PRI v1.1 (0-100), refreshed from existing production/dependence/resilience fields using a weighted base score plus bounded strategic modifiers. Base weighting is prod(0.50), dep_norm(0.22), res(0.28) with a constant offset (+8), then a strategic production uplift (for prod>70) and low-resilience penalty (for res<25), all clamped to [0,100]. Production covers oil, gas, coal, and critical minerals (Li, Co, Ni, REE). Dependence reflects natural resource rents (% of GDP). Resilience captures efficiency, renewable share, and technology readiness.",
     "sources": [
       "USGS Mineral Commodity Summaries 2025",
       "Energy Institute Statistical Review of World Energy 2024",
@@ -12,7 +12,8 @@
     ],
     "formula": "score = clamp[0,100](8 + 0.50*prod + 0.22*dep_norm + 0.28*res + 0.10*max(prod-70,0) - 0.06*max(25-res,0)), dep_norm = clamp[0,100](dep * 100/60).",
     "base_components": "prod: log-normalized production capacity; dep: natural resource rents dependence; res: efficiency/risk resilience. Existing country-level details.prod/dep/res are reused for recalculation.",
-    "rounding_notes": "Output rounded to one decimal; whole-number values may appear without trailing .0 in JSON serialization."
+    "rounding_notes": "Output rounded to one decimal; whole-number values may appear without trailing .0 in JSON serialization.",
+    "input_ranges": "prod: 0-100 (log-normalized production index), dep: 0-60+ (% of GDP natural resource rents; dep>60 is normalized to dep_norm=100 via clamp), res: 0-100 (efficiency/risk resilience index)."
   },
   "countries": {
     "AFG": {
