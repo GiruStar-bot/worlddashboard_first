@@ -11,16 +11,86 @@ import MacroStatsOverlay from './components/MacroStatsOverlay';
 import { REPORT_FILES } from './constants/isoMap';
 
 export default function App() {
-  // ... (Stateとデータ取得ロジックは変更なしのため省略。既存のまま維持) ...
-  // ※ ここではUIに関わる render 部分のみ書き換えます
-  
-  // (中略: State定義とuseEffect群)
   const [data, setData] = useState(null);
+  const [reports, setReports] = useState({});
+  const [selectedIso, setSelectedIso] = useState(null);
+  const [hoverInfo, setHoverInfo] = useState(null);
+  const [activeLayer, setActiveLayer] = useState('fsi');
+  const [chinaInfluenceData, setChinaInfluenceData] = useState(null);
+  const [resourcesData, setResourcesData] = useState(null);
+  const [usInfluenceData, setUsInfluenceData] = useState(null);
   const [isAnalyticsPanelOpen, setIsAnalyticsPanelOpen] = useState(false);
   const [isMacroOverlayOpen, setIsMacroOverlayOpen] = useState(false);
-  // ... 他のStateも既存通り
+  const [isLayerMenuOpen, setIsLayerMenuOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isStreamPanelOpen, setIsStreamPanelOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // ... (データ取得ロジック省略) ...
+  const layerMenuRef = useRef(null);
+  const layerMenuButtonRef = useRef(null);
+
+  useEffect(() => {
+    let isCancelled = false;
+    const loadJson = (fileName) => fetch(`${import.meta.env.BASE_URL}${fileName}`).then((res) => res.json());
+
+    Promise.all([
+      loadJson('worlddash_global_master.json'),
+      loadJson('china_influence_index.json'),
+      loadJson('natural_resources_index.json'),
+      loadJson('us_influence_index.json'),
+      Promise.all(REPORT_FILES.map(loadJson)),
+    ]).then(([master, china, resources, us, reportGroups]) => {
+      if (isCancelled) return;
+      const reportMap = {};
+      reportGroups.flat().forEach((report) => {
+        const iso3 = report?.meta?.country_iso3;
+        if (iso3) reportMap[iso3] = report;
+      });
+      setData(master);
+      setChinaInfluenceData(china);
+      setResourcesData(resources);
+      setUsInfluenceData(us);
+      setReports(reportMap);
+    }).catch((error) => {
+      console.error('Failed to load dashboard data:', error);
+    });
+
+    return () => { isCancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    const closeLayerMenuOnOutsideClick = (event) => {
+      if (!layerMenuRef.current?.contains(event.target) && !layerMenuButtonRef.current?.contains(event.target)) {
+        setIsLayerMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', closeLayerMenuOnOutsideClick);
+    return () => document.removeEventListener('mousedown', closeLayerMenuOnOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
+
+  const handleCountryClick = useCallback((iso3) => {
+    setSelectedIso(iso3);
+    setIsReportOpen(false);
+  }, []);
+
+  const handleHover = useCallback((iso3, position) => {
+    if (!iso3 || !position) {
+      setHoverInfo(null);
+      return;
+    }
+    setHoverInfo({ iso3, x: position.x, y: position.y });
+  }, []);
+
+  const toggleFs = useCallback(async () => {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  }, []);
 
   // Loading Screen: 演出を控えめに
   if (!data) return (
