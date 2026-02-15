@@ -2,14 +2,17 @@
   "meta": {
     "version": "1.1",
     "as_of": "2026-02-15",
-    "methodology": "Composite China Influence Index v1.1 (0-100). Refresh formula: score = clamp[0,100](0.90*base_score + 12 + 0.08*max(base_score-45,0) - 0.04*max(20-base_score,0)), where base_score is the previous composite index derived from trade exposure (30%), BRI participation (20%), Chinese FDI (20%), AIIB membership (10%), and infrastructure exposure (20%). Output rounded to one decimal (whole-number values may appear without trailing .0 in JSON serialization).",
+    "methodology": "Composite China Influence Index v1.1 (0-100), refreshed from prior composite score using bounded uplift transform.",
     "sources": [
       "IMF IMTS / UN Comtrade bilateral trade data",
       "PRC Belt & Road Initiative country list (MFA)",
       "UNCTAD / OECD FDI statistics",
       "AIIB official members list",
       "AidData Global Chinese Development Finance Dataset v3"
-    ]
+    ],
+    "formula": "clamp[0,100](0.90*base_score + 12 + 0.08*max(base_score-45,0) - 0.04*max(20-base_score,0))",
+    "base_components": "base_score derives from trade exposure (30%), BRI participation (20%), Chinese FDI (20%), AIIB membership (10%), and infrastructure exposure (20%).",
+    "rounding_notes": "Output rounded to one decimal; whole-number values may appear without trailing .0 in JSON serialization."
   },
   "countries": {
     "AFG": {
