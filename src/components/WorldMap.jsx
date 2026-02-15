@@ -42,7 +42,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   const geoStyle = useMemo(() => ({
     default: { outline: 'none', transition: 'all 0.2s ease' },
     hover:   { stroke: '#fff', strokeWidth: 1.5, cursor: 'pointer', outline: 'none' },
-    pressed: { stroke: '#fff', strokeWidth: 1.5, outline: 'none' },
+    pressed: { stroke: '#fff', strokeWidth: 2, outline: 'none' },
   }), []);
 
   // ── Legend (凡例) システム定義 ───────────────────────────────
