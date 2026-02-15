@@ -1,11 +1,37 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { GEO_URL, ISO_MAP } from '../constants/isoMap';
+import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates'; // 新規import
 import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorUtils';
 import { getChinaColour, getNaturalResourceColour } from '../utils/layerColorUtils';
 import { getUSColour } from '../utils/usLayerUtils';
 
 const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesData, usInfluenceData, onCountryClick, onHover, selectedIso }) => {
+  
+  // ── マップ位置のState管理 (Auto Zoom用) ─────────────────────
+  const [position, setPosition] = useState(DEFAULT_POSITION);
+
+  // selectedIso が変更されたら、自動でズーム＆パンを実行
+  useEffect(() => {
+    if (selectedIso && COUNTRY_COORDINATES[selectedIso]) {
+      // 登録済みの座標があればそこへ移動
+      setPosition({
+        coordinates: COUNTRY_COORDINATES[selectedIso].coordinates,
+        zoom: COUNTRY_COORDINATES[selectedIso].zoom
+      });
+    } else if (!selectedIso) {
+      // 選択解除時はデフォルト位置へ（必要なければこの分岐は削除可）
+      // setPosition(DEFAULT_POSITION); 
+      // ※ UX上、選択解除でいきなり世界全図に戻ると使いにくい場合があるため、
+      // 　戻すかどうかは好みによります。ここでは「戻さない」設定にしておきます。
+    }
+  }, [selectedIso]);
+
+  // 手動操作時の座標更新（これがないとドラッグ後に位置がリセットされてしまう）
+  const handleMoveEnd = (position) => {
+    setPosition(position);
+  };
+
   // ── データ処理 ───────────────────────────────────────────────
   const riskByIso = useMemo(() => {
     const map = {};
@@ -23,7 +49,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   const resourcesByIso = useMemo(() => resourcesData?.countries || {}, [resourcesData]);
   const usByIso = useMemo(() => usInfluenceData?.countries || {}, [usInfluenceData]);
 
-  // FSI (Fragile States Index) の最小・最大値計算
   const [minR, maxR] = useMemo(() => {
     const values = Object.values(riskByIso).filter((v) => v != null);
     if (!values.length) return [0, 120];
@@ -32,32 +57,24 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
 
   // ── 色計算ロジック ───────────────────────────────────────────
   const getColour = useCallback((risk) => {
-    if (risk == null) return '#1e293b'; // slate-800
-    // FSIは通常 0-120 の範囲。データの実測値に合わせて正規化
+    if (risk == null) return '#1e293b'; 
     const t = (risk - minR) / (maxR - minR || 1);
     if (t < 0.5) return mixColours(COLOUR_LOW, COLOUR_MID, t / 0.5);
     return mixColours(COLOUR_MID, COLOUR_HIGH, (t - 0.5) / 0.5);
   }, [minR, maxR]);
 
-  // ── スタイル定義（今回の修正箇所） ───────────────────────────
   const geoStyle = useMemo(() => ({
-    default: { 
-      outline: 'none', 
-      transition: 'all 0.2s ease' 
-    },
+    default: { outline: 'none', transition: 'all 0.2s ease' },
     hover: { 
-      // fillを削除: これによりホバー時もベースの色(データ色)が維持されます
-      stroke: '#ffffff',        // 枠線を白く
-      strokeWidth: 2,           // 枠線を少し太く強調
+      // 前回修正した「白枠発光」スタイル
+      stroke: '#ffffff',        
+      strokeWidth: 2,           
       cursor: 'pointer', 
       outline: 'none',
-      filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.7))', // 白く発光するエフェクト
+      filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.7))',
       transition: 'all 0.1s ease'
     },
-    pressed: { 
-      fill: '#e2e8f0', // クリック時はフィードバックとして明るくする（必要に応じて変更可）
-      outline: 'none' 
-    },
+    pressed: { fill: '#e2e8f0', outline: 'none' },
   }), []);
 
   // ── Legend (凡例) システム定義 ───────────────────────────────
@@ -87,7 +104,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-emerald-400'
         };
-      default: // fsi (Geopolitical Risk)
+      default:
         return {
           title: 'Fragile States Index (FSI)',
           subTitle: 'Stability Score (0-120)',
@@ -102,14 +119,23 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   return (
     <div className="w-full h-full bg-[#020617] relative">
       <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
-        <ZoomableGroup center={[10, 15]} zoom={1.5} minZoom={1} maxZoom={8} translateExtent={[[-500, -200], [1300, 800]]}>
+        {/* ZoomableGroup を Controlled Component に変更 
+          center, zoom を state から供給し、onMoveEnd で state を更新する
+        */}
+        <ZoomableGroup 
+          center={position.coordinates} 
+          zoom={position.zoom} 
+          minZoom={1} 
+          maxZoom={8} 
+          translateExtent={[[-500, -200], [1300, 800]]}
+          onMoveEnd={handleMoveEnd}
+        >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const isoAlpha3 = ISO_MAP[geo.id];
                 const iso = isoAlpha3 || geo.id;
                 
-                // アクティブレイヤーに応じた色決定
                 let baseFill;
                 if (activeLayer === 'us')        baseFill = getUSColour(usByIso[iso]?.score);
                 else if (activeLayer === 'china') baseFill = getChinaColour(influenceByIso[iso]?.score);
@@ -123,7 +149,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                     key={geo.rsmKey}
                     geography={geo}
                     fill={baseFill}
-                    // 選択時は白枠、通常時は薄い透過線
                     stroke={isSelected ? "#fff" : "rgba(255,255,255,0.08)"}
                     strokeWidth={isSelected ? 1.5 : 0.5}
                     style={geoStyle}
@@ -141,7 +166,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
       {/* Legend System */}
       <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl min-w-[200px]">
-          {/* ヘッダー情報 */}
           <div className="mb-2">
             <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
               {legendConfig.title}
@@ -151,7 +175,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
             </div>
           </div>
           
-          {/* グラデーションバー */}
           <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" 
                style={{ background: legendConfig.gradient }}>
             <div className="absolute inset-0 flex justify-between px-[1px]">
