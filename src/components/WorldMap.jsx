@@ -23,16 +23,17 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   const resourcesByIso = useMemo(() => resourcesData?.countries || {}, [resourcesData]);
   const usByIso = useMemo(() => usInfluenceData?.countries || {}, [usInfluenceData]);
 
+  // FSI (Fragile States Index) の最小・最大値計算
   const [minR, maxR] = useMemo(() => {
     const values = Object.values(riskByIso).filter((v) => v != null);
     if (!values.length) return [0, 120];
     return [Math.min(...values), Math.max(...values)];
   }, [riskByIso]);
 
-  // ── 色計算 ──────────────────────────────────────────────────
+  // ── 色計算ロジック ───────────────────────────────────────────
   const getColour = useCallback((risk) => {
     if (risk == null) return '#1e293b'; // slate-800
-    // FSIは通常 0-120 の範囲だが、データの実測値に合わせて調整
+    // FSIは通常 0-120 の範囲。データの実測値に合わせて正規化
     const t = (risk - minR) / (maxR - minR || 1);
     if (t < 0.5) return mixColours(COLOUR_LOW, COLOUR_MID, t / 0.5);
     return mixColours(COLOUR_MID, COLOUR_HIGH, (t - 0.5) / 0.5);
@@ -44,36 +45,44 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
     pressed: { fill: '#e2e8f0', outline: 'none' },
   }), []);
 
-  // ── 凡例（Legend）設定 ──────────────────────────────────────
+  // ── Legend (凡例) システム定義 ───────────────────────────────
+  // 各レイヤーごとの「タイトル」「グラデーション定義」「数値メモリ」「アクセントカラー」を定義
   const legendConfig = useMemo(() => {
     switch (activeLayer) {
       case 'us':
         return {
-          title: 'US Influence Score',
-          gradient: 'linear-gradient(to right, #0f172a, #2563eb, #dbeafe)',
+          title: 'US Influence Sphere',
+          subTitle: 'Diplomatic & Military Alignment (0-100)',
+          // Dark Navy -> Blue -> Light Blue
+          gradient: 'linear-gradient(to right, #0f172a, #1e40af, #3b82f6, #93c5fd)', 
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-blue-400'
         };
       case 'china':
         return {
-          title: 'China Influence Score',
-          gradient: 'linear-gradient(to right, #6b7280, #fbbf24, #dc2626)',
+          title: 'China Influence Sphere',
+          subTitle: 'Economic & Political Alignment (0-100)',
+          // Grey -> Yellow -> Red
+          gradient: 'linear-gradient(to right, #6b7280, #fbbf24, #ef4444, #991b1b)',
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-amber-400'
         };
       case 'resources':
         return {
-          title: 'Resource Strat. Index',
+          title: 'Resource Strategy Index',
+          subTitle: 'Critical Minerals & Energy (0-100)',
+          // Slate -> Green -> Gold -> Bronze
           gradient: 'linear-gradient(to right, #475569, #50C878, #D4AF37, #CD7F32)',
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-emerald-400'
         };
-      default: // fsi
+      default: // fsi (Geopolitical Risk)
         return {
           title: 'Fragile States Index (FSI)',
-          // FSIの色配分: Low(Cyan) -> Mid(Purple) -> High(Red)
+          subTitle: 'Stability Score (0-120)',
+          // Cyan (Low Risk) -> Purple -> Red (High Risk)
           gradient: 'linear-gradient(to right, #06b6d4, #8b5cf6, #ef4444)',
-          labels: ['0', '30', '60', '90', '120'], // FSIはMAX120
+          labels: ['0', '30', '60', '90', '120'],
           colorClass: 'text-rose-400'
         };
     }
@@ -90,13 +99,13 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                 const isoAlpha3 = ISO_MAP[geo.id];
                 const iso = isoAlpha3 || geo.id;
                 
-                // レイヤーに応じた色決定
-                const baseFill =
-                  activeLayer === 'us'        ? getUSColour(usByIso[iso]?.score) :
-                  activeLayer === 'resources' ? getNaturalResourceColour(resourcesByIso[iso]?.score) :
-                  activeLayer === 'china'     ? getChinaColour(influenceByIso[iso]?.score) :
-                  getColour(riskByIso[iso]);
-                
+                // アクティブレイヤーに応じた色決定
+                let baseFill;
+                if (activeLayer === 'us')        baseFill = getUSColour(usByIso[iso]?.score);
+                else if (activeLayer === 'china') baseFill = getChinaColour(influenceByIso[iso]?.score);
+                else if (activeLayer === 'resources') baseFill = getNaturalResourceColour(resourcesByIso[iso]?.score);
+                else baseFill = getColour(riskByIso[iso]);
+
                 const isSelected = iso === selectedIso;
 
                 return (
@@ -104,6 +113,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                     key={geo.rsmKey}
                     geography={geo}
                     fill={baseFill}
+                    // 選択時は白枠、通常時は薄い透過線
                     stroke={isSelected ? "#fff" : "rgba(255,255,255,0.08)"}
                     strokeWidth={isSelected ? 1.5 : 0.5}
                     style={geoStyle}
@@ -117,37 +127,43 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           </Geographies>
         </ZoomableGroup>
 
-        {/* 凡例パネル (Legend Panel) - Matte Style */}
-        <div className="absolute bottom-8 right-8 z-20 font-sans select-none">
-          <div className="bg-[#0f172a]/95 backdrop-blur-md border border-white/[0.08] rounded-lg p-4 shadow-2xl min-w-[200px]">
-            {/* タイトル */}
-            <div className="flex justify-between items-end mb-2">
-              <span className={`text-[11px] uppercase font-bold tracking-wider ${legendConfig.colorClass}`}>
+        {/* Legend System (右下配置のメモリ) 
+          - マットな背景と明確な数値基準を表示
+        */}
+        <div className="absolute bottom-8 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-5 shadow-2xl min-w-[240px]">
+            {/* ヘッダー情報 */}
+            <div className="mb-3">
+              <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
                 {legendConfig.title}
-              </span>
+              </div>
+              <div className="text-[10px] text-slate-500 font-medium">
+                {legendConfig.subTitle}
+              </div>
             </div>
             
-            {/* カラーバー */}
-            <div className="h-3 w-full rounded-[2px] mb-1.5 relative border border-white/10" 
+            {/* グラデーションバーとメモリ線 */}
+            <div className="h-2.5 w-full rounded-sm mb-2 relative border border-white/10 overflow-hidden" 
                  style={{ background: legendConfig.gradient }}>
-              {/* メモリ線（Ticks） */}
+              {/* グリッドライン（5分割） */}
               <div className="absolute inset-0 flex justify-between px-[1px]">
                 {[0, 1, 2, 3, 4].map(i => (
-                   <div key={i} className="w-[1px] h-full bg-white/20" />
+                   <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
                 ))}
               </div>
             </div>
 
             {/* 数値ラベル */}
-            <div className="flex justify-between text-[9px] text-slate-400 font-mono font-medium">
+            <div className="flex justify-between text-[10px] text-slate-400 font-mono font-medium">
               {legendConfig.labels.map((label, i) => (
-                <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"}>
+                <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"} style={{ width: '20px' }}>
                   {label}
                 </span>
               ))}
             </div>
           </div>
         </div>
+
       </ComposableMap>
     </div>
   );
