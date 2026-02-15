@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Globe, ChevronUp, Activity, Maximize, Minimize, BarChart2 } from 'lucide-react';
+import { Globe, ChevronUp, Activity, Maximize, Minimize, BarChart2, TrendingUp } from 'lucide-react';
 
 // コンポーネント
 import WorldMap        from './components/WorldMap';
@@ -7,6 +7,7 @@ import CountryDetails  from './components/CountryDetails';
 import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
 import GlobalStreamPanel from './components/GlobalStreamPanel';
+import MacroStatsOverlay from './components/MacroStatsOverlay';
 
 // 定数
 import { REPORT_FILES } from './constants/isoMap';
@@ -31,6 +32,7 @@ export default function App() {
   const [resourcesData,         setResourcesData]         = useState(null);
   const [usInfluenceData,       setUsInfluenceData]       = useState(null);
   const [isLayerMenuOpen,       setIsLayerMenuOpen]       = useState(false);
+  const [isMacroOverlayOpen,   setIsMacroOverlayOpen]   = useState(false);
   const layerMenuRef = useRef(null);
   const layerMenuButtonRef = useRef(null);
   const firstLayerItemRef = useRef(null);
@@ -230,6 +232,13 @@ export default function App() {
             )}
           </div>
           <button
+            onClick={() => setIsMacroOverlayOpen(true)}
+            className="transition-all flex items-center gap-2 border px-5 py-2 rounded-full text-xs font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.15em] bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/30 text-cyan-300 hover:from-cyan-500/20 hover:to-blue-500/20 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+          >
+            <TrendingUp size={14} />
+            MACRO ANALYTICS
+          </button>
+          <button
             onClick={() => setIsAnalyticsPanelOpen(!isAnalyticsPanelOpen)}
             className={`transition-all flex items-center gap-2 border px-5 py-2 rounded-full text-xs font-semibold shadow-lg active:scale-95 duration-300 uppercase tracking-[0.15em]
               ${isAnalyticsPanelOpen
@@ -368,6 +377,9 @@ export default function App() {
           </div>
         </footer>
       </main>
+
+      {/* マクロ分析オーバーレイ */}
+      <MacroStatsOverlay isOpen={isMacroOverlayOpen} onClose={() => setIsMacroOverlayOpen(false)} />
 
       {/* グローバルスタイル */}
       <style>{`
