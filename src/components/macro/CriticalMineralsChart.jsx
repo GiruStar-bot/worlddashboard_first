@@ -1,88 +1,57 @@
-import React, { useState } from 'react';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Cell
-} from 'recharts';
-import DashboardCard from './DashboardCard';
-import CustomTooltip from './CustomTooltip';
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
-const MINERALS = [
-  { key: 'lithium', label: 'リチウム' },
-  { key: 'cobalt', label: 'コバルト' },
-  { key: 'rare_earths', label: 'レアアース' },
+const data = [
+  { name: 'Lithium', value: 85, color: '#3b82f6' }, // Blue
+  { name: 'Cobalt', value: 65, color: '#8b5cf6' },  // Purple
+  { name: 'Nickel', value: 45, color: '#10b981' },  // Emerald
+  { name: 'Rare Earth', value: 92, color: '#f59e0b' }, // Amber
 ];
 
-const CHINA_COLOR = '#f43f5e';
-const DEFAULT_GRADIENT = ['#f59e0b', '#eab308'];
-
-export default function CriticalMineralsChart({ data }) {
-  const [activeMineral, setActiveMineral] = useState('rare_earths');
-
-  if (!data) return null;
-
-  const mineralData = data[activeMineral] || [];
-
-  return (
-    <DashboardCard title="重要鉱物供給の集中度" subtitle="世界シェア上位生産国（%）" source="USGS 2025">
-      <div className="flex gap-1.5 mb-3">
-        {MINERALS.map(m => (
-          <button
-            key={m.key}
-            onClick={() => setActiveMineral(m.key)}
-            className={`px-2.5 py-1 text-[10px] font-['Inter'] rounded-md border transition-all ${
-              activeMineral === m.key
-                ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
-                : 'bg-white/[0.03] border-white/[0.06] text-slate-500 hover:text-slate-300'
-            }`}
-          >
-            {m.label}
-          </button>
-        ))}
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-900/90 border border-slate-700 p-2 rounded shadow-xl text-xs">
+        <p className="font-bold text-slate-200 mb-1">{label}</p>
+        <p className="text-slate-300">
+          Dependency: <span className="font-mono text-white">{payload[0].value}%</span>
+        </p>
       </div>
-      <ResponsiveContainer width="100%" height={320}>
+    );
+  }
+  return null;
+};
+
+const CriticalMineralsChart = () => {
+  return (
+    <div className="w-full h-full min-h-[180px]">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={mineralData}
+          data={data}
           layout="vertical"
-          margin={{ top: 0, right: 20, left: 10, bottom: 0 }}
+          margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
         >
-          <defs>
-            <linearGradient id="grad-mineral-default" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={DEFAULT_GRADIENT[0]} stopOpacity={0.8} />
-              <stop offset="100%" stopColor={DEFAULT_GRADIENT[1]} stopOpacity={0.3} />
-            </linearGradient>
-            <linearGradient id="grad-mineral-china" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={CHINA_COLOR} stopOpacity={0.9} />
-              <stop offset="100%" stopColor="#f97316" stopOpacity={0.4} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-          <XAxis
-            type="number"
-            domain={[0, 'auto']}
-            tick={{ fontSize: 10, fill: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
-            tickLine={false}
-            unit="%"
-          />
-          <YAxis
-            type="category"
-            dataKey="country"
-            width={75}
-            tick={{ fontSize: 10, fill: '#cbd5e1', fontFamily: 'Inter' }}
+          <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
+          <XAxis type="number" hide />
+          <YAxis 
+            dataKey="name" 
+            type="category" 
+            tick={{ fill: '#94a3b8', fontSize: 10 }} 
+            width={70}
             axisLine={false}
             tickLine={false}
           />
-          <Tooltip content={<CustomTooltip unitOverride="%" />} />
-          <Bar dataKey="share" name="世界シェア" radius={[0, 6, 6, 0]} barSize={18}>
-            {mineralData.map((entry, idx) => (
-              <Cell
-                key={idx}
-                fill={entry.country === 'China' ? 'url(#grad-mineral-china)' : 'url(#grad-mineral-default)'}
-              />
+          {/* 変更点: cursor={false} を設定してホバー時の背景発光を削除 */}
+          <Tooltip content={<CustomTooltip />} cursor={false} />
+          <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={12}>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </DashboardCard>
+    </div>
   );
-}
+};
+
+export default CriticalMineralsChart;
