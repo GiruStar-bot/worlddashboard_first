@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "updated": "2025-Q4",
+    "sources": ["IEA World Energy Outlook 2025", "IMF Global Financial Stability Report", "USGS Mineral Commodity Summaries", "WIPO Global Innovation Index"],
+    "units_reference": {
+      "energy": "Exajoules (EJ)",
+      "hydrogen_production": "Million metric tons",
+      "hydrogen_cost": "USD per kilogram",
+      "minerals": "Percentage of global production",
+      "food_security": "Index score (0-100)",
+      "rd_spending": "Percentage of GDP",
+      "unicorns": "Count / USD Billion",
+      "fdi": "USD Billion"
+    }
+  },
+  "energy_transition": {
+    "global_energy_mix": [
+      { "year": 2010, "oil": 170.3, "gas": 112.8, "coal": 147.6, "renewables": 17.5, "hydrogen": 0.1, "unit": "EJ" },
+      { "year": 2012, "oil": 172.1, "gas": 118.5, "coal": 153.4, "renewables": 22.3, "hydrogen": 0.1, "unit": "EJ" },
+      { "year": 2014, "oil": 175.8, "gas": 121.3, "coal": 155.7, "renewables": 28.6, "hydrogen": 0.2, "unit": "EJ" },
+      { "year": 2016, "oil": 180.2, "gas": 126.7, "coal": 148.3, "renewables": 37.4, "hydrogen": 0.3, "unit": "EJ" },
+      { "year": 2018, "oil": 185.6, "gas": 135.2, "coal": 151.8, "renewables": 48.2, "hydrogen": 0.4, "unit": "EJ" },
+      { "year": 2020, "oil": 168.5, "gas": 131.4, "coal": 141.6, "renewables": 58.7, "hydrogen": 0.5, "unit": "EJ" },
+      { "year": 2022, "oil": 184.3, "gas": 140.1, "coal": 148.2, "renewables": 72.8, "hydrogen": 0.8, "unit": "EJ" },
+      { "year": 2024, "oil": 186.1, "gas": 143.8, "coal": 139.4, "renewables": 91.3, "hydrogen": 1.4, "unit": "EJ" },
+      { "year": 2026, "oil": 183.5, "gas": 145.2, "coal": 127.6, "renewables": 115.8, "hydrogen": 2.8, "unit": "EJ" },
+      { "year": 2028, "oil": 178.2, "gas": 144.8, "coal": 112.3, "renewables": 142.6, "hydrogen": 5.2, "unit": "EJ" },
+      { "year": 2030, "oil": 171.4, "gas": 142.5, "coal": 98.7, "renewables": 168.4, "hydrogen": 8.6, "unit": "EJ" }
+    ],
+    "clean_hydrogen": [
+      { "year": 2020, "production_mt": 0.5, "cost_per_kg": 6.80, "growth_rate": null },
+      { "year": 2021, "production_mt": 0.7, "cost_per_kg": 6.20, "growth_rate": 40.0 },
+      { "year": 2022, "production_mt": 1.1, "cost_per_kg": 5.50, "growth_rate": 57.1 },
+      { "year": 2023, "production_mt": 1.8, "cost_per_kg": 4.80, "growth_rate": 63.6 },
+      { "year": 2024, "production_mt": 2.9, "cost_per_kg": 4.10, "growth_rate": 61.1 },
+      { "year": 2025, "production_mt": 4.5, "cost_per_kg": 3.40, "growth_rate": 55.2 },
+      { "year": 2026, "production_mt": 6.8, "cost_per_kg": 2.80, "growth_rate": 51.1 },
+      { "year": 2027, "production_mt": 9.6, "cost_per_kg": 2.30, "growth_rate": 41.2 },
+      { "year": 2028, "production_mt": 13.2, "cost_per_kg": 1.90, "growth_rate": 37.5 },
+      { "year": 2029, "production_mt": 17.5, "cost_per_kg": 1.60, "growth_rate": 32.6 },
+      { "year": 2030, "production_mt": 22.0, "cost_per_kg": 1.40, "growth_rate": 25.7 }
+    ]
+  },
+  "strategic_resources": {
+    "critical_minerals": {
+      "lithium": [
+        { "country": "Australia", "share": 46.9, "growth_rate": 8.2, "unit": "%" },
+        { "country": "Chile", "share": 24.5, "growth_rate": 3.1, "unit": "%" },
+        { "country": "China", "share": 14.6, "growth_rate": 12.4, "unit": "%" },
+        { "country": "Argentina", "share": 5.8, "growth_rate": 18.7, "unit": "%" },
+        { "country": "Brazil", "share": 2.4, "growth_rate": 22.3, "unit": "%" },
+        { "country": "Zimbabwe", "share": 1.8, "growth_rate": 45.6, "unit": "%" },
+        { "country": "Portugal", "share": 1.1, "growth_rate": -2.1, "unit": "%" },
+        { "country": "USA", "share": 0.9, "growth_rate": 15.3, "unit": "%" },
+        { "country": "Canada", "share": 0.7, "growth_rate": 28.4, "unit": "%" },
+        { "country": "Others", "share": 1.3, "growth_rate": 5.0, "unit": "%" }
+      ],
+      "cobalt": [
+        { "country": "DRC", "share": 72.6, "growth_rate": 3.8, "unit": "%" },
+        { "country": "Indonesia", "share": 5.4, "growth_rate": 42.1, "unit": "%" },
+        { "country": "Russia", "share": 4.2, "growth_rate": -1.5, "unit": "%" },
+        { "country": "Australia", "share": 3.1, "growth_rate": 2.6, "unit": "%" },
+        { "country": "Philippines", "share": 2.8, "growth_rate": 8.3, "unit": "%" },
+        { "country": "Cuba", "share": 2.1, "growth_rate": 0.5, "unit": "%" },
+        { "country": "Canada", "share": 2.0, "growth_rate": 4.2, "unit": "%" },
+        { "country": "China", "share": 1.9, "growth_rate": 6.7, "unit": "%" },
+        { "country": "Madagascar", "share": 1.7, "growth_rate": 1.2, "unit": "%" },
+        { "country": "Others", "share": 4.2, "growth_rate": 3.0, "unit": "%" }
+      ],
+      "rare_earths": [
+        { "country": "China", "share": 60.0, "growth_rate": 2.1, "unit": "%" },
+        { "country": "Myanmar", "share": 12.4, "growth_rate": 15.8, "unit": "%" },
+        { "country": "USA", "share": 8.3, "growth_rate": 22.6, "unit": "%" },
+        { "country": "Australia", "share": 6.1, "growth_rate": 18.4, "unit": "%" },
+        { "country": "Thailand", "share": 3.2, "growth_rate": 9.7, "unit": "%" },
+        { "country": "India", "share": 2.8, "growth_rate": 11.5, "unit": "%" },
+        { "country": "Russia", "share": 2.3, "growth_rate": -3.2, "unit": "%" },
+        { "country": "Vietnam", "share": 1.6, "growth_rate": 7.8, "unit": "%" },
+        { "country": "Brazil", "share": 1.4, "growth_rate": 5.3, "unit": "%" },
+        { "country": "Others", "share": 1.9, "growth_rate": 4.5, "unit": "%" }
+      ]
+    },
+    "food_security": {
+      "regions": [
+        {
+          "region": "G7",
+          "grain_self_sufficiency": 92,
+          "water_stress": 28,
+          "fertilizer_dependence": 35,
+          "export_capacity": 88,
+          "arable_land_per_capita": 76,
+          "storage_infrastructure": 91
+        },
+        {
+          "region": "BRICS",
+          "grain_self_sufficiency": 78,
+          "water_stress": 52,
+          "fertilizer_dependence": 44,
+          "export_capacity": 62,
+          "arable_land_per_capita": 58,
+          "storage_infrastructure": 54
+        },
+        {
+          "region": "ASEAN",
+          "grain_self_sufficiency": 84,
+          "water_stress": 42,
+          "fertilizer_dependence": 58,
+          "export_capacity": 71,
+          "arable_land_per_capita": 42,
+          "storage_infrastructure": 47
+        },
+        {
+          "region": "Sub-Saharan Africa",
+          "grain_self_sufficiency": 56,
+          "water_stress": 68,
+          "fertilizer_dependence": 72,
+          "export_capacity": 28,
+          "arable_land_per_capita": 65,
+          "storage_infrastructure": 22
+        },
+        {
+          "region": "MENA",
+          "grain_self_sufficiency": 38,
+          "water_stress": 89,
+          "fertilizer_dependence": 62,
+          "export_capacity": 15,
+          "arable_land_per_capita": 18,
+          "storage_infrastructure": 61
+        }
+      ]
+    }
+  },
+  "innovation_tech": {
+    "unicorn_density": [
+      { "region": "Silicon Valley", "country": "USA", "count": 312, "total_valuation": 1840, "avg_valuation": 5.9, "growth_rate": 4.2, "unit": "USD Billion" },
+      { "region": "New York", "country": "USA", "count": 128, "total_valuation": 620, "avg_valuation": 4.8, "growth_rate": 6.8, "unit": "USD Billion" },
+      { "region": "London", "country": "UK", "count": 86, "total_valuation": 340, "avg_valuation": 3.9, "growth_rate": 3.1, "unit": "USD Billion" },
+      { "region": "Beijing", "country": "China", "count": 78, "total_valuation": 480, "avg_valuation": 6.2, "growth_rate": -2.4, "unit": "USD Billion" },
+      { "region": "Shanghai", "country": "China", "count": 64, "total_valuation": 310, "avg_valuation": 4.8, "growth_rate": -1.8, "unit": "USD Billion" },
+      { "region": "Shenzhen", "country": "China", "count": 42, "total_valuation": 220, "avg_valuation": 5.2, "growth_rate": 1.5, "unit": "USD Billion" },
+      { "region": "Bangalore", "country": "India", "count": 68, "total_valuation": 195, "avg_valuation": 2.9, "growth_rate": 28.4, "unit": "USD Billion" },
+      { "region": "Tokyo", "country": "Japan", "count": 18, "total_valuation": 58, "avg_valuation": 3.2, "growth_rate": 12.6, "unit": "USD Billion" },
+      { "region": "Berlin", "country": "Germany", "count": 34, "total_valuation": 98, "avg_valuation": 2.9, "growth_rate": 5.4, "unit": "USD Billion" },
+      { "region": "Tel Aviv", "country": "Israel", "count": 48, "total_valuation": 142, "avg_valuation": 3.0, "growth_rate": 8.2, "unit": "USD Billion" },
+      { "region": "Singapore", "country": "Singapore", "count": 24, "total_valuation": 72, "avg_valuation": 3.0, "growth_rate": 18.6, "unit": "USD Billion" },
+      { "region": "Sao Paulo", "country": "Brazil", "count": 16, "total_valuation": 42, "avg_valuation": 2.6, "growth_rate": 14.3, "unit": "USD Billion" },
+      { "region": "Lagos", "country": "Nigeria", "count": 7, "total_valuation": 12, "avg_valuation": 1.7, "growth_rate": 42.8, "unit": "USD Billion" },
+      { "region": "Nairobi", "country": "Kenya", "count": 4, "total_valuation": 6.2, "avg_valuation": 1.6, "growth_rate": 38.5, "unit": "USD Billion" },
+      { "region": "Jakarta", "country": "Indonesia", "count": 12, "total_valuation": 28, "avg_valuation": 2.3, "growth_rate": 22.1, "unit": "USD Billion" }
+    ],
+    "rd_investment": [
+      {
+        "year": 2015,
+        "usa": 2.72, "china": 2.06, "eu": 1.93, "japan": 3.28, "south_korea": 4.22, "india": 0.63, "israel": 4.27,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2016,
+        "usa": 2.76, "china": 2.12, "eu": 1.94, "japan": 3.16, "south_korea": 4.23, "india": 0.66, "israel": 4.51,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2017,
+        "usa": 2.79, "china": 2.13, "eu": 1.97, "japan": 3.21, "south_korea": 4.56, "india": 0.67, "israel": 4.82,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2018,
+        "usa": 2.84, "china": 2.19, "eu": 2.00, "japan": 3.28, "south_korea": 4.53, "india": 0.65, "israel": 4.95,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2019,
+        "usa": 3.07, "china": 2.24, "eu": 2.10, "japan": 3.24, "south_korea": 4.64, "india": 0.65, "israel": 5.14,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2020,
+        "usa": 3.45, "china": 2.40, "eu": 2.20, "japan": 3.27, "south_korea": 4.81, "india": 0.69, "israel": 5.44,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2021,
+        "usa": 3.46, "china": 2.44, "eu": 2.16, "japan": 3.30, "south_korea": 4.93, "india": 0.67, "israel": 5.56,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2022,
+        "usa": 3.48, "china": 2.55, "eu": 2.22, "japan": 3.31, "south_korea": 5.21, "india": 0.71, "israel": 5.69,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2023,
+        "usa": 3.52, "china": 2.64, "eu": 2.27, "japan": 3.34, "south_korea": 5.36, "india": 0.74, "israel": 5.81,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2024,
+        "usa": 3.58, "china": 2.78, "eu": 2.32, "japan": 3.38, "south_korea": 5.44, "india": 0.78, "israel": 5.92,
+        "unit": "% GDP"
+      },
+      {
+        "year": 2025,
+        "usa": 3.62, "china": 2.91, "eu": 2.38, "japan": 3.42, "south_korea": 5.56, "india": 0.82, "israel": 6.04,
+        "unit": "% GDP"
+      }
+    ]
+  },
+  "global_capital_flow": {
+    "fdi_flows": [
+      {
+        "year": 2018,
+        "global_north_inflow": 682, "global_north_outflow": -745,
+        "global_south_inflow": 512, "global_south_outflow": -268,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2019,
+        "global_north_inflow": 648, "global_north_outflow": -710,
+        "global_south_inflow": 534, "global_south_outflow": -285,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2020,
+        "global_north_inflow": 396, "global_north_outflow": -482,
+        "global_south_inflow": 448, "global_south_outflow": -214,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2021,
+        "global_north_inflow": 812, "global_north_outflow": -920,
+        "global_south_inflow": 685, "global_south_outflow": -358,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2022,
+        "global_north_inflow": 548, "global_north_outflow": -625,
+        "global_south_inflow": 572, "global_south_outflow": -312,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2023,
+        "global_north_inflow": 524, "global_north_outflow": -598,
+        "global_south_inflow": 548, "global_south_outflow": -345,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2024,
+        "global_north_inflow": 562, "global_north_outflow": -632,
+        "global_south_inflow": 618, "global_south_outflow": -382,
+        "unit": "USD Billion"
+      },
+      {
+        "year": 2025,
+        "global_north_inflow": 588, "global_north_outflow": -654,
+        "global_south_inflow": 672, "global_south_outflow": -418,
+        "unit": "USD Billion"
+      }
+    ]
+  }
+}
