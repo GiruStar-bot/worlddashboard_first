@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.1",
     "as_of": "2026-02-15",
-    "methodology": "Composite US Influence Index v1.1 (0-100). Formula: score = clamp(12 + 0.10*allied_institutions_exposure + 0.12*fdi_from_us + 0.14*trade_with_us_pct + 0.30*security_ties + 0.12*tech_dependency + 0.17*financial_exposure + 0.05*logistics_exposure). Inputs are pre-normalized 0-100 indicators; output rounded to one decimal. This revision raises baseline structural influence and increases weights for security_ties and financial_exposure to better reflect current geopolitical conditions.",
+    "methodology": "Composite US Influence Index v1.1 (0-100). Formula: score = clamp[0,100](12 + 0.10*allied_institutions_exposure + 0.12*fdi_from_us + 0.14*trade_with_us_pct + 0.30*security_ties + 0.12*tech_dependency + 0.17*financial_exposure + 0.05*logistics_exposure). Inputs are pre-normalized 0-100 indicators; stored numeric output is rounded to one decimal precision (whole-number values may appear without trailing .0 in JSON serialization). This revision raises baseline structural influence and increases weights for security_ties and financial_exposure to better reflect current geopolitical conditions.",
     "sources": [
       "IMF IMTS (International Trade in Goods by partner, formerly DOTS)",
       "IMF COFER (Currency Composition of Official Foreign Exchange Reserves, aggregate context)",
