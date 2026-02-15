@@ -11,6 +11,10 @@ import { REPORT_FILES } from './constants/isoMap';
 
 const TOOLTIP_WIDTH = 220;
 const TOOLTIP_HEIGHT = 90;
+const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
+const getIsMobileViewport = () => (
+  typeof window !== 'undefined' ? window.matchMedia(MOBILE_MEDIA_QUERY).matches : false
+);
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -26,6 +30,7 @@ export default function App() {
   const [isLayerMenuOpen, setIsLayerMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(getIsMobileViewport);
 
   const layerMenuRef = useRef(null);
   const layerMenuButtonRef = useRef(null);
@@ -75,23 +80,55 @@ export default function App() {
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const handleViewportChange = (event) => setIsMobileViewport(event.matches);
+    mediaQuery.addEventListener('change', handleViewportChange);
+    return () => mediaQuery.removeEventListener('change', handleViewportChange);
+  }, []);
+
   const handleCountryClick = useCallback((iso3) => {
     setSelectedIso(iso3);
     setIsReportOpen(false);
-  }, []);
+    if (isMobileViewport) setIsAnalyticsPanelOpen(false);
+  }, [isMobileViewport]);
 
   const handleHover = useCallback((iso3, position) => {
-    if (!iso3 || !position) {
+    if (isMobileViewport || !iso3 || !position) {
       setHoverInfo(null);
       return;
     }
     setHoverInfo({ iso3, x: position.x, y: position.y });
-  }, []);
+  }, [isMobileViewport]);
 
   const toggleFs = useCallback(async () => {
     if (document.fullscreenElement) await document.exitFullscreen();
     else await document.documentElement.requestFullscreen();
   }, []);
+
+  const closeCountryContextPanels = useCallback(() => {
+    setSelectedIso(null);
+    setIsReportOpen(false);
+  }, []);
+
+  const openMacroOverlay = useCallback(() => {
+    if (isMobileViewport) {
+      setIsAnalyticsPanelOpen(false);
+      closeCountryContextPanels();
+    }
+    setIsMacroOverlayOpen(true);
+  }, [closeCountryContextPanels, isMobileViewport]);
+
+  const toggleAnalyticsPanel = useCallback(() => {
+    setIsAnalyticsPanelOpen((prev) => {
+      const next = !prev;
+      if (next && isMobileViewport) {
+        closeCountryContextPanels();
+      }
+      return next;
+    });
+  }, [closeCountryContextPanels, isMobileViewport]);
 
   // Loading Screen: 演出を控えめに
   if (!data) return (
@@ -165,7 +202,7 @@ export default function App() {
 
           {/* Macro Analytics Button */}
           <button
-            onClick={() => setIsMacroOverlayOpen(true)}
+            onClick={openMacroOverlay}
             className="btn-base hover:bg-slate-700/50 hover:text-white hover:border-slate-500/30"
           >
             <TrendingUp size={14} />
@@ -174,7 +211,7 @@ export default function App() {
 
           {/* Analytics Panel Toggle */}
           <button
-            onClick={() => setIsAnalyticsPanelOpen(!isAnalyticsPanelOpen)}
+            onClick={toggleAnalyticsPanel}
             className={`btn-base ${isAnalyticsPanelOpen ? 'bg-white/[0.08] text-slate-100' : ''}`}
           >
             <BarChart2 size={14} />
@@ -207,7 +244,7 @@ export default function App() {
         </div>
 
         {/* ツールチップ: シンプルなカード形式に変更 */}
-        {hoverInfo && (
+        {hoverInfo && !isMobileViewport && (
           <div
             className="fixed z-[120] px-4 py-3 bg-[#0f172a]/95 backdrop-blur-sm border border-white/10 text-slate-200 shadow-xl rounded-lg pointer-events-none"
             style={{
