@@ -74,3 +74,20 @@ Deep Dive Reportボタン	その国に深掘りレポートが存在する場合
 ・情報ソースを最新のものへ継続的に更新する運用を新設（Data Freshness Auditと連動）
 ・データ鮮度監査（Data Freshness Audit）を運用し、半年超データを自動的に更新候補へ振り分ける
 ・FSIレイヤーは再定義済み計算プロセス（正規化 + 安定性補正）を基準に全国家・地域へ適用する
+
+## 情報取得プロセス（現行→動的適応）
+
+現行プロセスは、`public/*.json` の静的マスターファイル（全国家・地域データ、影響度、地域レポート）をビルド済みアプリで参照する構成です。  
+v6.3 以降は、以下の「動的優先 + 静的フォールバック」方式に対応しました。
+
+- `src/services/dashboardDataService.js` がデータ取得を一元化
+- `.env` の URL（`VITE_*_DATA_URL`）が設定されていれば動的エンドポイントから取得
+- 動的取得が失敗した場合は、既存の静的 JSON に自動フォールバック
+
+設定可能な主な環境変数:
+
+- `VITE_MASTER_DATA_URL`
+- `VITE_CHINA_INFLUENCE_DATA_URL`
+- `VITE_RESOURCE_DATA_URL`
+- `VITE_US_INFLUENCE_DATA_URL`
+- `VITE_REPORTS_DATA_BASE_URL`（`reports_africa.json` など地域レポートを `${BASE_URL}/{file}` で取得）

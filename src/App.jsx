@@ -7,8 +7,8 @@ import CountryDetails  from './components/CountryDetails';
 import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
 import MacroStatsOverlay from './components/MacroStatsOverlay';
-import { REPORT_FILES } from './constants/isoMap';
 import { redefineFsiLayerScores } from './utils/fsiLayerUtils';
+import { loadDashboardData } from './services/dashboardDataService';
 
 const TOOLTIP_WIDTH = 220;
 const TOOLTIP_HEIGHT = 90;
@@ -38,15 +38,7 @@ export default function App() {
 
   useEffect(() => {
     let isCancelled = false;
-    const loadJson = (fileName) => fetch(`${import.meta.env.BASE_URL}${fileName}`).then((res) => res.json());
-
-    Promise.all([
-      loadJson('worlddash_global_master.json'),
-      loadJson('china_influence_index.json'),
-      loadJson('natural_resources_index.json'),
-      loadJson('us_influence_index.json'),
-      Promise.all(REPORT_FILES.map(loadJson)),
-    ]).then(([master, china, resources, us, reportGroups]) => {
+    loadDashboardData().then(({ master, china, resources, us, reportGroups }) => {
       if (isCancelled) return;
       const reportMap = {};
       reportGroups.flat().forEach((report) => {
