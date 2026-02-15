@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, TrendingUp, AlertTriangle, Users, DollarSign } from 'lucide-react';
+import { X, TrendingUp, AlertTriangle, Users, DollarSign, BarChart2 } from 'lucide-react';
 
 const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso }) => {
   const [activeTab, setActiveTab] = useState('gdp');
