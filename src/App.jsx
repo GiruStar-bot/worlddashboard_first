@@ -153,7 +153,7 @@ export default function App() {
       <div className="absolute inset-0 pointer-events-none z-[998] opacity-[0.05] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.6)_50%)] bg-[length:100%_4px]" />
 
       {/* ═══ ヘッダー ══════════════════════════════════════════ */}
-      <header className="absolute top-0 left-0 right-0 h-20 flex items-center px-8 justify-between z-[110] bg-slate-950/70 backdrop-blur-[40px] border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-mono">
+      <header className="absolute top-0 left-0 right-0 h-20 flex items-center px-8 justify-between z-[110] bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-mono">
         {/* ロゴ */}
         <div className="flex items-center gap-6">
           <div className="p-2 bg-cyan-500/10 rounded-xl border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
@@ -300,7 +300,7 @@ export default function App() {
           const resMetric = activeLayer === "resources" ? resourcesData?.countries?.[hoverInfo.iso3]?.metric : null;
           return (
             <div
-              className="fixed z-[120] px-5 py-3 bg-slate-900/90 backdrop-blur-[20px] border border-white/20 text-slate-100 font-mono pointer-events-none shadow-[0_0_20px_rgba(0,0,0,0.8)] rounded-xl animate-in fade-in zoom-in-95 duration-200"
+              className="fixed z-[120] px-5 py-3 bg-[#0f172a]/90 backdrop-blur-xl border border-white/[0.06] text-slate-100 font-mono pointer-events-none shadow-[0_0_20px_rgba(0,0,0,0.8)] rounded-xl animate-in fade-in zoom-in-95 duration-200"
               style={{ left: hoverInfo.x + 20, top: hoverInfo.y + 20 }}
             >
               <div className={`font-semibold ${tooltipAccent} text-sm border-b border-white/10 mb-2 pb-2 flex items-center gap-3`}>
@@ -358,8 +358,8 @@ export default function App() {
         {/* ═══ フッター: グローバルストリーム ══════════════════════ */}
         <footer className={`absolute bottom-0 left-0 right-0 z-[100] transition-all duration-700 flex flex-col overflow-hidden shrink-0
           ${isStreamPanelOpen
-            ? 'h-[calc(100vh-7rem)] rounded-t-[3rem] bg-slate-950/80 backdrop-blur-[40px] border-t border-white/10 shadow-[0_-20px_60px_rgba(0,0,0,0.8)]'
-            : 'h-12 bg-gradient-to-b from-white/[0.05] to-transparent backdrop-blur-[8px] border-t border-white/20 hover:bg-white/[0.08]'}`}
+            ? 'h-[calc(100vh-7rem)] rounded-t-[3rem] bg-[#0f172a]/80 backdrop-blur-xl border-t border-white/[0.06] shadow-[0_-20px_60px_rgba(0,0,0,0.8)]'
+            : 'h-12 bg-[#0f172a]/80 backdrop-blur-xl border-t border-white/[0.06] hover:bg-[#0f172a]/90'}`}
         >
           <button
             onClick={() => setIsStreamPanelOpen(!isStreamPanelOpen)}

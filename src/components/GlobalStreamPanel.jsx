@@ -21,7 +21,7 @@ const FeedColumn = ({ source, isExpanded }) => {
   }, [isExpanded, news.length, source.url]);
 
   return (
-    <div className="flex flex-col h-full bg-white/[0.02] border border-white/10 rounded-3xl shadow-xl overflow-hidden relative">
+    <div className="flex flex-col h-full bg-[#0f172a]/80 border border-white/[0.06] rounded-3xl shadow-xl overflow-hidden relative backdrop-blur-xl font-['Inter']">
       {/* ヘッダー */}
       <div className="p-5 border-b border-white/5 flex justify-between items-center bg-white/[0.02] z-10 shrink-0">
         <h4 className={`text-xs ${source.color} font-bold tracking-[0.2em] flex items-center gap-2 uppercase font-mono`}>

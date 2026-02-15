@@ -8,7 +8,7 @@ const DeepReportPanel = ({ report, onClose }) => {
   const displayName = meta.country_name_ja || meta.country_name_en;
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/60 backdrop-blur-[50px] border-r border-l border-white/10 shadow-2xl overflow-hidden animate-in slide-in-from-right duration-700">
+    <div className="flex flex-col h-full bg-[#0f172a]/80 backdrop-blur-xl border-r border-l border-white/[0.06] shadow-2xl overflow-hidden animate-in slide-in-from-right duration-700 font-['Inter']">
       {/* ヘッダー */}
       <div className="p-6 border-b border-white/5 flex justify-between items-center bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
         <div className="space-y-1">

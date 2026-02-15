@@ -37,7 +37,7 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
 
   return (
     <div className={`absolute top-20 bottom-12 left-0 w-[22rem] md:w-[26rem] transform transition-all duration-700 z-[90] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-      <div className="flex flex-col h-full bg-slate-900/50 backdrop-blur-[40px] border-r border-white/10 shadow-[20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden">
+      <div className="flex flex-col h-full bg-[#0f172a]/80 backdrop-blur-xl border-r border-white/[0.06] shadow-[20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden font-['Inter']">
 
         {/* ヘッダー */}
         <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">

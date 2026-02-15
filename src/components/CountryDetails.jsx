@@ -46,7 +46,7 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/50 backdrop-blur-[40px] border-l border-white/10 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden">
+    <div className="flex flex-col h-full bg-[#0f172a]/80 backdrop-blur-xl border-l border-white/[0.06] shadow-[-20px_0_60px_rgba(0,0,0,0.5)] overflow-hidden font-['Inter']">
       {/* ヘッダー */}
       <div className="p-6 border-b border-white/5 flex justify-between items-start bg-gradient-to-b from-white/[0.04] to-transparent shrink-0">
         <div className="space-y-1.5 flex-1 pr-4">
