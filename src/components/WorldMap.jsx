@@ -1,35 +1,71 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { GEO_URL, ISO_MAP } from '../constants/isoMap';
-import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates'; // 新規import
+import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates';
 import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorUtils';
 import { getChinaColour, getNaturalResourceColour } from '../utils/layerColorUtils';
 import { getUSColour } from '../utils/usLayerUtils';
 
 const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesData, usInfluenceData, onCountryClick, onHover, selectedIso }) => {
   
-  // ── マップ位置のState管理 (Auto Zoom用) ─────────────────────
+  // ── マップ位置のState管理 (Smooth Zoom用) ─────────────────────
   const [position, setPosition] = useState(DEFAULT_POSITION);
+  const animationRef = useRef(null);
 
-  // selectedIso が変更されたら、自動でズーム＆パンを実行
+  // イージング関数 (Cubic Ease Out): 自然な減速感
+  const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+
+  // 目標地点へアニメーション移動する関数
+  const animateTo = useCallback((targetCoordinates, targetZoom) => {
+    const startCoordinates = position.coordinates;
+    const startZoom = position.zoom;
+    const startTime = performance.now();
+    const duration = 1500; // 1.5秒かけて移動（Google Earth風のゆったり感）
+
+    // 既存のアニメーションがあればキャンセル
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
+
+    const animate = (time) => {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = easeOutCubic(progress);
+
+      // 座標とズームの補間計算
+      const nextCoordinates = [
+        startCoordinates[0] + (targetCoordinates[0] - startCoordinates[0]) * ease,
+        startCoordinates[1] + (targetCoordinates[1] - startCoordinates[1]) * ease,
+      ];
+      const nextZoom = startZoom + (targetZoom - startZoom) * ease;
+
+      setPosition({ coordinates: nextCoordinates, zoom: nextZoom });
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        animationRef.current = null;
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [position]);
+
+  // selectedIso が変更されたら、アニメーションを開始
   useEffect(() => {
     if (selectedIso && COUNTRY_COORDINATES[selectedIso]) {
-      // 登録済みの座標があればそこへ移動
-      setPosition({
-        coordinates: COUNTRY_COORDINATES[selectedIso].coordinates,
-        zoom: COUNTRY_COORDINATES[selectedIso].zoom
-      });
-    } else if (!selectedIso) {
-      // 選択解除時はデフォルト位置へ（必要なければこの分岐は削除可）
-      // setPosition(DEFAULT_POSITION); 
-      // ※ UX上、選択解除でいきなり世界全図に戻ると使いにくい場合があるため、
-      // 　戻すかどうかは好みによります。ここでは「戻さない」設定にしておきます。
+      const target = COUNTRY_COORDINATES[selectedIso];
+      // 瞬間移動(setPosition)ではなく、アニメーション関数を呼ぶ
+      animateTo(target.coordinates, target.zoom);
     }
-  }, [selectedIso]);
+  }, [selectedIso, animateTo]);
 
-  // 手動操作時の座標更新（これがないとドラッグ後に位置がリセットされてしまう）
-  const handleMoveEnd = (position) => {
-    setPosition(position);
+  // 手動操作時の座標更新
+  const handleMoveEnd = (newPosition) => {
+    // ユーザーが手動操作したらアニメーションを強制停止（操作の競合を防ぐ）
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    setPosition(newPosition);
   };
 
   // ── データ処理 ───────────────────────────────────────────────
@@ -66,7 +102,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   const geoStyle = useMemo(() => ({
     default: { outline: 'none', transition: 'all 0.2s ease' },
     hover: { 
-      // 前回修正した「白枠発光」スタイル
       stroke: '#ffffff',        
       strokeWidth: 2,           
       cursor: 'pointer', 
@@ -119,9 +154,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   return (
     <div className="w-full h-full bg-[#020617] relative">
       <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
-        {/* ZoomableGroup を Controlled Component に変更 
-          center, zoom を state から供給し、onMoveEnd で state を更新する
-        */}
         <ZoomableGroup 
           center={position.coordinates} 
           zoom={position.zoom} 
@@ -129,6 +161,8 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           maxZoom={8} 
           translateExtent={[[-500, -200], [1300, 800]]}
           onMoveEnd={handleMoveEnd}
+          // アニメーション中のカクつきを防ぐため、移動中はtransitionを無効化するスタイル調整も可能だが、
+          // Reactのレンダリングサイクルでの更新となるため、ここでは標準設定で実装
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
