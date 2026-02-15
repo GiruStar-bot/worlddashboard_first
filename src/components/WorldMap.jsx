@@ -131,10 +131,10 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
       {/* Legend System (右下配置のメモリ) 
         - マットな背景と明確な数値基準を表示
       */}
-      <div className="absolute bottom-8 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-5 shadow-2xl min-w-[240px]">
+      <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl min-w-[200px]">
           {/* ヘッダー情報 */}
-          <div className="mb-3">
+          <div className="mb-2">
             <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
               {legendConfig.title}
             </div>
@@ -144,7 +144,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           </div>
           
           {/* グラデーションバーとメモリ線 */}
-          <div className="h-2.5 w-full rounded-sm mb-2 relative border border-white/10 overflow-hidden" 
+          <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" 
                style={{ background: legendConfig.gradient }}>
             {/* グリッドライン（5分割） */}
             <div className="absolute inset-0 flex justify-between px-[1px]">
@@ -155,13 +155,13 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           </div>
 
           {/* 濃淡の意味 */}
-          <div className="flex justify-between text-[10px] text-slate-500 mb-1">
+          <div className="flex justify-between text-[9px] text-slate-500 mb-1">
             <span>Low</span>
             <span>High</span>
           </div>
 
           {/* 数値ラベル */}
-          <div className="flex justify-between text-[10px] text-slate-400 font-mono font-medium">
+          <div className="flex justify-between text-[9px] text-slate-400 font-mono font-medium">
             {legendConfig.labels.map((label, i) => (
               <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"} style={{ width: '20px' }}>
                 {label}

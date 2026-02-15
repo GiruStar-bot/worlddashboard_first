@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Globe, ChevronUp, Activity, Maximize, Minimize, BarChart2, TrendingUp, Layers } from 'lucide-react';
+import { Globe, Maximize, Minimize, BarChart2, TrendingUp, Layers } from 'lucide-react';
 
 // コンポーネント
 import WorldMap        from './components/WorldMap';
 import CountryDetails  from './components/CountryDetails';
 import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
-import GlobalStreamPanel from './components/GlobalStreamPanel';
 import MacroStatsOverlay from './components/MacroStatsOverlay';
 import { REPORT_FILES } from './constants/isoMap';
 
@@ -23,7 +22,6 @@ export default function App() {
   const [isMacroOverlayOpen, setIsMacroOverlayOpen] = useState(false);
   const [isLayerMenuOpen, setIsLayerMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isStreamPanelOpen, setIsStreamPanelOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const layerMenuRef = useRef(null);
@@ -245,26 +243,6 @@ export default function App() {
             hasReport={!!selectedReport}
           />
         </aside>
-
-        {/* フッター (Global Stream): シンプル化 */}
-        <footer className={`absolute bottom-0 left-0 right-0 z-[100] transition-all duration-500 flex flex-col
-          ${isStreamPanelOpen
-            ? 'h-[40vh] bg-[#0f172a] border-t border-white/[0.06] shadow-[0_-10px_40px_rgba(0,0,0,0.5)]'
-            : 'h-10 bg-[#0f172a]/80 border-t border-white/[0.06]'}`}
-        >
-          <button
-            onClick={() => setIsStreamPanelOpen(!isStreamPanelOpen)}
-            className="h-10 w-full flex items-center justify-center gap-2 text-[10px] font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.02] transition-colors uppercase tracking-widest"
-          >
-            <Activity size={12} />
-            {isStreamPanelOpen ? 'Collapse Stream' : 'Live Intelligence Stream'}
-            <ChevronUp size={14} className={`transition-transform duration-300 ${isStreamPanelOpen ? 'rotate-180' : ''}`} />
-          </button>
-          
-          <div className="flex-1 overflow-hidden relative">
-             <GlobalStreamPanel isExpanded={isStreamPanelOpen} />
-          </div>
-        </footer>
 
       </main>
 
