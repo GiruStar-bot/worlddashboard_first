@@ -6,11 +6,39 @@ import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorU
 import { getChinaColour, getNaturalResourceColour } from '../utils/layerColorUtils';
 import { getUSColour } from '../utils/usLayerUtils';
 
+// Center mobile default view around the Europe/Africa midpoint (longitude, latitude)
+const MOBILE_DEFAULT_POSITION = {
+  coordinates: [10, 35],
+  zoom: 2.2,
+};
+const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
+
+const getDefaultPositionForViewport = (isMobileViewport) => (
+  isMobileViewport ? MOBILE_DEFAULT_POSITION : DEFAULT_POSITION
+);
+
+const getInitialPosition = () => {
+  if (typeof window === 'undefined') return DEFAULT_POSITION;
+  return getDefaultPositionForViewport(window.matchMedia(MOBILE_MEDIA_QUERY).matches);
+};
+
 const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesData, usInfluenceData, onCountryClick, onHover, selectedIso }) => {
   
   // ── マップ位置のState管理 (Smooth Zoom用) ─────────────────────
-  const [position, setPosition] = useState(DEFAULT_POSITION);
+  const [position, setPosition] = useState(getInitialPosition);
   const animationRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return () => {};
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const handleViewportChange = (event) => {
+      if (!selectedIso) {
+        setPosition(getDefaultPositionForViewport(event.matches));
+      }
+    };
+    mediaQuery.addEventListener('change', handleViewportChange);
+    return () => mediaQuery.removeEventListener('change', handleViewportChange);
+  }, [selectedIso]);
 
   // イージング関数 (Cubic Ease Out): 自然な減速感
   const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
