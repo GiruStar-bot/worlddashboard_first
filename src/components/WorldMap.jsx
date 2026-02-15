@@ -90,7 +90,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
 
   // ── レンダリング ────────────────────────────────────────────
   return (
-    <div className="w-full h-full bg-[#020617]">
+    <div className="w-full h-full bg-[#020617] relative">
       <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
         <ZoomableGroup center={[10, 15]} zoom={1.5} minZoom={1} maxZoom={8} translateExtent={[[-500, -200], [1300, 800]]}>
           <Geographies geography={GEO_URL}>
@@ -126,45 +126,50 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
             }
           </Geographies>
         </ZoomableGroup>
+      </ComposableMap>
 
-        {/* Legend System (右下配置のメモリ) 
-          - マットな背景と明確な数値基準を表示
-        */}
-        <div className="absolute bottom-8 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-5 shadow-2xl min-w-[240px]">
-            {/* ヘッダー情報 */}
-            <div className="mb-3">
-              <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
-                {legendConfig.title}
-              </div>
-              <div className="text-[10px] text-slate-500 font-medium">
-                {legendConfig.subTitle}
-              </div>
+      {/* Legend System (右下配置のメモリ) 
+        - マットな背景と明確な数値基準を表示
+      */}
+      <div className="absolute bottom-8 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-5 shadow-2xl min-w-[240px]">
+          {/* ヘッダー情報 */}
+          <div className="mb-3">
+            <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
+              {legendConfig.title}
             </div>
-            
-            {/* グラデーションバーとメモリ線 */}
-            <div className="h-2.5 w-full rounded-sm mb-2 relative border border-white/10 overflow-hidden" 
-                 style={{ background: legendConfig.gradient }}>
-              {/* グリッドライン（5分割） */}
-              <div className="absolute inset-0 flex justify-between px-[1px]">
-                {[0, 1, 2, 3, 4].map(i => (
-                   <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
-                ))}
-              </div>
+            <div className="text-[10px] text-slate-500 font-medium">
+              {legendConfig.subTitle}
             </div>
-
-            {/* 数値ラベル */}
-            <div className="flex justify-between text-[10px] text-slate-400 font-mono font-medium">
-              {legendConfig.labels.map((label, i) => (
-                <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"} style={{ width: '20px' }}>
-                  {label}
-                </span>
+          </div>
+          
+          {/* グラデーションバーとメモリ線 */}
+          <div className="h-2.5 w-full rounded-sm mb-2 relative border border-white/10 overflow-hidden" 
+               style={{ background: legendConfig.gradient }}>
+            {/* グリッドライン（5分割） */}
+            <div className="absolute inset-0 flex justify-between px-[1px]">
+              {[0, 1, 2, 3, 4].map(i => (
+                 <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
               ))}
             </div>
           </div>
-        </div>
 
-      </ComposableMap>
+          {/* 濃淡の意味 */}
+          <div className="flex justify-between text-[10px] text-slate-500 mb-1">
+            <span>Low</span>
+            <span>High</span>
+          </div>
+
+          {/* 数値ラベル */}
+          <div className="flex justify-between text-[10px] text-slate-400 font-mono font-medium">
+            {legendConfig.labels.map((label, i) => (
+              <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"} style={{ width: '20px' }}>
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 });
