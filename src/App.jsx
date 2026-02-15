@@ -29,6 +29,7 @@ export default function App() {
   const [activeLayer,           setActiveLayer]           = useState("fsi");
   const [chinaInfluenceData,    setChinaInfluenceData]    = useState(null);
   const [resourcesData,         setResourcesData]         = useState(null);
+  const [usInfluenceData,       setUsInfluenceData]       = useState(null);
   const [isLayerMenuOpen,       setIsLayerMenuOpen]       = useState(false);
   const layerMenuRef = useRef(null);
   const layerMenuButtonRef = useRef(null);
@@ -54,6 +55,11 @@ export default function App() {
       .then(res => res.json())
       .catch(e => { console.warn("Natural resources data load failed", e); return null; });
 
+    // 米国影響力インデックス
+    const loadUSInfluence = fetch(`${baseUrl}us_influence_index.json`)
+      .then(res => res.json())
+      .catch(e => { console.warn("US influence data load failed", e); return null; });
+
     // 分割レポートファイル（並列取得・エラー時は空配列）
     const loadReports = Promise.all(
       REPORT_FILES.map(filename =>
@@ -72,11 +78,12 @@ export default function App() {
       return merged;
     });
 
-    Promise.all([loadMaster, loadReports, loadChinaInfluence, loadResources]).then(([masterData, mergedReports, chinaData, resData]) => {
+    Promise.all([loadMaster, loadReports, loadChinaInfluence, loadResources, loadUSInfluence]).then(([masterData, mergedReports, chinaData, resData, usData]) => {
       if (masterData) setData(masterData);
       setReports(mergedReports);
       if (chinaData) setChinaInfluenceData(chinaData);
       if (resData) setResourcesData(resData);
+      if (usData) setUsInfluenceData(usData);
     });
   }, []);
 
@@ -208,6 +215,17 @@ export default function App() {
                 >
                   Natural Resources
                 </button>
+                <button
+                  role="menuitemradio"
+                  aria-checked={activeLayer === "us"}
+                  onClick={() => { setActiveLayer("us"); setIsLayerMenuOpen(false); }}
+                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
+                    ${activeLayer === "us"
+                      ? "bg-blue-500/20 border-blue-500/50 text-blue-300 shadow-[0_0_12px_rgba(37,99,235,0.2)]"
+                      : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-blue-400 hover:bg-white/[0.08]"}`}
+                >
+                  US Influence
+                </button>
               </div>
             )}
           </div>
@@ -241,6 +259,7 @@ export default function App() {
             activeLayer={activeLayer}
             chinaInfluenceData={chinaInfluenceData}
             resourcesData={resourcesData}
+            usInfluenceData={usInfluenceData}
             onCountryClick={handleCountryClick}
             onHover={handleHover}
             selectedIso={selectedIso}
@@ -250,18 +269,22 @@ export default function App() {
         {/* ホバーツールチップ */}
         {hoverInfo && (() => {
           const tooltipAccent =
+            activeLayer === "us" ? "text-blue-400" :
             activeLayer === "china" ? "text-amber-400" :
             activeLayer === "resources" ? "text-emerald-400" :
             "text-cyan-400";
           const tooltipDot =
+            activeLayer === "us" ? "bg-blue-400" :
             activeLayer === "china" ? "bg-amber-400" :
             activeLayer === "resources" ? "bg-emerald-400" :
             "bg-cyan-400";
           const layerScore =
+            activeLayer === "us" ? usInfluenceData?.countries?.[hoverInfo.iso3]?.score :
             activeLayer === "china" ? chinaInfluenceData?.countries?.[hoverInfo.iso3]?.score :
             activeLayer === "resources" ? resourcesData?.countries?.[hoverInfo.iso3]?.score :
             null;
           const layerLabel =
+            activeLayer === "us" ? "US_INF" :
             activeLayer === "china" ? "CHINA_INF" :
             activeLayer === "resources" ? "GNR-PRI" :
             null;
