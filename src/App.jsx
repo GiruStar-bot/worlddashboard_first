@@ -108,9 +108,9 @@ export default function App() {
       {/* 削除: ノイズテクスチャ、スキャンライン、グラデーションオーバーレイ */}
       
       {/* ═══ ヘッダー: マットデザイン ══════════════════════════════════ */}
-      <header className="absolute top-0 left-0 right-0 h-16 flex items-center px-6 justify-between z-[110] bg-[#0f172a]/90 backdrop-blur-md border-b border-white/[0.06]">
+      <header className="absolute top-0 left-0 right-0 h-16 flex items-center px-3 sm:px-6 justify-between z-[110] bg-[#0f172a]/90 backdrop-blur-md border-b border-white/[0.06]">
         {/* ロゴエリア: シンプルかつ堅牢に */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex items-center justify-center w-8 h-8 bg-white/[0.05] rounded-md border border-white/10 text-slate-200">
             <Globe size={18} strokeWidth={1.5} />
           </div>
@@ -118,14 +118,14 @@ export default function App() {
             <h1 className="text-sm font-semibold text-slate-100 tracking-wide font-['Inter']">
               WORLD DASHBOARD
             </h1>
-            <div className="text-[10px] text-slate-500 font-medium">
+            <div className="hidden sm:block text-[10px] text-slate-500 font-medium">
               Global Intelligence Nexus v6.3
             </div>
           </div>
         </div>
 
         {/* コントロール群: 派手な光彩を削除し、実用的なボタンスタイルへ */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Layer Menu */}
           <div className="relative hidden md:block" ref={layerMenuRef}>
             <button
@@ -158,7 +158,7 @@ export default function App() {
             )}
           </div>
 
-          <div className="h-4 w-[1px] bg-white/10 mx-1" />
+          <div className="hidden sm:block h-4 w-[1px] bg-white/10 mx-1" />
 
           {/* Macro Analytics Button */}
           <button
@@ -166,7 +166,7 @@ export default function App() {
             className="btn-base hover:bg-slate-700/50 hover:text-white hover:border-slate-500/30"
           >
             <TrendingUp size={14} />
-            <span>MACRO</span>
+            <span className="hidden sm:inline">MACRO</span>
           </button>
 
           {/* Analytics Panel Toggle */}
@@ -175,7 +175,7 @@ export default function App() {
             className={`btn-base ${isAnalyticsPanelOpen ? 'bg-white/[0.08] text-slate-100' : ''}`}
           >
             <BarChart2 size={14} />
-            <span>ANALYTICS</span>
+            <span className="hidden sm:inline">ANALYTICS</span>
           </button>
 
           {/* Fullscreen */}
@@ -207,7 +207,10 @@ export default function App() {
         {hoverInfo && (
           <div
             className="fixed z-[120] px-4 py-3 bg-[#0f172a]/95 backdrop-blur-sm border border-white/10 text-slate-200 shadow-xl rounded-lg pointer-events-none"
-            style={{ left: hoverInfo.x + 15, top: hoverInfo.y + 15 }}
+            style={{
+              left: Math.max(8, Math.min(window.innerWidth - 220, hoverInfo.x + 15)),
+              top: Math.max(8, Math.min(window.innerHeight - 90, hoverInfo.y + 15)),
+            }}
           >
             <div className="text-xs font-bold text-slate-100 mb-1 flex items-center gap-2">
                {allCountries.find(c => c.master.iso3 === hoverInfo.iso3)?.master.name}
@@ -230,12 +233,12 @@ export default function App() {
         />
 
         {selectedReport && isReportOpen && (
-          <aside className="absolute top-20 bottom-12 right-[24rem] md:right-[28rem] w-[26rem] z-[89]">
+          <aside className="absolute top-16 bottom-0 right-0 w-full md:w-[26rem] z-[89] md:right-[26rem]">
             <DeepReportPanel report={selectedReport} onClose={() => setIsReportOpen(false)} />
           </aside>
         )}
 
-        <aside className={`absolute top-16 bottom-0 right-0 w-[24rem] md:w-[26rem] transform transition-transform duration-300 z-[90] ${selectedIso ? 'translate-x-0' : 'translate-x-full'}`}>
+        <aside className={`absolute top-16 bottom-0 right-0 w-full sm:w-80 md:w-[26rem] transform transition-transform duration-300 z-[90] ${selectedIso ? 'translate-x-0' : 'translate-x-full'}`}>
           <CountryDetails
             country={selectedCountry}
             onClose={() => setSelectedIso(null)}

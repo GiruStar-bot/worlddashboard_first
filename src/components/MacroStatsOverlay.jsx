@@ -119,7 +119,7 @@ export default function MacroStatsOverlay({ isOpen, onClose }) {
         }`}
       >
         {/* Sidebar */}
-        <nav className="relative w-[72px] lg:w-[220px] flex-shrink-0 border-r border-white/[0.06] bg-[#0f172a]/80 backdrop-blur-xl flex flex-col">
+        <nav className="relative w-14 md:w-40 lg:w-[220px] flex-shrink-0 border-r border-white/[0.06] bg-[#0f172a]/80 backdrop-blur-xl flex flex-col">
           {/* Logo area */}
           <div className="h-14 flex items-center px-4 border-b border-white/[0.06]">
             <span className="hidden lg:block text-xs font-semibold text-slate-300 font-['Inter'] tracking-widest uppercase">

@@ -42,7 +42,7 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
   const activeTabConfig = tabs.find(t => t.key === activeTab);
 
   return (
-    <div className={`absolute top-16 bottom-0 left-0 w-[22rem] md:w-[24rem] transform transition-transform duration-300 z-[90] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+    <div className={`absolute top-16 bottom-0 left-0 w-full sm:w-80 md:w-[24rem] transform transition-transform duration-300 z-[90] ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className="flex flex-col h-full bg-[#0f172a]/95 backdrop-blur-xl border-r border-white/[0.06] shadow-2xl">
 
         {/* ヘッダー */}
