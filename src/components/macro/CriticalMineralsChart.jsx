@@ -72,8 +72,23 @@ export default function CriticalMineralsChart({ data }) {
             axisLine={false}
             tickLine={false}
           />
-          <Tooltip content={<CustomTooltip unitOverride="%" />} />
-          <Bar dataKey="share" name="世界シェア" radius={[0, 6, 6, 0]} barSize={18}>
+          {/* UI改善: 白く光る背景(cursor)を削除し、透明に設定 
+            これによりグラフの色の視認性を確保
+          */}
+          <Tooltip 
+            cursor={{ fill: 'transparent' }} 
+            content={<CustomTooltip unitOverride="%" />} 
+          />
+          {/* UI改善: activeBarを追加
+            ホバー時にバー自体に白い枠線を表示し、選択状態を明確化
+          */}
+          <Bar 
+            dataKey="share" 
+            name="世界シェア" 
+            radius={[0, 6, 6, 0]} 
+            barSize={18}
+            activeBar={{ stroke: '#ffffff', strokeWidth: 1, fillOpacity: 1 }}
+          >
             {mineralData.map((entry, idx) => (
               <Cell
                 key={idx}
