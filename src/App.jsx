@@ -195,6 +195,17 @@ export default function App() {
                 </button>
                 <button
                   role="menuitemradio"
+                  aria-checked={activeLayer === "us"}
+                  onClick={() => { setActiveLayer("us"); setIsLayerMenuOpen(false); }}
+                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
+                    ${activeLayer === "us"
+                      ? "bg-blue-500/20 border-blue-500/50 text-blue-300 shadow-[0_0_12px_rgba(37,99,235,0.2)]"
+                      : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-blue-400 hover:bg-white/[0.08]"}`}
+                >
+                  US Influence
+                </button>
+                <button
+                  role="menuitemradio"
                   aria-checked={activeLayer === "china"}
                   onClick={() => { setActiveLayer("china"); setIsLayerMenuOpen(false); }}
                   className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
@@ -214,17 +225,6 @@ export default function App() {
                       : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-emerald-400 hover:bg-white/[0.08]"}`}
                 >
                   Natural Resources
-                </button>
-                <button
-                  role="menuitemradio"
-                  aria-checked={activeLayer === "us"}
-                  onClick={() => { setActiveLayer("us"); setIsLayerMenuOpen(false); }}
-                  className={`w-full text-left mt-2 px-3 py-2 rounded-lg uppercase text-xs font-semibold tracking-[0.15em] border transition-all duration-300 active:scale-95
-                    ${activeLayer === "us"
-                      ? "bg-blue-500/20 border-blue-500/50 text-blue-300 shadow-[0_0_12px_rgba(37,99,235,0.2)]"
-                      : "bg-white/[0.04] border-white/10 text-slate-400 hover:text-blue-400 hover:bg-white/[0.08]"}`}
-                >
-                  US Influence
                 </button>
               </div>
             )}
