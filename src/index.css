@@ -2,54 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 基本設定: マットで深い色合いの背景 */
 body {
-  @apply bg-slate-950 text-slate-200 antialiased font-sans overflow-hidden;
-  /* 修正: 拡張子を .png に変更 */
-  background-image: url('/worlddashboard_2/cyberpunk-bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: multiply;
-  background-color: #020617;
+  @apply bg-[#020617] text-slate-200 antialiased font-sans overflow-hidden;
+  /* 背景画像・ノイズ・乗算モードを削除し、純粋な色のみにする */
 }
 
 @layer components {
-  .glassmorphic {
-    @apply bg-slate-900 bg-opacity-60 backdrop-blur-xl border border-white/10 rounded-lg;
-    box-shadow: 0 0 20px 0 rgba(6, 182, 212, 0.1);
+  /* 新しい共通カードスタイル: MacroStatsOverlayと統一 */
+  .panel-base {
+    @apply bg-[#0f172a]/80 backdrop-blur-xl border border-white/[0.06];
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
 
-  .text-glow {
-    text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  /* インタラクティブ要素の基本スタイル */
+  .btn-base {
+    @apply flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
+           border border-white/[0.06] bg-white/[0.03] text-slate-400 font-medium text-xs
+           hover:bg-white/[0.08] hover:text-slate-200 transition-all duration-200;
   }
 
-  .scanline-effect {
-    background: linear-gradient(
-        to bottom,
-        rgba(18, 16, 16, 0) 50%,
-        rgba(0, 0, 0, 0.25) 50%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.06),
-        rgba(0, 255, 0, 0.02),
-        rgba(0, 0, 255, 0.06)
-      );
-    background-size: 100% 4px, 3px 100%;
+  .btn-active {
+    @apply bg-white/[0.1] text-white border-white/[0.2];
   }
+
+  /* 廃止: .text-glow, .scanline-effect は削除 */
 }
 
-/* カスタムスクロールバー (ニュースフィード用) */
+/* スクロールバー: 色味をCyanからSlate系に落ち着かせる */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.3);
-  border-radius: 10px;
+  background: rgba(148, 163, 184, 0.2); /* slate-400/20 */
+  border-radius: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.6);
+  background: rgba(148, 163, 184, 0.4);
 }
