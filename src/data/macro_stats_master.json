@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "updated": "2025-Q4",
-    "sources": ["IEA World Energy Outlook 2025", "IMF Global Financial Stability Report", "USGS Mineral Commodity Summaries", "WIPO Global Innovation Index"],
+    "updated": "2026-Q1",
+    "sources": ["IEA World Energy Outlook 2025 + monthly data updates (retrieved 2026-02)", "IMF Global Financial Stability Report 2025 + IMF Data API (retrieved 2026-02)", "USGS Mineral Commodity Summaries 2025 + USGS commodity monthly updates (retrieved 2026-02)", "WIPO Global Innovation Index 2025 + WIPO statistics database updates (retrieved 2026-02)"],
     "units_reference": {
       "energy": "Exajoules (EJ)",
       "hydrogen_production": "Million metric tons",
