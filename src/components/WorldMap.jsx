@@ -39,21 +39,34 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
     return mixColours(COLOUR_MID, COLOUR_HIGH, (t - 0.5) / 0.5);
   }, [minR, maxR]);
 
+  // ── スタイル定義（今回の修正箇所） ───────────────────────────
   const geoStyle = useMemo(() => ({
-    default: { outline: 'none', transition: 'all 0.2s ease' },
-    hover:   { fill: '#f8fafc', stroke: '#cbd5e1', strokeWidth: 1.5, cursor: 'pointer', outline: 'none' },
-    pressed: { fill: '#e2e8f0', outline: 'none' },
+    default: { 
+      outline: 'none', 
+      transition: 'all 0.2s ease' 
+    },
+    hover: { 
+      // fillを削除: これによりホバー時もベースの色(データ色)が維持されます
+      stroke: '#ffffff',        // 枠線を白く
+      strokeWidth: 2,           // 枠線を少し太く強調
+      cursor: 'pointer', 
+      outline: 'none',
+      filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.7))', // 白く発光するエフェクト
+      transition: 'all 0.1s ease'
+    },
+    pressed: { 
+      fill: '#e2e8f0', // クリック時はフィードバックとして明るくする（必要に応じて変更可）
+      outline: 'none' 
+    },
   }), []);
 
   // ── Legend (凡例) システム定義 ───────────────────────────────
-  // 各レイヤーごとの「タイトル」「グラデーション定義」「数値メモリ」「アクセントカラー」を定義
   const legendConfig = useMemo(() => {
     switch (activeLayer) {
       case 'us':
         return {
           title: 'US Influence Sphere',
           subTitle: 'Diplomatic & Military Alignment (0-100)',
-          // Dark Navy -> Blue -> Light Blue
           gradient: 'linear-gradient(to right, #0f172a, #1e40af, #3b82f6, #93c5fd)', 
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-blue-400'
@@ -62,7 +75,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
         return {
           title: 'China Influence Sphere',
           subTitle: 'Economic & Political Alignment (0-100)',
-          // Grey -> Yellow -> Red
           gradient: 'linear-gradient(to right, #6b7280, #fbbf24, #ef4444, #991b1b)',
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-amber-400'
@@ -71,7 +83,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
         return {
           title: 'Resource Strategy Index',
           subTitle: 'Critical Minerals & Energy (0-100)',
-          // Slate -> Green -> Gold -> Bronze
           gradient: 'linear-gradient(to right, #475569, #50C878, #D4AF37, #CD7F32)',
           labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-emerald-400'
@@ -80,7 +91,6 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
         return {
           title: 'Fragile States Index (FSI)',
           subTitle: 'Stability Score (0-120)',
-          // Cyan (Low Risk) -> Purple -> Red (High Risk)
           gradient: 'linear-gradient(to right, #06b6d4, #8b5cf6, #ef4444)',
           labels: ['0', '30', '60', '90', '120'],
           colorClass: 'text-rose-400'
@@ -128,9 +138,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
         </ZoomableGroup>
       </ComposableMap>
 
-      {/* Legend System (右下配置のメモリ) 
-        - マットな背景と明確な数値基準を表示
-      */}
+      {/* Legend System */}
       <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl min-w-[200px]">
           {/* ヘッダー情報 */}
@@ -143,10 +151,9 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
             </div>
           </div>
           
-          {/* グラデーションバーとメモリ線 */}
+          {/* グラデーションバー */}
           <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" 
                style={{ background: legendConfig.gradient }}>
-            {/* グリッドライン（5分割） */}
             <div className="absolute inset-0 flex justify-between px-[1px]">
               {[0, 1, 2, 3, 4].map(i => (
                  <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
@@ -154,13 +161,11 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
             </div>
           </div>
 
-          {/* 濃淡の意味 */}
           <div className="flex justify-between text-[9px] text-slate-500 mb-1">
             <span>Low</span>
             <span>High</span>
           </div>
 
-          {/* 数値ラベル */}
           <div className="flex justify-between text-[9px] text-slate-400 font-mono font-medium">
             {legendConfig.labels.map((label, i) => (
               <span key={i} className={i === 0 ? "text-left" : i === 4 ? "text-right" : "text-center"} style={{ width: '20px' }}>
