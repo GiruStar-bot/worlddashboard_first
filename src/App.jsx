@@ -8,6 +8,7 @@ import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
 import MacroStatsOverlay from './components/MacroStatsOverlay';
 import { REPORT_FILES } from './constants/isoMap';
+import { redefineFsiLayerScores } from './utils/fsiLayerUtils';
 
 const TOOLTIP_WIDTH = 220;
 const TOOLTIP_HEIGHT = 90;
@@ -52,7 +53,7 @@ export default function App() {
         const iso3 = report?.meta?.country_iso3;
         if (iso3) reportMap[iso3] = report;
       });
-      setData(master);
+      setData(redefineFsiLayerScores(master));
       setChinaInfluenceData(china);
       setResourcesData(resources);
       setUsInfluenceData(us);

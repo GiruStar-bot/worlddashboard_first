@@ -76,7 +76,7 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
             <Metric label="Population"   value={canonical?.society?.population?.value?.toLocaleString() || "-"} icon={Users} />
             <Metric label="GDP (Nominal)" value={`$${((canonical?.economy?.gdp_nominal?.value || 0) / 1e9).toFixed(1)}B`} icon={Activity} valueColor="text-emerald-400" />
             <Metric label="GDP Growth"    value={`${(canonical?.economy?.gdp_growth?.value || 0)}%`} icon={TrendingUp} valueColor={canonical?.economy?.gdp_growth?.value >= 0 ? "text-emerald-400" : "text-rose-400"} />
-            <Metric label="FSI Risk"      value={canonical?.risk?.fsi_total?.value?.toFixed(1) || "-"} icon={AlertTriangle} valueColor="text-rose-400" />
+            <Metric label="FSI Risk (R)"  value={canonical?.risk?.fsi_total?.value?.toFixed(1) || "-"} icon={AlertTriangle} valueColor="text-rose-400" />
           </div>
         </div>
 

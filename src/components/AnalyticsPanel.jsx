@@ -26,7 +26,7 @@ const AnalyticsPanel = ({ data, isOpen, onClose, onSelectCountry, selectedIso })
   let maxVal = 1;
   if (currentData.length > 0) {
     if      (activeTab === 'gdp')    maxVal = currentData[0].canonical.economy.gdp_nominal.value;
-    else if (activeTab === 'risk')   maxVal = 120;
+    else if (activeTab === 'risk')   maxVal = 100;
     else if (activeTab === 'growth') maxVal = Math.max(...currentData.map(c => c.canonical.economy.gdp_growth.value));
     else if (activeTab === 'pop')    maxVal = currentData[0].canonical.society.population.value;
   }

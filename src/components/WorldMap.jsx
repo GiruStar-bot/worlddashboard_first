@@ -113,19 +113,13 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   const resourcesByIso = useMemo(() => resourcesData?.countries || {}, [resourcesData]);
   const usByIso = useMemo(() => usInfluenceData?.countries || {}, [usInfluenceData]);
 
-  const [minR, maxR] = useMemo(() => {
-    const values = Object.values(riskByIso).filter((v) => v != null);
-    if (!values.length) return [0, 120];
-    return [Math.min(...values), Math.max(...values)];
-  }, [riskByIso]);
-
   // ── 色計算ロジック ───────────────────────────────────────────
   const getColour = useCallback((risk) => {
     if (risk == null) return '#1e293b'; 
-    const t = (risk - minR) / (maxR - minR || 1);
+    const t = Math.max(0, Math.min(1, risk / 100));
     if (t < 0.5) return mixColours(COLOUR_LOW, COLOUR_MID, t / 0.5);
     return mixColours(COLOUR_MID, COLOUR_HIGH, (t - 0.5) / 0.5);
-  }, [minR, maxR]);
+  }, []);
 
   const geoStyle = useMemo(() => ({
     default: { outline: 'none', transition: 'all 0.2s ease' },
@@ -170,9 +164,9 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
       default:
         return {
           title: 'Fragile States Index (FSI)',
-          subTitle: 'Stability Score (0-120)',
+          subTitle: 'Redefined Risk Score (0-100)',
           gradient: 'linear-gradient(to right, #06b6d4, #8b5cf6, #ef4444)',
-          labels: ['0', '30', '60', '90', '120'],
+          labels: ['0', '25', '50', '75', '100'],
           colorClass: 'text-rose-400'
         };
     }

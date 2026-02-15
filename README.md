@@ -6,11 +6,11 @@ World‑Dashboard – Global Intelligence Nexus
 •	経済：IMF WEO (2025-10) + World Bank DataBank / WDI（2026-01更新）
 •	人口：UN Data API（2025-12更新）+ UN DESA Population Division Data Portal（2026-01取得）
 •	政治体制：V‑Dem Democracy Report 2025 + IDEA Democracy Tracker（2025Q4反映）
-•	リスク指数：Fragile States Index 2025 + ACLED Conflict Data（週次更新、2026-02取得）
+•	リスク指数：Fragile States Index 2026 + ACLED Conflict Data（週次更新、2026-02取得）
 これらの統計値を国別に整理したマスターファイル（worlddash_global_master.json）には、各国のISO 3コード、国名、名目GDP、GDP成長率、人口、FSI総合スコアなどが含まれています。UI表示用として見出し文やスコアも保持されており、レーダーチャートなどで使用されます。
 現在実装済みの主な要素
 1. インタラクティブ世界地図（World Map）
-•	リスクのヒートマップ表示 – 各国のFSI総合スコアを取得し、低リスクから高リスクまでを色グラデーションで表現します[4]。リスクが不明な国は暗色で表示されます。
+•	リスクのヒートマップ表示 – 各国のFSI総合スコア（0-120）を正規化し、安定性補正（stability_score）を加えた再定義リスクスコア（0-100）で色グラデーション表示します[4]。リスクが不明な国は暗色で表示されます。
 •	カーソル操作 – 国の上にマウスを置くと国名とISO 3コードをツールチップで表示し[5]、クリックすると詳細パネルが開きます[6]。
 •	ズーム・パン – react-simple-maps の ZoomableGroup を利用し、地図の拡大縮小や移動が可能です[7]。
 2. Analytics Panel（世界ランキング）
@@ -69,5 +69,6 @@ Deep Dive Reportボタン	その国に深掘りレポートが存在する場合
 今後の開発ビジョン
 現在は世界の地政学的な構造を表層的なデータで俯瞰できる状態ですが、本プロジェクトでは次のような機能追加を計画しています。
 ・マクロ分析パネルの拡張と充実
-・情報を高いフレッシュ度の状態にアップデートし続ける
+・情報ソースを最新のものへ継続的に更新する運用を新設（Data Freshness Auditと連動）
 ・データ鮮度監査（Data Freshness Audit）を運用し、半年超データを自動的に更新候補へ振り分ける
+・FSIレイヤーは再定義済み計算プロセス（正規化 + 安定性補正）を基準に全国家・地域へ適用する

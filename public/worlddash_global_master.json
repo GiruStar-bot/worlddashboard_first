@@ -7,7 +7,7 @@
       "economy": "IMF World Economic Outlook (Oct 2025) + World Bank DataBank (Jan 2026 refresh)",
       "society": "UN Data API (Dec 2025 update) + UN DESA Population Division Data Portal (Jan 2026 retrieval)",
       "politics": "V-Dem Democracy Report 2025 + IDEA Democracy Tracker (Q4 2025)",
-      "risk": "Fragile States Index (FSI) 2025 + ACLED Conflict Data (retrieved Feb 2026)"
+      "risk": "Fragile States Index (FSI) 2026 + ACLED Conflict Data (retrieved Feb 2026)"
     },
     "last_changes": "Added 16 missing entities (AUT, BGR, CZE, DNK, FIN, GRC, HRV, LVA, SVK, SVN, VAT, LBY, TUN, ESH, SOM, NIC) and recomputed meta.stats.total_countries.",
     "stats": {
