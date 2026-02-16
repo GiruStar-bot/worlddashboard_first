@@ -1,7 +1,7 @@
 // 定数・設定値
 
-// UI形状は従来の world-atlas countries-110m と同一。Kosovo のみ id=983 を補完したローカルコピー。
-export const GEO_URL = 'countries-110m-kosovo-id.json';
+// 管理境界データ (ISO3 属性付き GeoJSON)。
+export const GEO_URL = 'admin0-countries-iso-a3.geojson';
 export const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 
 export const REPORT_FILES = [
@@ -18,7 +18,7 @@ export const NEWS_SOURCES = [
   { id: 'un',  name: 'UN NEWS',   url: 'https://news.un.org/feed/subscribe/en/news/all/rss.xml',   color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
 ];
 
-// 国名マッピング (Numeric ID -> ISO3)
+// Numeric ID -> ISO3 のフォールバック変換テーブル（geo.properties で解決できない場合のみ使用）
 export const ISO_MAP = {
   "004":"AFG","008":"ALB","010":"ATA","012":"DZA","016":"ASM","020":"AND","024":"AGO",
   "028":"ATG","031":"AZE","032":"ARG","036":"AUS","040":"AUT","044":"BHS","048":"BHR",

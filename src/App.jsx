@@ -223,6 +223,7 @@ export default function App() {
           <button onClick={toggleFs} className="btn-base w-9 px-0">
             {isFullscreen ? <Minimize size={14} /> : <Maximize size={14} />}
           </button>
+
         </div>
       </header>
 

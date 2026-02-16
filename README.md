@@ -15,7 +15,7 @@ World‑Dashboard – Global Intelligence Nexus
 •	China Influenceレイヤー – 既存の複合指数（貿易・BRI・FDI・AIIB・インフラ）をベースに、最新化フォーミュラで全国家・地域スコアを再計算し、地図レイヤーへ反映します。
 •	Natural Resourcesレイヤー – 既存の prod / dep / res 指標を用いた再定義フォーミュラ（0-100）で全国家・地域スコアを再計算し、資源戦略レイヤーへ反映します。
 •	カーソル操作 – 国の上にマウスを置くと国名とISO 3コードをツールチップで表示し[5]、クリックすると詳細パネルが開きます[6]。
-•	ズーム・パン – react-simple-maps の ZoomableGroup を利用し、地図の拡大縮小や移動が可能です[7]。
+•	ズーム・パン – MapLibre GL によるインタラクティブ操作（パン／ズーム）に対応し、表示中レイヤーと同一ソースで一貫したインタラクションを提供します。
 2. Analytics Panel（世界ランキング）
 サイドバー型パネルで、世界各国を複数指標でランキング表示します。
 •	選択可能な指標 – 名目GDP、FSIリスク、GDP成長率、人口の４つのタブがあります[8]。タブを切り替えると並び替えが動的に変わります[9]。
@@ -67,7 +67,30 @@ Deep Dive Reportボタン	その国に深掘りレポートが存在する場合
 * **技術スタック**
 * **Frontend**: React 18, Vite
 * **Styling**: Tailwind CSS (Utility-first), Lucide React (Icons)
-* **Visualization**: react-simple-maps (Vector Map), Recharts (Radar/Bar Charts)
+* **Visualization**: MapLibre GL JS (World Map), Recharts (Radar/Bar Charts)
+
+## 地図描画方針（feature_id 統一とレイヤー優先順位）
+
+今後の地図実装は **MapLibreWorldMap を唯一の運用系レンダラー** とし、
+**LegacyWorldMap（react-simple-maps 様式）は以降活用しない** 方針です。
+
+### 1) 色決定キーの統一
+- 地図の色決定は ISO3 専用ロジックではなく、`feature_id` を主キーとして扱います。
+- 解決順は `feature_id` → `custom_geoid` → `iso3`（または `key`）です。
+- これにより国境定義の変更や非ISO地物の追加時も、色決定ロジックを再実装せずに運用できます。
+
+### 2) index データ参照スキーマの統一
+- `public/*_index.json` は `countries` だけでなく `regions` / `disputed` も同じ参照層で解釈します。
+- 地図レイヤー側は地物タイプを意識せず、共通の feature 解決ロジックでスコア取得します。
+
+### 3) スコア生成処理の抽象化
+- 従来の `riskByIso` / `influenceByIso` のような個別実装は行わず、
+  レイヤー共通ユーティリティでスコアマップを生成します。
+- これにより、境界データや入力JSONの構造変更があっても追従コストを最小化します。
+
+### 4) レイヤー表示・イベント優先順位
+- 表示と操作の優先順位は **国ポリゴン > 係争地オーバーレイ** を仕様とします。
+- hover / click 判定でも同順序を適用し、イベント競合を防止します。
 
 今後の開発ビジョン
 現在は世界の地政学的な構造を表層的なデータで俯瞰できる状態ですが、本プロジェクトでは次のような機能追加を計画しています。
