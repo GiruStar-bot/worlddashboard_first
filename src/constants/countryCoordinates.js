@@ -4,8 +4,8 @@
 // src/constants/isoMap.js に準拠
 
 export const DEFAULT_POSITION = {
-  coordinates: [10, 15],
-  zoom: 1.5
+  coordinates: [0, 20],
+  zoom: 1
 };
 
 export const COUNTRY_COORDINATES = {
