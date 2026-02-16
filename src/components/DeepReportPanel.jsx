@@ -6,6 +6,8 @@ const DeepReportPanel = ({ report, onClose }) => {
 
   const { meta, key_takeaways, analysis } = report;
   const displayName = meta.country_name_ja || meta.country_name_en;
+  const takeaways = Array.isArray(key_takeaways) ? key_takeaways : [];
+  const reportAnalysis = analysis || {};
 
   return (
     <div className="flex flex-col h-full bg-[#0f172a]/95 backdrop-blur-xl border-l border-white/[0.06] shadow-2xl animate-in slide-in-from-right duration-500 font-sans">
@@ -40,7 +42,7 @@ const DeepReportPanel = ({ report, onClose }) => {
             Executive Summary
           </h3>
           <div className="space-y-3">
-            {key_takeaways.map((item, idx) => (
+            {takeaways.map((item, idx) => (
               <div key={idx} className="flex gap-3 text-sm text-slate-300 leading-relaxed">
                 <span className="text-amber-500 font-bold mt-0.5">•</span>
                 <span>{item.claim}</span>
@@ -55,7 +57,7 @@ const DeepReportPanel = ({ report, onClose }) => {
           { key: 'political_stability', title: 'Political Stability' },
           { key: 'economic_structure', title: 'Economic Structure' }
         ].map(section => {
-          const content = analysis[section.key];
+          const content = reportAnalysis[section.key];
           if (!content) return null;
 
           return (

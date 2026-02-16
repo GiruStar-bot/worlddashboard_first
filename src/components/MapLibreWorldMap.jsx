@@ -91,8 +91,7 @@ const loadMapLibre = async () => {
   if (typeof window !== 'undefined' && window.maplibregl) return window.maplibregl;
 
   try {
-    const packageName = 'maplibre-gl';
-    const mod = await import(/* @vite-ignore */ packageName);
+    const mod = await import('maplibre-gl');
     ensureMapLibreCss();
     return mod?.default || mod;
   } catch {

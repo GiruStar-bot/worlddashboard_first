@@ -16,6 +16,7 @@ const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
 const getIsMobileViewport = () => (
   typeof window !== 'undefined' ? window.matchMedia(MOBILE_MEDIA_QUERY).matches : false
 );
+const normalizeIso = (iso) => (typeof iso === 'string' ? iso.trim().toUpperCase() : null);
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -50,7 +51,7 @@ export default function App() {
       if (isCancelled) return;
       const reportMap = {};
       reportGroups.flat().forEach((report) => {
-        const iso3 = report?.meta?.country_iso3;
+        const iso3 = normalizeIso(report?.meta?.country_iso3 || report?.meta?.iso3 || report?.country_iso3);
         if (iso3) reportMap[iso3] = report;
       });
       setData(redefineFsiLayerScores(master));
@@ -141,7 +142,7 @@ export default function App() {
 
   const allCountries = data?.regions ? Object.values(data.regions).flat() : [];
   const selectedCountry = allCountries.find(c => c.master.iso3 === selectedIso) || null;
-  const selectedReport  = selectedIso ? reports[selectedIso] : null;
+  const selectedReport  = selectedIso ? reports[normalizeIso(selectedIso)] : null;
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#020617] relative font-sans text-slate-200">
