@@ -1,4 +1,5 @@
 import { ISO_MAP } from '../constants/isoMap';
+import { resolveFeatureIdFromProperties } from './layerScoreUtils';
 
 const PROPERTY_ISO_KEYS = ['iso_a3', 'ISO_A3', 'adm0_a3', 'ADM0_A3'];
 const INVALID_ISO_VALUES = new Set(['', '-99', '---', 'N/A', null, undefined]);
@@ -46,10 +47,12 @@ const pickIsoFromFallbackMap = (geoId) => {
  * `id` 欠損・ISO解決不可の地物は `clickable: false` として扱う。
  */
 export const resolveGeoIso = (geo) => {
+  const featureId = resolveFeatureIdFromProperties(geo?.properties);
   const fromProperties = pickIsoFromProperties(geo?.properties);
   if (fromProperties) {
     return {
       ...fromProperties,
+      featureId: featureId || fromProperties.iso,
       clickable: true,
       name: geo?.properties?.name || geo?.properties?.NAME || null,
     };
@@ -59,6 +62,7 @@ export const resolveGeoIso = (geo) => {
   if (fromFallbackMap) {
     return {
       ...fromFallbackMap,
+      featureId: featureId || fromFallbackMap.iso,
       clickable: true,
       name: geo?.properties?.name || geo?.properties?.NAME || null,
     };
@@ -66,9 +70,9 @@ export const resolveGeoIso = (geo) => {
 
   return {
     iso: null,
+    featureId,
     source: 'unresolved',
     clickable: false,
     name: geo?.properties?.name || geo?.properties?.NAME || null,
   };
 };
-

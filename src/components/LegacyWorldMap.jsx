@@ -6,6 +6,7 @@ import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorU
 import { getChinaColour, getNaturalResourceColour } from '../utils/layerColorUtils';
 import { getUSColour } from '../utils/usLayerUtils';
 import { resolveGeoIso } from '../utils/geoIsoResolver';
+import { getLayerScoreMaps } from '../utils/layerScoreUtils';
 
 // Center mobile default view around the Europe/Africa midpoint (longitude, latitude)
 const MOBILE_DEFAULT_POSITION = {
@@ -98,21 +99,12 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   };
 
   // ── データ処理 ───────────────────────────────────────────────
-  const riskByIso = useMemo(() => {
-    const map = {};
-    if (data && data.regions) {
-      Object.values(data.regions).forEach((region) => {
-        region.forEach((entry) => {
-          map[entry.master.iso3] = entry.canonical?.risk?.fsi_total?.value;
-        });
-      });
-    }
-    return map;
-  }, [data]);
-
-  const influenceByIso = useMemo(() => chinaInfluenceData?.countries || {}, [chinaInfluenceData]);
-  const resourcesByIso = useMemo(() => resourcesData?.countries || {}, [resourcesData]);
-  const usByIso = useMemo(() => usInfluenceData?.countries || {}, [usInfluenceData]);
+  const scoreMaps = useMemo(() => getLayerScoreMaps({
+    masterData: data,
+    chinaInfluenceData,
+    resourcesData,
+    usInfluenceData,
+  }), [data, chinaInfluenceData, resourcesData, usInfluenceData]);
 
   // ── 色計算ロジック ───────────────────────────────────────────
   const getColour = useCallback((risk) => {
@@ -190,13 +182,15 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const { iso, clickable } = resolveGeoIso(geo);
+                const { iso, featureId, clickable } = resolveGeoIso(geo);
+                const layerKey = ['fsi', 'us', 'china', 'resources'].includes(activeLayer) ? activeLayer : 'fsi';
+                const score = scoreMaps[layerKey]?.[featureId || iso] ?? null;
 
                 let baseFill;
-                if (activeLayer === 'us')        baseFill = getUSColour(usByIso[iso]?.score);
-                else if (activeLayer === 'china') baseFill = getChinaColour(influenceByIso[iso]?.score);
-                else if (activeLayer === 'resources') baseFill = getNaturalResourceColour(resourcesByIso[iso]?.score);
-                else baseFill = getColour(riskByIso[iso]);
+                if (activeLayer === 'us')        baseFill = getUSColour(score);
+                else if (activeLayer === 'china') baseFill = getChinaColour(score);
+                else if (activeLayer === 'resources') baseFill = getNaturalResourceColour(score);
+                else baseFill = getColour(score);
 
                 const isSelected = iso === selectedIso;
 

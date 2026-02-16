@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates';
+import { getLayerScoreMaps } from '../utils/layerScoreUtils';
 
 const MOBILE_DEFAULT_POSITION = {
   coordinates: [10, 35],
   zoom: 2.2,
 };
 const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
-const SOURCE_ID = 'countries';
-const FILL_LAYER_ID = 'countries-fill';
-const LINE_LAYER_ID = 'countries-line';
+const COUNTRY_SOURCE_ID = 'countries';
+const COUNTRY_FILL_LAYER_ID = 'countries-fill';
+const COUNTRY_LINE_LAYER_ID = 'countries-line';
+const DISPUTED_FILL_LAYER_ID = 'disputed-fill';
 const MAPLIBRE_CSS_ID = 'maplibre-gl-css';
 
 const getDefaultPositionForViewport = (isMobileViewport) => (
@@ -59,27 +61,20 @@ const layerStyles = {
   },
 };
 
-const getScoreMaps = (data, chinaInfluenceData, resourcesData, usInfluenceData) => {
-  const riskByIso = {};
-  if (data?.regions) {
-    Object.values(data.regions).forEach((region) => {
-      region.forEach((entry) => {
-        riskByIso[entry.master.iso3] = entry.canonical?.risk?.fsi_total?.value;
-      });
-    });
-  }
+const DISPUTED_FILTER = ['any',
+  ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_type'], '']]], 'disputed'],
+  ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_class'], '']]], 'disputed'],
+  ['==', ['downcase', ['to-string', ['coalesce', ['get', 'kind'], '']]], 'disputed'],
+  ['==', ['downcase', ['to-string', ['coalesce', ['get', 'status'], '']]], 'disputed'],
+  ['==', ['downcase', ['to-string', ['coalesce', ['get', 'boundary_type'], '']]], 'disputed'],
+];
 
-  const toScores = (payload) => Object.fromEntries(
-    Object.entries(payload?.countries || {}).map(([iso, val]) => [iso, val?.score]),
-  );
+const COUNTRY_FILTER = ['all', ['!=', ['coalesce', ['get', 'iso_a3'], '-99'], '-99'], ['!', DISPUTED_FILTER]];
 
-  return {
-    fsi: riskByIso,
-    china: toScores(chinaInfluenceData),
-    resources: toScores(resourcesData),
-    us: toScores(usInfluenceData),
-  };
-};
+const FEATURE_ID_EXPR = [
+  'upcase',
+  ['to-string', ['coalesce', ['get', 'feature_id'], ['get', 'custom_geoid'], ['get', 'iso_a3'], ['get', 'ISO_A3'], ['get', 'adm0_a3'], ['get', 'ADM0_A3'], '']],
+];
 
 const ensureMapLibreCss = () => {
   if (typeof document === 'undefined') return;
@@ -131,6 +126,14 @@ const loadMapLibre = async () => {
   return window.maplibregl;
 };
 
+const pickCountryFeature = (features = []) => {
+  const country = features.find((feature) => feature.layer?.id === COUNTRY_FILL_LAYER_ID);
+  if (!country) return null;
+  const iso = country.properties?.iso_a3;
+  if (!iso || iso === '-99') return null;
+  return { iso };
+};
+
 const MapLibreWorldMap = ({
   data,
   activeLayer,
@@ -151,20 +154,25 @@ const MapLibreWorldMap = ({
 
   const legendConfig = useMemo(() => layerStyles[activeLayer] || layerStyles.fsi, [activeLayer]);
   const scoreMaps = useMemo(
-    () => getScoreMaps(data, chinaInfluenceData, resourcesData, usInfluenceData),
+    () => getLayerScoreMaps({
+      masterData: data,
+      chinaInfluenceData,
+      resourcesData,
+      usInfluenceData,
+    }),
     [data, chinaInfluenceData, resourcesData, usInfluenceData],
   );
 
   const updateSelectedFeatureState = useCallback((nextSelectedIso) => {
     const map = mapRef.current;
-    if (!map || !map.getSource(SOURCE_ID)) return;
+    if (!map || !map.getSource(COUNTRY_SOURCE_ID)) return;
 
     if (selectedIsoRef.current) {
-      map.setFeatureState({ source: SOURCE_ID, id: selectedIsoRef.current }, { selected: false });
+      map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: selectedIsoRef.current }, { selected: false });
     }
 
     if (nextSelectedIso) {
-      map.setFeatureState({ source: SOURCE_ID, id: nextSelectedIso }, { selected: true });
+      map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: nextSelectedIso }, { selected: true });
     }
 
     selectedIsoRef.current = nextSelectedIso || null;
@@ -224,7 +232,7 @@ const MapLibreWorldMap = ({
     }, 6000);
 
     const handleSourceData = (event) => {
-      if (event.sourceId === SOURCE_ID && event.isSourceLoaded) {
+      if (event.sourceId === COUNTRY_SOURCE_ID && event.isSourceLoaded) {
         sourceReady = true;
         setIsMapReady(true);
         window.clearTimeout(sourceTimeoutId);
@@ -247,16 +255,29 @@ const MapLibreWorldMap = ({
     map.on('error', handleMapError);
 
     map.on('load', () => {
-      map.addSource(SOURCE_ID, {
+      map.addSource(COUNTRY_SOURCE_ID, {
         type: 'geojson',
         data: `${import.meta.env.BASE_URL}admin0-countries-iso-a3-antimeridian-fix.geojson`,
         promoteId: 'iso_a3',
       });
 
+      // 仕様: 国ポリゴン > 係争地オーバーレイ（係争地は下層で描画し、イベントも国を優先）
       map.addLayer({
-        id: FILL_LAYER_ID,
+        id: DISPUTED_FILL_LAYER_ID,
         type: 'fill',
-        source: SOURCE_ID,
+        source: COUNTRY_SOURCE_ID,
+        filter: DISPUTED_FILTER,
+        paint: {
+          'fill-color': '#6b7280',
+          'fill-opacity': 0.35,
+        },
+      });
+
+      map.addLayer({
+        id: COUNTRY_FILL_LAYER_ID,
+        type: 'fill',
+        source: COUNTRY_SOURCE_ID,
+        filter: COUNTRY_FILTER,
         paint: {
           'fill-color': '#334155',
           'fill-opacity': 1,
@@ -264,9 +285,10 @@ const MapLibreWorldMap = ({
       });
 
       map.addLayer({
-        id: LINE_LAYER_ID,
+        id: COUNTRY_LINE_LAYER_ID,
         type: 'line',
-        source: SOURCE_ID,
+        source: COUNTRY_SOURCE_ID,
+        filter: COUNTRY_FILTER,
         paint: {
           'line-color': [
             'case',
@@ -283,31 +305,41 @@ const MapLibreWorldMap = ({
         },
       });
 
-      map.on('mousemove', FILL_LAYER_ID, (event) => {
-        const iso = event.features?.[0]?.properties?.iso_a3;
-        if (!iso || iso === '-99') return;
+      map.on('mousemove', (event) => {
+        const features = map.queryRenderedFeatures(event.point, { layers: [COUNTRY_FILL_LAYER_ID, DISPUTED_FILL_LAYER_ID] });
+        const country = pickCountryFeature(features);
 
-        if (hoveredIsoRef.current && hoveredIsoRef.current !== iso) {
-          map.setFeatureState({ source: SOURCE_ID, id: hoveredIsoRef.current }, { hover: false });
+        if (!country) {
+          if (hoveredIsoRef.current) {
+            map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: hoveredIsoRef.current }, { hover: false });
+            hoveredIsoRef.current = null;
+          }
+          onHover(null);
+          return;
         }
 
-        hoveredIsoRef.current = iso;
-        map.setFeatureState({ source: SOURCE_ID, id: iso }, { hover: true });
-        onHover(iso, { x: event.originalEvent.clientX, y: event.originalEvent.clientY });
+        if (hoveredIsoRef.current && hoveredIsoRef.current !== country.iso) {
+          map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: hoveredIsoRef.current }, { hover: false });
+        }
+
+        hoveredIsoRef.current = country.iso;
+        map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: country.iso }, { hover: true });
+        onHover(country.iso, { x: event.originalEvent.clientX, y: event.originalEvent.clientY });
       });
 
-      map.on('mouseleave', FILL_LAYER_ID, () => {
+      map.on('mouseout', () => {
         if (hoveredIsoRef.current) {
-          map.setFeatureState({ source: SOURCE_ID, id: hoveredIsoRef.current }, { hover: false });
+          map.setFeatureState({ source: COUNTRY_SOURCE_ID, id: hoveredIsoRef.current }, { hover: false });
           hoveredIsoRef.current = null;
         }
         onHover(null);
       });
 
-      map.on('click', FILL_LAYER_ID, (event) => {
-        const iso = event.features?.[0]?.properties?.iso_a3;
-        if (!iso || iso === '-99') return;
-        onCountryClick(iso);
+      map.on('click', (event) => {
+        const features = map.queryRenderedFeatures(event.point, { layers: [COUNTRY_FILL_LAYER_ID, DISPUTED_FILL_LAYER_ID] });
+        const country = pickCountryFeature(features);
+        if (!country) return;
+        onCountryClick(country.iso);
       });
     });
 
@@ -335,25 +367,24 @@ const MapLibreWorldMap = ({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!isMapReady || !map || !map.getLayer(FILL_LAYER_ID) || !map.getSource(SOURCE_ID)) return;
+    if (!isMapReady || !map || !map.getLayer(COUNTRY_FILL_LAYER_ID) || !map.getSource(COUNTRY_SOURCE_ID)) return;
 
     const layerKey = layerStyles[activeLayer] ? activeLayer : 'fsi';
     const activeScores = scoreMaps[layerKey] || {};
 
     const stops = (layerStyles[layerKey] || layerStyles.fsi).stops;
     const noData = (layerStyles[layerKey] || layerStyles.fsi).noData;
-    const scoreMatch = ['match', ['get', 'iso_a3']];
+    const scoreMatch = ['match', FEATURE_ID_EXPR];
 
-    Object.entries(activeScores).forEach(([iso, score]) => {
+    Object.entries(activeScores).forEach(([featureId, score]) => {
       if (Number.isFinite(score)) {
-        scoreMatch.push(iso, score);
+        scoreMatch.push(featureId, score);
       }
     });
 
-    // fallback value: score unavailable
     scoreMatch.push(-1);
 
-    map.setPaintProperty(FILL_LAYER_ID, 'fill-color', [
+    map.setPaintProperty(COUNTRY_FILL_LAYER_ID, 'fill-color', [
       'let',
       'score',
       scoreMatch,
