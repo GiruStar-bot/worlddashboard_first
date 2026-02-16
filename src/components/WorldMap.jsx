@@ -174,8 +174,8 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
 
   // ── レンダリング ────────────────────────────────────────────
   return (
-    <div className="w-full h-full bg-[#020617] relative">
-      <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
+    <div data-testid="world-map" className="w-full h-full bg-[#020617] relative">
+      <ComposableMap projectionConfig={{ scale: 185 }} className="w-full h-full outline-none">
         <ZoomableGroup 
           center={position.coordinates} 
           zoom={position.zoom} 
@@ -189,9 +189,12 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const isoAlpha3 = ISO_MAP[geo.id];
-                const iso = isoAlpha3 || geo.id;
-                
+                const isoFromProperties = geo.properties?.iso_a3 || geo.properties?.ISO_A3 || geo.properties?.adm0_a3;
+                const geoId = geo.id != null ? String(geo.id) : null;
+                const isoFromNumericId = geoId ? (ISO_MAP[geoId] || ISO_MAP[geoId.padStart(3, '0')]) : null;
+                const isoAlpha3 = isoFromProperties || isoFromNumericId || geoId;
+                const iso = isoAlpha3;
+
                 let baseFill;
                 if (activeLayer === 'us')        baseFill = getUSColour(usByIso[iso]?.score);
                 else if (activeLayer === 'china') baseFill = getChinaColour(influenceByIso[iso]?.score);
@@ -205,12 +208,12 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                     key={geo.rsmKey}
                     geography={geo}
                     fill={baseFill}
-                    stroke={isSelected ? "#fff" : "rgba(255,255,255,0.08)"}
-                    strokeWidth={isSelected ? 1.5 : 0.5}
+                    stroke={isSelected ? "#fff" : "rgba(2, 6, 23, 0.45)"}
+                    strokeWidth={isSelected ? 1.5 : 0.6}
                     style={geoStyle}
                     onMouseEnter={(evt) => onHover(iso, { x: evt.clientX, y: evt.clientY })}
                     onMouseLeave={() => onHover(null)}
-                    onClick={() => { if (isoAlpha3) onCountryClick(iso); }}
+                    onClick={() => { if (iso && iso.length === 3) onCountryClick(iso); }}
                   />
                 );
               })

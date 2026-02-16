@@ -1,7 +1,7 @@
 // 定数・設定値
 
-// UI形状は従来の world-atlas countries-110m と同一。Kosovo のみ id=983 を補完したローカルコピー。
-export const GEO_URL = 'countries-110m-kosovo-id.json';
+// 管理境界データ (ISO3 属性付き GeoJSON)。
+export const GEO_URL = 'admin0-countries-iso-a3.geojson';
 export const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 
 export const REPORT_FILES = [
