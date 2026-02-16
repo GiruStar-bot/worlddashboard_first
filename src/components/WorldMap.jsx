@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { GEO_URL, ISO_MAP } from '../constants/isoMap';
+import { GEO_URL, GEO_ID_ISO_EXCEPTIONS, GEO_NAME_ISO_EXCEPTIONS } from '../constants/isoMap';
 import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates';
 import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorUtils';
 import { getChinaColour, getNaturalResourceColour } from '../utils/layerColorUtils';
@@ -189,8 +189,15 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const isoAlpha3 = ISO_MAP[geo.id];
-                const iso = isoAlpha3 || geo.id;
+                const properties = geo.properties || {};
+                const idKey = geo.id == null ? '' : String(geo.id);
+                const iso = (
+                  properties.ISO_A3
+                  || properties.ADM0_A3
+                  || GEO_ID_ISO_EXCEPTIONS[idKey]
+                  || GEO_NAME_ISO_EXCEPTIONS[properties.name]
+                  || null
+                );
                 
                 let baseFill;
                 if (activeLayer === 'us')        baseFill = getUSColour(usByIso[iso]?.score);
@@ -210,7 +217,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                     style={geoStyle}
                     onMouseEnter={(evt) => onHover(iso, { x: evt.clientX, y: evt.clientY })}
                     onMouseLeave={() => onHover(null)}
-                    onClick={() => { if (isoAlpha3) onCountryClick(iso); }}
+                    onClick={() => { if (iso) onCountryClick(iso); }}
                   />
                 );
               })
