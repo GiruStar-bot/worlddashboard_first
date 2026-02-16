@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
-import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 import { GEO_URL, ISO_MAP } from '../constants/isoMap';
 import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates';
 import { mixColours, COLOUR_LOW, COLOUR_MID, COLOUR_HIGH } from '../utils/colorUtils';
@@ -12,6 +12,7 @@ const MOBILE_DEFAULT_POSITION = {
   zoom: 2.2,
 };
 const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
+const SMALL_COUNTRY_HITBOX_ISOS = ['MCO', 'SGP', 'MLT', 'LIE', 'SMR', 'AND', 'MDV', 'BHR'];
 
 const getDefaultPositionForViewport = (isMobileViewport) => (
   isMobileViewport ? MOBILE_DEFAULT_POSITION : DEFAULT_POSITION
@@ -134,6 +135,18 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
     pressed: { fill: '#e2e8f0', outline: 'none' },
   }), []);
 
+  const mapConfig = useMemo(() => {
+    const zoom = position.zoom;
+    return {
+      projectionScale: 235,
+      minZoom: 1.05,
+      maxZoom: 10,
+      countryStrokeWidth: Math.max(0.45, 0.95 / Math.max(zoom, 1)),
+      selectedStrokeWidth: Math.max(1.2, 1.9 / Math.max(zoom, 1)),
+      hitMarkerRadius: Math.max(1.6, 3.6 / Math.max(zoom, 1)),
+    };
+  }, [position.zoom]);
+
   // ── Legend (凡例) システム定義 ───────────────────────────────
   const legendConfig = useMemo(() => {
     switch (activeLayer) {
@@ -175,12 +188,12 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
   // ── レンダリング ────────────────────────────────────────────
   return (
     <div className="w-full h-full bg-[#020617] relative">
-      <ComposableMap projectionConfig={{ scale: 220 }} className="w-full h-full outline-none">
+      <ComposableMap projectionConfig={{ scale: mapConfig.projectionScale }} className="w-full h-full outline-none">
         <ZoomableGroup 
           center={position.coordinates} 
           zoom={position.zoom} 
-          minZoom={1} 
-          maxZoom={8} 
+          minZoom={mapConfig.minZoom} 
+          maxZoom={mapConfig.maxZoom} 
           translateExtent={[[-500, -200], [1300, 800]]}
           onMoveEnd={handleMoveEnd}
           // アニメーション中のカクつきを防ぐため、移動中はtransitionを無効化するスタイル調整も可能だが、
@@ -206,7 +219,7 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
                     geography={geo}
                     fill={baseFill}
                     stroke={isSelected ? "#fff" : "rgba(255,255,255,0.08)"}
-                    strokeWidth={isSelected ? 1.5 : 0.5}
+                    strokeWidth={isSelected ? mapConfig.selectedStrokeWidth : mapConfig.countryStrokeWidth}
                     style={geoStyle}
                     onMouseEnter={(evt) => onHover(iso, { x: evt.clientX, y: evt.clientY })}
                     onMouseLeave={() => onHover(null)}
@@ -216,6 +229,23 @@ const WorldMap = React.memo(({ data, activeLayer, chinaInfluenceData, resourcesD
               })
             }
           </Geographies>
+
+          {SMALL_COUNTRY_HITBOX_ISOS.map((iso) => {
+            const country = COUNTRY_COORDINATES[iso];
+            if (!country) return null;
+            return (
+              <Marker key={`hitbox-${iso}`} coordinates={country.coordinates}>
+                <circle
+                  r={mapConfig.hitMarkerRadius}
+                  fill="rgba(255,255,255,0.001)"
+                  stroke="transparent"
+                  onMouseEnter={(evt) => onHover(iso, { x: evt.clientX, y: evt.clientY })}
+                  onMouseLeave={() => onHover(null)}
+                  onClick={() => onCountryClick(iso)}
+                />
+              </Marker>
+            );
+          })}
         </ZoomableGroup>
       </ComposableMap>
 

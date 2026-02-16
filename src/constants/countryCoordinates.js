@@ -124,6 +124,10 @@ export const COUNTRY_COORDINATES = {
   EST: { coordinates: [25.013, 58.595], zoom: 6 },     // Estonia
   MNE: { coordinates: [19.374, 42.708], zoom: 8 },     // Montenegro
   LUX: { coordinates: [6.129, 49.815], zoom: 9 },      // Luxembourg
+  MCO: { coordinates: [7.424, 43.738], zoom: 11 },     // Monaco
+  AND: { coordinates: [1.521, 42.507], zoom: 10 },     // Andorra
+  LIE: { coordinates: [9.556, 47.166], zoom: 11 },     // Liechtenstein
+  SMR: { coordinates: [12.458, 43.942], zoom: 11 },    // San Marino
   MLT: { coordinates: [14.375, 35.937], zoom: 10 },    // Malta
   ISL: { coordinates: [-19.020, 64.963], zoom: 5 },    // Iceland
   RUS: { coordinates: [105.318, 61.524], zoom: 2 },    // Russia

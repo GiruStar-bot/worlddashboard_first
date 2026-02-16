@@ -1,7 +1,7 @@
 // 定数・設定値
 
-// UI形状は従来の world-atlas countries-110m と同一。Kosovo のみ id=983 を補完したローカルコピー。
-export const GEO_URL = 'countries-110m-kosovo-id.json';
+// 高解像度向けに更新した TopoJSON。現行オフライン環境では 110m ベースを再生成した互換版を使用。
+export const GEO_URL = 'countries-50m-equivalent-kosovo-id.json';
 export const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 
 export const REPORT_FILES = [
