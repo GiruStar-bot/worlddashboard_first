@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react';
 // Vite configuration for the Worlddashboard project.
 export default defineConfig({
   plugins: [react()],
-  // 修正: GitHub Pagesのリポジトリ名に合わせてベースパスを設定
-  base: "/worlddashboard_2/",
+  // GitHub Pages のリポジトリ名変更時でも壊れないよう、相対パスで配信する
+  base: "./",
   server: {
     port: 5173,
   },
