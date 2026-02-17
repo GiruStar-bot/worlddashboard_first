@@ -21,6 +21,17 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
 
   const { master, canonical, ui_view } = country;
 
+
+  const fsiBreakdown = ui_view?.score_breakdown?.fsi;
+
+  const whyThisScoreRows = [
+    { key: 'normalized_fsi', label: 'normalized_fsi (N)', value: fsiBreakdown?.normalized_fsi },
+    { key: 'stability_penalty', label: 'stability_penalty (P)', value: fsiBreakdown?.stability_penalty },
+    { key: 'weighted_fsi', label: 'weighted_fsi (0.85 × N)', value: fsiBreakdown?.weighted_fsi },
+    { key: 'weighted_stability_penalty', label: 'weighted_stability_penalty (0.15 × P)', value: fsiBreakdown?.weighted_stability_penalty },
+    { key: 'final_score', label: 'final_score', value: fsiBreakdown?.final_score },
+  ];
+
   const radarData = [
     { subject: 'Economy',    score: ui_view?.scores?.economy_score   || 0 },
     { subject: 'Stability',  score: ui_view?.scores?.stability_score  || 0 },
@@ -78,6 +89,23 @@ const CountryDetails = ({ country, onClose, onShowReport, hasReport }) => {
             <Metric label="GDP Growth"    value={`${(canonical?.economy?.gdp_growth?.value || 0)}%`} icon={TrendingUp} valueColor={canonical?.economy?.gdp_growth?.value >= 0 ? "text-emerald-400" : "text-rose-400"} />
             <Metric label="FSI Risk (R)"  value={canonical?.risk?.fsi_total?.value?.toFixed(1) || "-"} icon={AlertTriangle} valueColor="text-rose-400" />
           </div>
+        </div>
+
+
+        {/* Why this score? */}
+        <div className="space-y-3">
+          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Why this score?</h3>
+          <div className="border border-white/[0.06] rounded-lg bg-white/[0.01] divide-y divide-white/[0.06]">
+            {whyThisScoreRows.map((row) => (
+              <div key={row.key} className="flex items-center justify-between px-4 py-2.5 text-xs">
+                <span className="text-slate-400">{row.label}</span>
+                <span className="text-slate-100 font-mono">{row.value == null ? '-' : row.value.toFixed(1)}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-[11px] text-slate-500 leading-relaxed">
+            Final formula: <span className="font-mono">final_score = clamp(0.85×normalized_fsi + 0.15×stability_penalty)</span>
+          </p>
         </div>
 
         {/* Chart */}

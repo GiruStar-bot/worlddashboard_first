@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Globe, Maximize, Minimize, BarChart2, TrendingUp, Layers } from 'lucide-react';
+import { Globe, Maximize, Minimize, BarChart2, TrendingUp, Layers, BookOpen } from 'lucide-react';
 
 // コンポーネント
 import WorldMap        from './components/WorldMap';
@@ -219,6 +219,17 @@ export default function App() {
             <BarChart2 size={14} />
             <span className="hidden sm:inline">ANALYTICS</span>
           </button>
+
+
+          <a
+            href={`${import.meta.env.BASE_URL}methodology.md`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-base hover:bg-slate-700/50 hover:text-white hover:border-slate-500/30"
+          >
+            <BookOpen size={14} />
+            <span className="hidden sm:inline">METHODOLOGY</span>
+          </a>
 
           {/* Fullscreen */}
           <button onClick={toggleFs} className="btn-base w-9 px-0">

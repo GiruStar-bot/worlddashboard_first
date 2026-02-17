@@ -11,9 +11,9 @@ World‑Dashboard – Global Intelligence Nexus
 現在実装済みの主な要素
 1. インタラクティブ世界地図（World Map）
 •	リスクのヒートマップ表示 – 各国のFSI総合スコア（0-120）を正規化し、安定性補正（stability_score）を加えた再定義リスクスコア（0-100）で色グラデーション表示します[4]。リスクが不明な国は暗色で表示されます。
-•	US Influenceレイヤー – allied_institutions_exposure / fdi_from_us / trade_with_us_pct / security_ties / tech_dependency / financial_exposure / logistics_exposure を用いた再定義フォーミュラ（0-100）で全国家・地域の影響度を再算出し、最新情勢を反映します。
-•	China Influenceレイヤー – 既存の複合指数（貿易・BRI・FDI・AIIB・インフラ）をベースに、最新化フォーミュラで全国家・地域スコアを再計算し、地図レイヤーへ反映します。
-•	Natural Resourcesレイヤー – 既存の prod / dep / res 指標を用いた再定義フォーミュラ（0-100）で全国家・地域スコアを再計算し、資源戦略レイヤーへ反映します。
+•	US Influenceレイヤー – `public/us_influence_index.json` の配布済みスコア（0-100）を参照して表示します。スコア算出式はJSONの`meta.methodology`に定義されています（アプリ実行時に再計算はしません）。
+•	China Influenceレイヤー – `public/china_influence_index.json` の配布済みスコア（0-100）を参照して表示します。base score重みと変換式はJSONの`meta.base_components`/`meta.formula`に定義されています（アプリ実行時に再計算はしません）。
+•	Natural Resourcesレイヤー – `public/natural_resources_index.json` の配布済みスコア（0-100）を参照して表示します。prod/dep/res に基づく式はJSONの`meta.formula`に定義されています（アプリ実行時に再計算はしません）。
 •	カーソル操作 – 国の上にマウスを置くと国名とISO 3コードをツールチップで表示し[5]、クリックすると詳細パネルが開きます[6]。
 •	ズーム・パン – MapLibre GL によるインタラクティブ操作（パン／ズーム）に対応し、表示中レイヤーと同一ソースで一貫したインタラクションを提供します。
 2. Analytics Panel（世界ランキング）
@@ -85,6 +85,12 @@ Deep Dive Reportボタン	その国に深掘りレポートが存在する場合
 ### 4) レイヤー表示・イベント優先順位
 - 表示と操作の優先順位は **国ポリゴン > 係争地オーバーレイ** を仕様とします。
 - hover / click 判定でも同順序を適用し、イベント競合を防止します。
+
+### 5) 「再定義（redefine）」の定義
+- 本リポジトリ実装で「再定義」を行うのは **FSIレイヤーのみ** です。
+- FSIは `normalized_fsi = (fsi_total/120)*100` と `stability_penalty = 100-stability_score` を用いて `0.85/0.15` 加重で再計算し、`canonical.risk.fsi_total.value` を更新します。
+- US/China/Natural Resources は **生成済みindex JSONのscoreを読み取るのみ** で、アプリ側で再定義・再計算は行いません。
+- 詳細仕様は `docs/methodology.md` を参照してください。
 
 今後の開発ビジョン
 現在は世界の地政学的な構造を表層的なデータで俯瞰できる状態ですが、本プロジェクトでは次のような機能追加を計画しています。
