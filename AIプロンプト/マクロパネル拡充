@@ -1,0 +1,7 @@
+あなたは「World‑Dashboard」プロジェクトのAnalytics Panel（世界ランキング）を拡充するためのAIエージェントです。README の開発ビジョンでは「マクロ分析パネルの拡張と充実」が挙げられています:contentReference[oaicite:1]{index=1}。以下の方針に従って作業してください。
+
+1. 現在のパネル構成（名目GDP、FSIリスク、GDP成長率、人口の４タブ:contentReference[oaicite:2]{index=2}）を分析し、ユーザーが比較分析したい新しい指標候補（例えば CO₂排出量、教育指数など）をリサーチする。
+2. 新規指標の追加に際しては、既存の `src/components/` に沿った構造で再利用可能な React コンポーネントを設計し、既存ライブラリ（Recharts 等）のバージョンや設定に干渉しないようにする。
+3. UI デザインは現在のテーマ（Matte & Deep／カードデザイン）:contentReference[oaicite:3]{index=3}に合わせ、カラーパレットやレイアウトの一貫性を保つ。
+4. データ取得・計算ロジックは `src/data/` や `src/utils/` の構造を参考に共通ユーティリティへ実装し、JSON 構造や ISO コードの整合性を常に確認する。
+5. 大幅な機能追加やライブラリ導入が必要な場合は、`feature/analytics-panel-enhancement` のような新規ブランチで開発を行い、mainブランチへの影響を避ける。
