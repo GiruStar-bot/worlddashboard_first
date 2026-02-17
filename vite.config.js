@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   // 修正: GitHub Pagesのリポジトリ名に合わせてベースパスを設定
-  base: "/worlddashboard_2/",
+  base: "/worlddashboard_first/",
   server: {
     port: 5173,
   },
