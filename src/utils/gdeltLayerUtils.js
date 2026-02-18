@@ -59,9 +59,9 @@ export async function fetchAndBuildGdeltGeojson() {
  * Returns the MapLibre layer config for the glowing halo layer rendered behind GDELT bubbles.
  *
  * The halo uses the same filter and color logic as the main bubble layer, but with:
- *   - Radius 1.75× the main circle (between the specified 1.5× and 2.0× range).
+ *   - Radius ~2.5× the main circle to create a larger pulsing glow.
  *   - Initial opacity 0.0 — driven by a requestAnimationFrame animation loop.
- *   - Heavy blur (1.0) to create a soft glow effect.
+ *   - Reduced blur (0.5) to keep a visible halo edge.
  *
  * @returns {{ type: string, filter: Array, paint: object }}
  */
@@ -71,14 +71,14 @@ export function getGdeltHaloLayerStyle() {
     // Same filter as the main layer — only render where bubbles exist
     filter: ['<', ['coalesce', ['get', 'risk_score'], 99], -1.0],
     paint: {
-      // 1.5x ~ 2.0x the main circle radius (using ×1.75 as midpoint)
+      // ~2.5x the main circle radius for a bolder pulse
       'circle-radius': [
         'interpolate',
         ['linear'],
         ['coalesce', ['get', 'count'], 0],
-        0, 5,    // 3 × 1.75 ≈ 5
-        100, 14, // 8 × 1.75 = 14
-        500, 26, // 15 × 1.75 ≈ 26
+        0, 15,
+        100, 30,
+        500, 50,
       ],
       // Same color decision logic as the main layer
       'circle-color': [
@@ -88,8 +88,8 @@ export function getGdeltHaloLayerStyle() {
       ],
       // Start fully transparent; opacity is driven by the animation loop
       'circle-opacity': 0.0,
-      // Strong blur creates the glowing halo effect
-      'circle-blur': 1.0,
+      // Softer blur keeps the halo edge visible
+      'circle-blur': 0.5,
     },
   };
 }
@@ -101,8 +101,8 @@ export function getGdeltHaloLayerStyle() {
  *   - Only countries with risk_score < -1.0 are rendered (filter excludes the rest).
  *   - risk_score < -5.0  →  deep red  (#dc2626)
  *   - risk_score < -1.0  →  yellow/orange  (#f59e0b)
- *   - Circle radius scales with article count: 3 px (0 articles) → 15 px (500+ articles).
- *   - 1.5 px black stroke ensures visibility on every base-layer colour.
+ *   - Circle radius scales with article count: 6 px (0 articles) → 20 px (500+ articles).
+ *   - 1.5 px white stroke ensures visibility on every base-layer colour.
  *
  * @returns {{ type: string, filter: Array, paint: object }}
  */
@@ -112,14 +112,14 @@ export function getGdeltLayerStyle() {
     // Show only countries with a meaningfully negative risk score
     filter: ['<', ['coalesce', ['get', 'risk_score'], 99], -1.0],
     paint: {
-      // Scale bubble size by article count (3 px min → 15 px max)
+      // Scale bubble size by article count (6 px min → 20 px max)
       'circle-radius': [
         'interpolate',
         ['linear'],
         ['coalesce', ['get', 'count'], 0],
-        0, 3,
-        100, 8,
-        500, 15,
+        0, 6,
+        100, 12,
+        500, 20,
       ],
       // Deep red for high-risk, yellow/orange for moderate risk
       'circle-color': [
@@ -128,10 +128,10 @@ export function getGdeltLayerStyle() {
         '#f59e0b',
       ],
       'circle-opacity': 0.85,
-      // Black stroke so bubbles are readable on any base-layer colour
+      // White stroke so bubbles are readable on any base-layer colour
       'circle-stroke-width': 1.5,
-      'circle-stroke-color': '#000000',
-      'circle-stroke-opacity': 0.7,
+      'circle-stroke-color': '#ffffff',
+      'circle-stroke-opacity': 0.9,
     },
   };
 }

@@ -548,10 +548,18 @@ const MapLibreWorldMap = ({
 
     let rafId;
     let cancelled = false;
+    let hasLoggedStart = false;
     const startAnimation = () => {
-      if (cancelled || !map.getLayer(GDELT_HALO_LAYER_ID)) return;
+      if (cancelled) return;
+      if (!map.getLayer(GDELT_HALO_LAYER_ID)) {
+        rafId = requestAnimationFrame(startAnimation);
+        return;
+      }
 
-      console.log('Animation running...');
+      if (!hasLoggedStart) {
+        console.log('Risk animation started successfully');
+        hasLoggedStart = true;
+      }
       const animate = () => {
         const opacity = (Math.sin(performance.now() / 800) + 1) / 2 * 0.7 + 0.1;
         if (map.getLayer(GDELT_HALO_LAYER_ID)) {
@@ -599,7 +607,7 @@ const MapLibreWorldMap = ({
         <button
           type="button"
           onClick={() => setShowRiskOverlay((prev) => !prev)}
-          className={`absolute top-24 left-4 z-[9999] flex items-center gap-2 px-4 py-2 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-xs cursor-pointer ${
+          className={`absolute top-16 left-4 z-[9999] flex items-center gap-2 px-4 py-2 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-xs cursor-pointer ${
             showRiskOverlay
               ? 'bg-red-950/90 border-red-500 text-red-100 shadow-[0_0_15px_rgba(239,68,68,0.6)] animate-pulse'
               : 'bg-slate-900/90 border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400'
