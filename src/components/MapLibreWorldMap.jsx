@@ -4,8 +4,10 @@ import { getLayerScoreMaps } from '../utils/layerScoreUtils';
 import {
   fetchAndBuildGdeltGeojson,
   getGdeltLayerStyle,
+  getGdeltHaloLayerStyle,
   GDELT_SOURCE_ID,
   GDELT_LAYER_ID,
+  GDELT_HALO_LAYER_ID,
 } from '../utils/gdeltLayerUtils';
 
 const MOBILE_DEFAULT_POSITION = {
@@ -449,6 +451,16 @@ const MapLibreWorldMap = ({
 
     map.addSource(GDELT_SOURCE_ID, { type: 'geojson', data: gdeltGeojson });
 
+    // Add halo layer first so it renders behind the main bubble layer
+    const haloStyle = getGdeltHaloLayerStyle();
+    map.addLayer({
+      id: GDELT_HALO_LAYER_ID,
+      source: GDELT_SOURCE_ID,
+      type: haloStyle.type,
+      filter: haloStyle.filter,
+      paint: haloStyle.paint,
+    });
+
     const style = getGdeltLayerStyle();
     map.addLayer({
       id: GDELT_LAYER_ID,
@@ -519,11 +531,40 @@ const MapLibreWorldMap = ({
 
     map.setLayoutProperty(GDELT_LAYER_ID, 'visibility', showRiskOverlay ? 'visible' : 'none');
 
+    if (map.getLayer(GDELT_HALO_LAYER_ID)) {
+      map.setLayoutProperty(GDELT_HALO_LAYER_ID, 'visibility', showRiskOverlay ? 'visible' : 'none');
+    }
+
     if (!showRiskOverlay && gdeltPopupRef.current) {
       gdeltPopupRef.current.remove();
       gdeltPopupRef.current = null;
     }
   }, [isMapReady, showRiskOverlay]);
+
+  // ── GDELT: pulsing halo animation (new useEffect — no existing code touched) ──
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !showRiskOverlay || !gdeltGeojson) return;
+    if (!map.getLayer(GDELT_HALO_LAYER_ID)) return;
+
+    let rafId;
+    const animate = () => {
+      const opacity = (Math.sin(performance.now() / 800) + 1) / 2 * 0.6 + 0.2;
+      if (map.getLayer(GDELT_HALO_LAYER_ID)) {
+        map.setPaintProperty(GDELT_HALO_LAYER_ID, 'circle-opacity', opacity);
+      }
+      rafId = requestAnimationFrame(animate);
+    };
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      // Reset to invisible when overlay is hidden or component unmounts
+      if (map.getLayer(GDELT_HALO_LAYER_ID)) {
+        map.setPaintProperty(GDELT_HALO_LAYER_ID, 'circle-opacity', 0);
+      }
+    };
+  }, [isMapReady, showRiskOverlay, gdeltGeojson]);
 
   return (
     <div data-testid="world-map" className="w-full h-full bg-[#020617] relative">
@@ -541,21 +582,23 @@ const MapLibreWorldMap = ({
         </div>
       )}
 
-      {/* GDELT risk overlay toggle */}
+      {/* GDELT risk overlay toggle — moved to top-left to avoid credit overlap */}
       {gdeltGeojson && (
-        <div className="absolute bottom-4 left-4 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="absolute top-4 left-4 z-50 font-sans select-none animate-in fade-in slide-in-from-top-4 duration-700">
           <button
             type="button"
             onClick={() => setShowRiskOverlay((prev) => !prev)}
-            className="flex items-center gap-2 bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg px-3 py-2 shadow-2xl text-[10px] text-slate-300 hover:text-white hover:border-white/20 transition-colors"
+            className={`flex items-center gap-2 backdrop-blur-md border rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+              showRiskOverlay
+                ? 'bg-red-900/90 text-red-100 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]'
+                : 'bg-slate-800/90 text-slate-300 border-white/10 shadow-2xl'
+            }`}
           >
             <span
-              className="inline-block w-3 h-3 rounded-full border border-black/50 flex-shrink-0"
-              style={{ background: showRiskOverlay ? '#dc2626' : '#475569' }}
+              className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
+              style={{ background: showRiskOverlay ? '#ef4444' : '#475569' }}
             />
-            <span className="uppercase tracking-wider font-bold">
-              {showRiskOverlay ? 'GDELT Risk ON' : 'GDELT Risk OFF'}
-            </span>
+            <span>LIVE RISK MONITOR</span>
           </button>
         </div>
       )}

@@ -6,6 +6,7 @@ const GDELT_DATA_URL =
 
 export const GDELT_SOURCE_ID = 'gdelt-risk-source';
 export const GDELT_LAYER_ID = 'gdelt-risk-circles';
+export const GDELT_HALO_LAYER_ID = 'gdelt-risk-halo';
 
 /**
  * Fetches GDELT daily risk scores and joins them with country coordinates,
@@ -52,6 +53,45 @@ export async function fetchAndBuildGdeltGeojson() {
   }
 
   return { type: 'FeatureCollection', features };
+}
+
+/**
+ * Returns the MapLibre layer config for the glowing halo layer rendered behind GDELT bubbles.
+ *
+ * The halo uses the same filter and color logic as the main bubble layer, but with:
+ *   - Radius 1.75× the main circle (between the specified 1.5× and 2.0× range).
+ *   - Initial opacity 0.0 — driven by a requestAnimationFrame animation loop.
+ *   - Heavy blur (1.0) to create a soft glow effect.
+ *
+ * @returns {{ type: string, filter: Array, paint: object }}
+ */
+export function getGdeltHaloLayerStyle() {
+  return {
+    type: 'circle',
+    // Same filter as the main layer — only render where bubbles exist
+    filter: ['<', ['coalesce', ['get', 'risk_score'], 99], -1.0],
+    paint: {
+      // 1.5x ~ 2.0x the main circle radius (using ×1.75 as midpoint)
+      'circle-radius': [
+        'interpolate',
+        ['linear'],
+        ['coalesce', ['get', 'count'], 0],
+        0, 5,    // 3 × 1.75 ≈ 5
+        100, 14, // 8 × 1.75 = 14
+        500, 26, // 15 × 1.75 ≈ 26
+      ],
+      // Same color decision logic as the main layer
+      'circle-color': [
+        'case',
+        ['<', ['coalesce', ['get', 'risk_score'], 0], -5.0], '#dc2626',
+        '#f59e0b',
+      ],
+      // Start fully transparent; opacity is driven by the animation loop
+      'circle-opacity': 0.0,
+      // Strong blur creates the glowing halo effect
+      'circle-blur': 1.0,
+    },
+  };
 }
 
 /**
