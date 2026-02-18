@@ -76,9 +76,9 @@ export function getGdeltHaloLayerStyle() {
         'interpolate',
         ['linear'],
         ['coalesce', ['get', 'count'], 0],
-        0, 15,
-        100, 30,
-        500, 50,
+        0, 15,   // 6 × 2.5 = 15
+        100, 30, // 12 × 2.5 = 30
+        500, 50, // 20 × 2.5 = 50
       ],
       // Same color decision logic as the main layer
       'circle-color': [
