@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { COUNTRY_COORDINATES, DEFAULT_POSITION } from '../constants/countryCoordinates';
 import { getLayerScoreMaps } from '../utils/layerScoreUtils';
+import {
+  fetchAndBuildGdeltGeojson,
+  getGdeltLayerStyle,
+  GDELT_SOURCE_ID,
+  GDELT_LAYER_ID,
+} from '../utils/gdeltLayerUtils';
 
 const MOBILE_DEFAULT_POSITION = {
   coordinates: [10, 35],
@@ -150,6 +156,9 @@ const MapLibreWorldMap = ({
   const [maplibre, setMaplibre] = useState(null);
   const [maplibreError, setMaplibreError] = useState(null);
   const [isMapReady, setIsMapReady] = useState(false);
+  const [showRiskOverlay, setShowRiskOverlay] = useState(true);
+  const [gdeltGeojson, setGdeltGeojson] = useState(null);
+  const gdeltPopupRef = useRef(null);
 
   const legendConfig = useMemo(() => layerStyles[activeLayer] || layerStyles.fsi, [activeLayer]);
   const scoreMaps = useMemo(
@@ -335,6 +344,11 @@ const MapLibreWorldMap = ({
       });
 
       map.on('click', (event) => {
+        // If the user clicked a GDELT risk bubble, skip country selection —
+        // the layer-specific click handler (added later) will handle the popup.
+        const gdeltHits = map.queryRenderedFeatures(event.point, { layers: [GDELT_LAYER_ID] });
+        if (gdeltHits.length > 0) return;
+
         const features = map.queryRenderedFeatures(event.point, { layers: [COUNTRY_FILL_LAYER_ID, DISPUTED_FILL_LAYER_ID] });
         const country = pickCountryFeature(features);
         if (!country) return;
@@ -409,6 +423,108 @@ const MapLibreWorldMap = ({
     });
   }, [selectedIso, updateSelectedFeatureState]);
 
+  // ── GDELT: fetch daily risk data once on mount ───────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+    fetchAndBuildGdeltGeojson()
+      .then((geojson) => {
+        if (!cancelled) setGdeltGeojson(geojson);
+      })
+      .catch((err) => {
+        console.warn('GDELT data fetch failed:', err);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  // ── GDELT: add/update the bubble layer once both map and data are ready ──
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !gdeltGeojson || !maplibre) return;
+
+    // If the source already exists, just refresh the data
+    if (map.getSource(GDELT_SOURCE_ID)) {
+      map.getSource(GDELT_SOURCE_ID).setData(gdeltGeojson);
+      return;
+    }
+
+    map.addSource(GDELT_SOURCE_ID, { type: 'geojson', data: gdeltGeojson });
+
+    const style = getGdeltLayerStyle();
+    map.addLayer({
+      id: GDELT_LAYER_ID,
+      source: GDELT_SOURCE_ID,
+      type: style.type,
+      filter: style.filter,
+      paint: style.paint,
+      // No beforeId: render on top of all fill/line layers, below no explicit label layer exists
+    });
+
+    // Popup on bubble click
+    map.on('click', GDELT_LAYER_ID, (event) => {
+      const feature = event.features?.[0];
+      if (!feature) return;
+
+      const { iso3, risk_score, count, top_news } = feature.properties;
+      const coordinates = feature.geometry.coordinates.slice();
+
+      if (gdeltPopupRef.current) {
+        gdeltPopupRef.current.remove();
+        gdeltPopupRef.current = null;
+      }
+
+      const scoreNum = risk_score != null ? Number(risk_score) : null;
+      const scoreText = scoreNum != null ? scoreNum.toFixed(2) : 'N/A';
+      const scoreColor = scoreNum != null && scoreNum < -5 ? '#dc2626' : '#d97706';
+
+      const newsHtml = (() => {
+        if (!top_news) return '';
+        const url = typeof top_news === 'string'
+          ? top_news
+          : (Array.isArray(top_news) ? (top_news[0]?.url ?? top_news[0]) : null);
+        if (!url) return '';
+        const safeUrl = String(url).replace(/"/g, '%22');
+        return `<div style="margin-top:6px;font-size:11px;"><a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;">Top News ↗</a></div>`;
+      })();
+
+      const popup = new maplibre.Popup({ closeButton: true, closeOnClick: true, maxWidth: '280px' })
+        .setLngLat(coordinates)
+        .setHTML(`
+          <div style="font-family:sans-serif;padding:4px 2px;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">${iso3}</div>
+            <div style="font-size:12px;margin-bottom:2px;">
+              Risk Score: <strong style="color:${scoreColor}">${scoreText}</strong>
+            </div>
+            <div style="font-size:12px;">Articles: <strong>${count}</strong></div>
+            ${newsHtml}
+          </div>
+        `)
+        .addTo(map);
+
+      gdeltPopupRef.current = popup;
+    });
+
+    // Change cursor when hovering over a bubble
+    map.on('mouseenter', GDELT_LAYER_ID, () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', GDELT_LAYER_ID, () => {
+      map.getCanvas().style.cursor = '';
+    });
+  }, [isMapReady, gdeltGeojson, maplibre]);
+
+  // ── GDELT: toggle layer visibility when showRiskOverlay changes ──────────
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !map.getLayer(GDELT_LAYER_ID)) return;
+
+    map.setLayoutProperty(GDELT_LAYER_ID, 'visibility', showRiskOverlay ? 'visible' : 'none');
+
+    if (!showRiskOverlay && gdeltPopupRef.current) {
+      gdeltPopupRef.current.remove();
+      gdeltPopupRef.current = null;
+    }
+  }, [isMapReady, showRiskOverlay]);
+
   return (
     <div data-testid="world-map" className="w-full h-full bg-[#020617] relative">
       <div ref={mapContainerRef} className="w-full h-full" />
@@ -422,6 +538,25 @@ const MapLibreWorldMap = ({
       {maplibreError && (
         <div className="absolute top-28 right-4 z-20 max-w-[280px] text-[10px] px-2 py-1 rounded bg-rose-950/80 border border-rose-400/30 text-rose-200">
           Map render warning: {maplibreError}
+        </div>
+      )}
+
+      {/* GDELT risk overlay toggle */}
+      {gdeltGeojson && (
+        <div className="absolute bottom-4 left-4 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <button
+            type="button"
+            onClick={() => setShowRiskOverlay((prev) => !prev)}
+            className="flex items-center gap-2 bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg px-3 py-2 shadow-2xl text-[10px] text-slate-300 hover:text-white hover:border-white/20 transition-colors"
+          >
+            <span
+              className="inline-block w-3 h-3 rounded-full border border-black/50 flex-shrink-0"
+              style={{ background: showRiskOverlay ? '#dc2626' : '#475569' }}
+            />
+            <span className="uppercase tracking-wider font-bold">
+              {showRiskOverlay ? 'GDELT Risk ON' : 'GDELT Risk OFF'}
+            </span>
+          </button>
         </div>
       )}
 
