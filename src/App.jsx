@@ -7,6 +7,7 @@ import CountryDetails  from './components/CountryDetails';
 import DeepReportPanel from './components/DeepReportPanel';
 import AnalyticsPanel  from './components/AnalyticsPanel';
 import MacroStatsOverlay from './components/MacroStatsOverlay';
+import DataSourceCredits from './components/DataSourceCredits';
 import { REPORT_FILES } from './constants/isoMap';
 import { redefineFsiLayerScores } from './utils/fsiLayerUtils';
 
@@ -245,6 +246,8 @@ export default function App() {
             // Mapコンポーネント側でも色味の彩度を落とす調整が必要な場合があります
           />
         </div>
+
+        <DataSourceCredits activeLayer={activeLayer} />
 
         {/* ツールチップ: シンプルなカード形式に変更 */}
         {hoverInfo && !isMobileViewport && (
