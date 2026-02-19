@@ -22,7 +22,7 @@ export const GDELT_HALO_LAYER_ID = 'gdelt-risk-halo';
  * @returns {Promise<{type: 'FeatureCollection', features: Array}>}
  */
 export async function fetchAndBuildGdeltGeojson() {
-  const response = await fetch(GDELT_DATA_URL);
+  const response = await fetch(`${GDELT_DATA_URL}?t=${new Date().getTime()}`);
   if (!response.ok) {
     throw new Error(`GDELT fetch failed: ${response.status} ${response.statusText}`);
   }

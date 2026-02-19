@@ -1,30 +1,10 @@
 // src/constants/seaLanes.js
 
 export const SEA_LANES = [
-  {
-    id: 'middle_east_to_japan',
-    name: 'Energy Route (Middle East - Japan)',
-    type: 'energy',
-    coordinates: [
-      [56.48, 26.56],  // Hormuz
-      [70.0, 15.0],    // Arabian Sea
-      [80.0, 5.0],     // Indian Ocean
-      [95.0, 5.5],     // Towards Malacca
-      [100.0, 4.0],    // Malacca
-      [112.0, 12.0],   // South China Sea
-      [119.5, 24.5],   // Taiwan Strait
-      [139.69, 35.68], // Tokyo, Japan
-    ],
-  },
-  {
-    id: 'europe_to_japan',
-    name: 'Trade Route (Europe - Japan)',
-    type: 'trade',
-    coordinates: [
-      [32.35, 30.60], // Suez
-      [43.32, 12.58], // Bab-el-Mandeb
-      [60.0, 10.0],   // Arabian Sea
-      [80.0, 5.0],    // Joins main route...
-    ],
-  },
+  { id: 'middle_east_to_japan', name: 'エネルギー航路 (中東 - 日本)', type: 'energy', coordinates: [[56.48, 26.56], [70.0, 15.0], [80.0, 5.0], [95.0, 5.5], [100.0, 4.0], [112.0, 12.0], [119.5, 24.5], [139.69, 35.68]] },
+  { id: 'middle_east_to_europe', name: 'エネルギー航路 (中東 - 欧州)', type: 'energy', coordinates: [[56.48, 26.56], [50.0, 12.0], [43.32, 12.58], [38.0, 20.0], [32.35, 30.60], [20.0, 35.0]] },
+  { id: 'asia_to_europe_suez', name: '主要貿易航路 (アジア - 欧州 / スエズ経由)', type: 'trade', coordinates: [[139.69, 35.68], [119.5, 24.5], [112.0, 12.0], [100.0, 4.0], [80.0, 5.0], [60.0, 10.0], [43.32, 12.58], [32.35, 30.60], [20.0, 35.0]] },
+  { id: 'asia_to_europe_cape', name: '代替貿易航路 (アジア - 欧州 / 喜望峰回り)', type: 'trade', coordinates: [[139.69, 35.68], [119.5, 24.5], [112.0, 12.0], [100.0, 4.0], [80.0, -5.0], [50.0, -20.0], [18.47, -34.35], [0.0, -10.0], [-10.0, 20.0], [-5.0, 45.0]] },
+  { id: 'americas_to_asia', name: '太平洋貿易航路 (米州 - アジア)', type: 'trade', coordinates: [[-79.91, 9.08], [-120.0, 10.0], [-160.0, 15.0], [160.0, 20.0], [119.5, 24.5]] },
+  { id: 'black_sea_to_mediterranean', name: '黒海・地中海航路', type: 'trade', coordinates: [[34.0, 43.0], [29.07, 41.02], [25.0, 38.0], [32.35, 30.60]] },
 ];

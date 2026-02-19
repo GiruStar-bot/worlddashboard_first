@@ -8,7 +8,7 @@ const KodokuPanel = ({ onRouteSelect }) => {
   const [selectedRouteId, setSelectedRouteId] = useState('');
 
   useEffect(() => {
-    fetch(KODOKU_DATA_URL)
+    fetch(`${KODOKU_DATA_URL}?t=${new Date().getTime()}`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
@@ -53,13 +53,13 @@ const KodokuPanel = ({ onRouteSelect }) => {
 
       {error && (
         <div className="text-red-400 text-[10px] py-2">
-          DATA LINK FAILURE: {error}
+          データリンク障害: {error}
         </div>
       )}
 
       {!report && !error && (
         <div className="text-slate-500 text-[10px] py-4 text-center animate-pulse">
-          CONNECTING TO KODOKU ENGINE...
+          KODOKU ENGINE 接続中...
         </div>
       )}
 
@@ -67,7 +67,7 @@ const KodokuPanel = ({ onRouteSelect }) => {
         <>
           {/* Timestamp */}
           <div className="text-slate-600 text-[9px] mb-2">
-            GENERATED: {report.generated_at || 'N/A'}
+            最終更新: {report.generated_at || 'N/A'}
           </div>
 
           {/* Route selector */}
@@ -87,7 +87,7 @@ const KodokuPanel = ({ onRouteSelect }) => {
             <div className="space-y-3">
               {/* Survival Rate */}
               <div>
-                <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">SURVIVAL RATE</div>
+                <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">航路生存確率</div>
                 <div className={`text-3xl font-black tracking-tight ${getSurvivalColor(selectedRoute.survival_rate)}`}>
                   {selectedRoute.survival_rate}%
                 </div>
@@ -96,13 +96,13 @@ const KodokuPanel = ({ onRouteSelect }) => {
               {/* Critical Node */}
               {selectedRoute.critical_node && (
                 <div>
-                  <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">CRITICAL NODE</div>
+                  <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">最大リスクノード (チョークポイント)</div>
                   <div className="flex items-baseline gap-2">
                     <span className="text-orange-400 font-bold text-xs">
                       {selectedRoute.critical_node}
                     </span>
                     <span className="text-red-400 text-[10px]">
-                      BLOCKADE RISK: {selectedRoute.max_disruption_risk}%
+                      物理封鎖リスク: {selectedRoute.max_disruption_risk}%
                     </span>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ const KodokuPanel = ({ onRouteSelect }) => {
               {/* Insight */}
               {selectedRoute.insight && (
                 <div>
-                  <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">INSIGHT</div>
+                  <div className="text-slate-500 text-[9px] tracking-wider mb-0.5">AI 状況分析</div>
                   <p className="font-mono text-[10px] text-slate-300 leading-relaxed">
                     {selectedRoute.insight}
                   </p>
