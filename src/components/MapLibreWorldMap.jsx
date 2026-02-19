@@ -69,13 +69,6 @@ const layerStyles = {
   },
 };
 
-const GDELT_LEGEND = {
-  title: 'Risk Scale',
-  gradient: 'linear-gradient(to right, #facc15, #ef4444)',
-  labelLow: 'Low',
-  labelHigh: 'High',
-};
-
 const DISPUTED_FILTER = ['any',
   ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_type'], '']]], 'disputed'],
   ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_class'], '']]], 'disputed'],
@@ -597,37 +590,22 @@ const MapLibreWorldMap = ({
         </button>
       )}
 
-      <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700 pointer-events-none">
-        <div className="bg-slate-900/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl w-48">
-          <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-2">
-            {legendConfig.title}
-          </div>
-
-          <div
-            className="h-2 w-full rounded-full"
-            style={{ background: legendConfig.gradient }}
-          />
-
-          <div className="flex justify-between text-[9px] text-slate-500 mt-1">
-            <span>{legendConfig.labels[0]}</span>
-            <span>{legendConfig.labels[legendConfig.labels.length - 1]}</span>
-          </div>
-
-          {showRiskOverlay && gdeltGeojson && (
-            <div className="mt-2 pt-2 border-t border-white/[0.08]">
-              <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">
-                {GDELT_LEGEND.title}
-              </div>
-              <div
-                className="h-2 w-full rounded-full"
-                style={{ background: GDELT_LEGEND.gradient }}
-              />
-              <div className="flex justify-between text-[9px] text-slate-500 mt-1">
-                <span>{GDELT_LEGEND.labelLow}</span>
-                <span>{GDELT_LEGEND.labelHigh}</span>
-              </div>
-            </div>
-          )}
+      <div className="absolute bottom-8 right-8 z-50 w-48 pointer-events-none">
+        <div
+          className="h-2 w-full rounded-full relative"
+          style={{ background: legendConfig.gradient }}
+        >
+          {[0, 20, 40, 60, 80, 100].map((pos) => (
+            <span
+              key={pos}
+              className="absolute top-0 h-3 w-[1px] bg-white/70"
+              style={{ left: `${pos}%` }}
+            />
+          ))}
+        </div>
+        <div className="flex justify-between mt-1">
+          <span className="text-white text-[10px] font-mono opacity-90">0</span>
+          <span className="text-white text-[10px] font-mono opacity-90">100</span>
         </div>
       </div>
     </div>
