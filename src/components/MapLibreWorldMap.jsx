@@ -579,47 +579,44 @@ const MapLibreWorldMap = ({
         <button
           type="button"
           onClick={() => setShowRiskOverlay((prev) => !prev)}
-          className={`absolute top-[68px] left-4 z-[9999] flex items-center gap-2 px-4 py-2 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-xs cursor-pointer ${
+          className={`absolute top-[60px] left-4 z-[9999] flex items-center gap-1 px-2 py-0.5 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-[10px] cursor-pointer ${
             showRiskOverlay
               ? 'bg-red-950/90 border-red-500 text-red-100 shadow-[0_0_15px_rgba(239,68,68,0.6)] animate-pulse'
               : 'bg-slate-900/90 border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400'
           }`}
         >
-          <span className={showRiskOverlay ? 'text-red-500' : 'text-slate-400'}>●</span>
+          <span className={`${showRiskOverlay ? 'text-red-500' : 'text-slate-400'} text-[8px]`}>●</span>
           <span>LIVE RISK MONITOR</span>
         </button>
       )}
 
-      <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700 pointer-events-none">
-        <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl min-w-[200px]">
-          <div className="mb-2">
-            <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
+      <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700 pointer-events-auto">
+        <div className="group bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-2 shadow-2xl min-w-[100px] max-w-[140px] transition-all duration-300 cursor-default">
+          {/* Title - always visible */}
+          <div className="mb-1">
+            <div className={`text-[10px] font-bold uppercase tracking-wider ${legendConfig.colorClass}`}>
               {legendConfig.title}
             </div>
-            <div className="text-[10px] text-slate-500 font-medium">
+          </div>
+
+          {/* Details - shown on hover */}
+          <div className="max-h-0 overflow-hidden group-hover:max-h-32 transition-all duration-300 ease-in-out">
+            <div className="text-[9px] text-slate-500 font-medium mb-2">
               {legendConfig.subTitle}
             </div>
-          </div>
 
-          <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" style={{ background: legendConfig.gradient }}>
-            <div className="absolute inset-0 flex justify-between px-[1px]">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
-              ))}
+            <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" style={{ background: legendConfig.gradient }}>
+              <div className="absolute inset-0 flex justify-between px-[1px]">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="flex justify-between text-[9px] text-slate-500 mb-1">
-            <span>Low</span>
-            <span>High</span>
-          </div>
-
-          <div className="flex justify-between text-[9px] text-slate-400 font-mono font-medium">
-            {legendConfig.labels.map((label, i) => (
-              <span key={i} className={i === 0 ? 'text-left' : i === 4 ? 'text-right' : 'text-center'} style={{ width: '20px' }}>
-                {label}
-              </span>
-            ))}
+            <div className="flex justify-between text-[8px] text-slate-400 font-mono font-medium">
+              <span>{legendConfig.labels[0]}</span>
+              <span>{legendConfig.labels[4]}</span>
+            </div>
           </div>
         </div>
       </div>
