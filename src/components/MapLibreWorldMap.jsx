@@ -4,10 +4,8 @@ import { getLayerScoreMaps } from '../utils/layerScoreUtils';
 import {
   fetchAndBuildGdeltGeojson,
   getGdeltLayerStyle,
-  getGdeltHaloLayerStyle,
   GDELT_SOURCE_ID,
   GDELT_LAYER_ID,
-  GDELT_HALO_LAYER_ID,
 } from '../utils/gdeltLayerUtils';
 
 const MOBILE_DEFAULT_POSITION = {
@@ -451,16 +449,6 @@ const MapLibreWorldMap = ({
 
     map.addSource(GDELT_SOURCE_ID, { type: 'geojson', data: gdeltGeojson });
 
-    // Add halo layer first so it renders behind the main bubble layer
-    const haloStyle = getGdeltHaloLayerStyle();
-    map.addLayer({
-      id: GDELT_HALO_LAYER_ID,
-      source: GDELT_SOURCE_ID,
-      type: haloStyle.type,
-      filter: haloStyle.filter,
-      paint: haloStyle.paint,
-    });
-
     const style = getGdeltLayerStyle();
     map.addLayer({
       id: GDELT_LAYER_ID,
@@ -531,61 +519,11 @@ const MapLibreWorldMap = ({
 
     map.setLayoutProperty(GDELT_LAYER_ID, 'visibility', showRiskOverlay ? 'visible' : 'none');
 
-    if (map.getLayer(GDELT_HALO_LAYER_ID)) {
-      map.setLayoutProperty(GDELT_HALO_LAYER_ID, 'visibility', showRiskOverlay ? 'visible' : 'none');
-    }
-
     if (!showRiskOverlay && gdeltPopupRef.current) {
       gdeltPopupRef.current.remove();
       gdeltPopupRef.current = null;
     }
   }, [isMapReady, showRiskOverlay]);
-
-  // ── GDELT: pulsing halo animation (new useEffect — no existing code touched) ──
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!isMapReady || !map || !showRiskOverlay || !gdeltGeojson) return;
-
-    let rafId;
-    let cancelled = false;
-    let hasLoggedStart = false;
-    const startAnimation = () => {
-      if (cancelled) return;
-      if (!map.getLayer(GDELT_HALO_LAYER_ID)) {
-        // Keep polling until the halo layer is added.
-        rafId = requestAnimationFrame(startAnimation);
-        return;
-      }
-
-      if (!hasLoggedStart) {
-        console.log('Risk animation started successfully');
-        hasLoggedStart = true;
-      }
-      const animate = () => {
-        const opacity = (Math.sin(performance.now() / 800) + 1) / 2 * 0.7 + 0.1;
-        if (map.getLayer(GDELT_HALO_LAYER_ID)) {
-          map.setPaintProperty(GDELT_HALO_LAYER_ID, 'circle-opacity', opacity);
-        }
-        rafId = requestAnimationFrame(animate);
-      };
-      rafId = requestAnimationFrame(animate);
-    };
-
-    if (map.isStyleLoaded()) {
-      startAnimation();
-    } else {
-      map.once('style.load', startAnimation);
-    }
-
-    return () => {
-      cancelled = true;
-      if (rafId) cancelAnimationFrame(rafId);
-      // Reset to invisible when overlay is hidden or component unmounts
-      if (map.getLayer(GDELT_HALO_LAYER_ID)) {
-        map.setPaintProperty(GDELT_HALO_LAYER_ID, 'circle-opacity', 0);
-      }
-    };
-  }, [isMapReady, showRiskOverlay, gdeltGeojson]);
 
   return (
     <div data-testid="world-map" className="w-full h-full bg-[#020617] relative">
@@ -608,7 +546,7 @@ const MapLibreWorldMap = ({
         <button
           type="button"
           onClick={() => setShowRiskOverlay((prev) => !prev)}
-          className={`absolute top-16 left-4 z-[9999] flex items-center gap-2 px-4 py-2 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-xs cursor-pointer ${
+          className={`absolute top-[68px] left-4 z-[9999] flex items-center gap-2 px-4 py-2 rounded-full border shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-xs cursor-pointer ${
             showRiskOverlay
               ? 'bg-red-950/90 border-red-500 text-red-100 shadow-[0_0_15px_rgba(239,68,68,0.6)] animate-pulse'
               : 'bg-slate-900/90 border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400'

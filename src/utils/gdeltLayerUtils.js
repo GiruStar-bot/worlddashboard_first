@@ -6,8 +6,6 @@ const GDELT_DATA_URL =
 
 export const GDELT_SOURCE_ID = 'gdelt-risk-source';
 export const GDELT_LAYER_ID = 'gdelt-risk-circles';
-export const GDELT_HALO_LAYER_ID = 'gdelt-risk-halo';
-
 /**
  * Fetches GDELT daily risk scores and joins them with country coordinates,
  * returning a GeoJSON FeatureCollection of Point features.
@@ -56,45 +54,6 @@ export async function fetchAndBuildGdeltGeojson() {
 }
 
 /**
- * Returns the MapLibre layer config for the glowing halo layer rendered behind GDELT bubbles.
- *
- * The halo uses the same filter and color logic as the main bubble layer, but with:
- *   - Radius ~2.5× the main circle to create a larger pulsing glow.
- *   - Initial opacity 0.0 — driven by a requestAnimationFrame animation loop.
- *   - Reduced blur (0.5) to keep a visible halo edge.
- *
- * @returns {{ type: string, filter: Array, paint: object }}
- */
-export function getGdeltHaloLayerStyle() {
-  return {
-    type: 'circle',
-    // Same filter as the main layer — only render where bubbles exist
-    filter: ['<', ['coalesce', ['get', 'risk_score'], 99], -1.0],
-    paint: {
-      // ~2.5x the main circle radius for a bolder pulse (per UX update)
-      'circle-radius': [
-        'interpolate',
-        ['linear'],
-        ['coalesce', ['get', 'count'], 0],
-        0, 15,
-        100, 30,
-        500, 50,
-      ],
-      // Same color decision logic as the main layer
-      'circle-color': [
-        'case',
-        ['<', ['coalesce', ['get', 'risk_score'], 0], -5.0], '#dc2626',
-        '#f59e0b',
-      ],
-      // Start fully transparent; opacity is driven by the animation loop
-      'circle-opacity': 0.0,
-      // Softer blur keeps the halo edge visible
-      'circle-blur': 0.5,
-    },
-  };
-}
-
-/**
  * Returns the MapLibre layer config (type, filter, paint) for GDELT risk bubbles.
  *
  * Rendering rules:
@@ -127,11 +86,11 @@ export function getGdeltLayerStyle() {
         ['<', ['coalesce', ['get', 'risk_score'], 0], -5.0], '#dc2626',
         '#f59e0b',
       ],
-      'circle-opacity': 0.85,
+      'circle-opacity': 0.4,
       // White stroke so bubbles are readable on any base-layer colour
-      'circle-stroke-width': 1.5,
+      'circle-stroke-width': 1.0,
       'circle-stroke-color': '#ffffff',
-      'circle-stroke-opacity': 0.9,
+      'circle-stroke-opacity': 0.5,
     },
   };
 }
