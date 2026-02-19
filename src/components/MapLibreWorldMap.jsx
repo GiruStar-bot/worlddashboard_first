@@ -69,6 +69,13 @@ const layerStyles = {
   },
 };
 
+const GDELT_LEGEND = {
+  title: 'Risk Scale',
+  gradient: 'linear-gradient(to right, #facc15, #ef4444)',
+  labelLow: 'Low',
+  labelHigh: 'High',
+};
+
 const DISPUTED_FILTER = ['any',
   ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_type'], '']]], 'disputed'],
   ['==', ['downcase', ['to-string', ['coalesce', ['get', 'feature_class'], '']]], 'disputed'],
@@ -591,36 +598,36 @@ const MapLibreWorldMap = ({
       )}
 
       <div className="absolute bottom-4 right-8 z-20 font-sans select-none animate-in fade-in slide-in-from-bottom-4 duration-700 pointer-events-none">
-        <div className="bg-[#0f172a]/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl min-w-[200px]">
-          <div className="mb-2">
-            <div className={`text-xs font-bold uppercase tracking-wider mb-0.5 ${legendConfig.colorClass}`}>
-              {legendConfig.title}
-            </div>
-            <div className="text-[10px] text-slate-500 font-medium">
-              {legendConfig.subTitle}
-            </div>
+        <div className="bg-slate-900/90 backdrop-blur-md border border-white/[0.08] rounded-lg p-3 shadow-2xl w-48">
+          <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-2">
+            {legendConfig.title}
           </div>
 
-          <div className="h-2 w-full rounded-sm mb-1.5 relative border border-white/10 overflow-hidden" style={{ background: legendConfig.gradient }}>
-            <div className="absolute inset-0 flex justify-between px-[1px]">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-[1px] h-full bg-white/30 backdrop-invert" />
-              ))}
+          <div
+            className="h-2 w-full rounded-full"
+            style={{ background: legendConfig.gradient }}
+          />
+
+          <div className="flex justify-between text-[9px] text-slate-500 mt-1">
+            <span>{legendConfig.labels[0]}</span>
+            <span>{legendConfig.labels[legendConfig.labels.length - 1]}</span>
+          </div>
+
+          {showRiskOverlay && gdeltGeojson && (
+            <div className="mt-2 pt-2 border-t border-white/[0.08]">
+              <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">
+                {GDELT_LEGEND.title}
+              </div>
+              <div
+                className="h-2 w-full rounded-full"
+                style={{ background: GDELT_LEGEND.gradient }}
+              />
+              <div className="flex justify-between text-[9px] text-slate-500 mt-1">
+                <span>{GDELT_LEGEND.labelLow}</span>
+                <span>{GDELT_LEGEND.labelHigh}</span>
+              </div>
             </div>
-          </div>
-
-          <div className="flex justify-between text-[9px] text-slate-500 mb-1">
-            <span>Low</span>
-            <span>High</span>
-          </div>
-
-          <div className="flex justify-between text-[9px] text-slate-400 font-mono font-medium">
-            {legendConfig.labels.map((label, i) => (
-              <span key={i} className={i === 0 ? 'text-left' : i === 4 ? 'text-right' : 'text-center'} style={{ width: '20px' }}>
-                {label}
-              </span>
-            ))}
-          </div>
+          )}
         </div>
       </div>
     </div>
