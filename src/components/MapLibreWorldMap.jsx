@@ -23,6 +23,7 @@ import {
 } from '../utils/chokePointLayerUtils';
 import { CHOKE_POINTS } from '../constants/chokePoints';
 import { calculateDistance } from '../utils/geoMath';
+import KodokuPanel from './KodokuPanel';
 import {
   buildSeaLaneGeojson,
   getSeaLaneLayerStyle,
@@ -183,6 +184,8 @@ const MapLibreWorldMap = ({
   const gdeltPopupRef = useRef(null);
   const [showChokePoints, setShowChokePoints] = useState(true);
   const chokePopupRef = useRef(null);
+  const [showKodokuPanel, setShowKodokuPanel] = useState(false);
+  const [kodokuRouteId, setKodokuRouteId] = useState(null);
 
   const legendConfig = useMemo(() => layerStyles[activeLayer] || layerStyles.fsi, [activeLayer]);
   const scoreMaps = useMemo(
@@ -663,6 +666,24 @@ const MapLibreWorldMap = ({
     }
   }, [isMapReady, showChokePoints]);
 
+  // ── KODOKU: highlight selected route on sea lane layer ───────────────────
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !map.getLayer(SEA_LANE_LAYER_ID)) return;
+
+    if (kodokuRouteId && showKodokuPanel) {
+      map.setPaintProperty(SEA_LANE_LAYER_ID, 'line-width', [
+        'case', ['==', ['get', 'id'], kodokuRouteId], 4.5, 2.0,
+      ]);
+      map.setPaintProperty(SEA_LANE_LAYER_ID, 'line-opacity', [
+        'case', ['==', ['get', 'id'], kodokuRouteId], 1.0, 0.3,
+      ]);
+    } else {
+      map.setPaintProperty(SEA_LANE_LAYER_ID, 'line-width', 2.0);
+      map.setPaintProperty(SEA_LANE_LAYER_ID, 'line-opacity', 0.6);
+    }
+  }, [isMapReady, kodokuRouteId, showKodokuPanel]);
+
   // ── Chokepoints: halo pulsing animation ─────────────────────────────────
   useEffect(() => {
     if (!isMapReady) return;
@@ -770,6 +791,27 @@ const MapLibreWorldMap = ({
         <span className={showChokePoints ? 'text-cyan-400' : 'text-slate-400'}>◆</span>
         <span>SEA LANES</span>
       </button>
+
+      {/* KODOKU ENGINE toggle */}
+      <button
+        type="button"
+        onClick={() => setShowKodokuPanel((prev) => !prev)}
+        className={`absolute top-[128px] left-4 z-[9999] flex items-center gap-1.5 px-2 py-0.5 rounded-full border shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-[10px] cursor-pointer ${
+          showKodokuPanel
+            ? 'bg-red-950/90 border-red-700 text-red-200 shadow-[0_0_15px_rgba(127,29,29,0.6)]'
+            : 'bg-slate-900/90 border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400'
+        }`}
+      >
+        <span className={showKodokuPanel ? 'text-red-500' : 'text-slate-400'}>⬡</span>
+        <span>KODOKU ENGINE</span>
+      </button>
+
+      {/* KODOKU Panel overlay */}
+      {showKodokuPanel && (
+        <div className="absolute bottom-12 left-4 z-[9998]">
+          <KodokuPanel onRouteSelect={setKodokuRouteId} />
+        </div>
+      )}
 
       <div className="absolute bottom-2 right-8 z-50 w-48 pointer-events-none">
         <div
