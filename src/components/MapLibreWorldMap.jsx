@@ -592,7 +592,7 @@ const MapLibreWorldMap = ({
 
       <div className="absolute bottom-2 right-8 z-50 w-48 pointer-events-none">
         <div
-          className="h-2 w-full rounded-full relative border border-black/90 shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+          className="h-2 w-full relative border border-black/90 shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
           style={{ background: legendConfig.gradient }}
         >
           {[0, 20, 40, 60, 80, 100].map((pos) => (
