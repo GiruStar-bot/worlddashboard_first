@@ -4,8 +4,8 @@
 Generates ``kodoku_reports.json`` consumed by the WorldDashboard frontend.
 """
 
+import hashlib
 import json
-import math
 import os
 import random
 from datetime import datetime, timezone
@@ -54,7 +54,9 @@ ROUTES = [
 
 def _disruption_risk(chokepoint: str) -> float:
     """Return a simulated disruption-risk percentage for *chokepoint*."""
-    random.seed(hash(chokepoint + datetime.now(timezone.utc).strftime("%Y-%m-%d")))
+    seed_str = chokepoint + datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    seed_val = int(hashlib.sha256(seed_str.encode()).hexdigest(), 16) % (2**32)
+    random.seed(seed_val)
     return round(random.uniform(1, 60), 1)
 
 
