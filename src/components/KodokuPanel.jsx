@@ -16,7 +16,7 @@ const KodokuPanel = ({ onRouteSelect }) => {
       .then((data) => {
         setReport(data);
         if (data.routes?.length > 0) {
-          setSelectedRouteId(data.routes[0].route_id);
+          setSelectedRouteId(data.routes[0].id);
         }
       })
       .catch((err) => setError(err.message));
