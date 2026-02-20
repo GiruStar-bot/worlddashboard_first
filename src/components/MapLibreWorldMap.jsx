@@ -30,6 +30,16 @@ import {
   SEA_LANE_SOURCE_ID,
   SEA_LANE_LAYER_ID,
 } from '../utils/seaLaneLayerUtils';
+import {
+  fetchConflictGeojson,
+  getConflictIconStyle,
+  getConflictHaloStyle,
+  getConflictLabelStyle,
+  CONFLICT_SOURCE_ID,
+  CONFLICT_ICON_LAYER_ID,
+  CONFLICT_HALO_LAYER_ID,
+  CONFLICT_LABEL_LAYER_ID,
+} from '../utils/conflictLayerUtils';
 
 const SEA_LANE_HIGHLIGHT_WIDTH = 4.5;
 const SEA_LANE_DEFAULT_WIDTH = 2.0;
@@ -192,6 +202,9 @@ const MapLibreWorldMap = ({
   const chokePopupRef = useRef(null);
   const [showKodokuPanel, setShowKodokuPanel] = useState(false);
   const [kodokuRouteId, setKodokuRouteId] = useState(null);
+  const [conflictGeojson, setConflictGeojson] = useState(null);
+  const [showConflicts, setShowConflicts] = useState(true);
+  const conflictPopupRef = useRef(null);
 
   const legendConfig = useMemo(() => layerStyles[activeLayer] || layerStyles.fsi, [activeLayer]);
   const scoreMaps = useMemo(
@@ -413,6 +426,10 @@ const MapLibreWorldMap = ({
         const gdeltHits = map.queryRenderedFeatures(event.point, { layers: [GDELT_LAYER_ID] });
         if (gdeltHits.length > 0) return;
 
+        // Skip country selection when clicking a conflict marker
+        const conflictHits = map.queryRenderedFeatures(event.point, { layers: [CONFLICT_ICON_LAYER_ID] });
+        if (conflictHits.length > 0) return;
+
         const features = map.queryRenderedFeatures(event.point, { layers: [COUNTRY_FILL_LAYER_ID, DISPUTED_FILL_LAYER_ID] });
         const country = pickCountryFeature(features);
         if (!country) return;
@@ -528,6 +545,19 @@ const MapLibreWorldMap = ({
     return () => { cancelled = true; };
   }, []);
 
+  // ── Conflict Ledger: fetch once on mount ─────────────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+    fetchConflictGeojson()
+      .then((geojson) => {
+        if (!cancelled) setConflictGeojson(geojson);
+      })
+      .catch((err) => {
+        console.warn('Conflict ledger fetch failed:', err);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
   // ── Chokepoints: update source when dynamic risk levels change ──────────
   useEffect(() => {
     const map = mapRef.current;
@@ -619,6 +649,121 @@ const MapLibreWorldMap = ({
       map.getCanvas().style.cursor = '';
     });
   }, [isMapReady, gdeltGeojson, maplibre]);
+
+  // ── Conflict Ledger: add/update layers (topmost) ────────────────────────
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !conflictGeojson || !maplibre) return;
+
+    // If the source already exists, just refresh the data
+    if (map.getSource(CONFLICT_SOURCE_ID)) {
+      map.getSource(CONFLICT_SOURCE_ID).setData(conflictGeojson);
+      return;
+    }
+
+    map.addSource(CONFLICT_SOURCE_ID, { type: 'geojson', data: conflictGeojson });
+
+    const halo = getConflictHaloStyle();
+    map.addLayer({
+      id: CONFLICT_HALO_LAYER_ID,
+      source: CONFLICT_SOURCE_ID,
+      type: halo.type,
+      filter: halo.filter,
+      paint: halo.paint,
+    });
+
+    const icon = getConflictIconStyle();
+    map.addLayer({
+      id: CONFLICT_ICON_LAYER_ID,
+      source: CONFLICT_SOURCE_ID,
+      type: icon.type,
+      layout: icon.layout,
+      paint: icon.paint,
+    });
+
+    const label = getConflictLabelStyle();
+    map.addLayer({
+      id: CONFLICT_LABEL_LAYER_ID,
+      source: CONFLICT_SOURCE_ID,
+      type: label.type,
+      minzoom: label.minzoom,
+      layout: label.layout,
+      paint: label.paint,
+    });
+
+    // Popup on icon click
+    map.on('click', CONFLICT_ICON_LAYER_ID, (event) => {
+      const feature = event.features?.[0];
+      if (!feature) return;
+
+      const { name, status, description } = feature.properties;
+      const coordinates = feature.geometry.coordinates.slice();
+
+      if (conflictPopupRef.current) {
+        conflictPopupRef.current.remove();
+        conflictPopupRef.current = null;
+      }
+
+      const isActive = status === 'active';
+      const borderColor = isActive ? '#ef4444' : '#eab308';
+      const statusLabel = isActive ? 'ACTIVE' : 'CEASEFIRE';
+      const statusIcon = isActive ? '⚔️' : '⛔';
+
+      const popup = new maplibre.Popup({ closeButton: true, closeOnClick: true, maxWidth: '280px' })
+        .setLngLat(coordinates)
+        .setHTML(`
+          <div style="font-family:monospace;padding:4px 2px;background:#0f172a;color:#e2e8f0;border:1px solid ${borderColor};border-radius:4px;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:${borderColor};">${statusIcon} ${name}</div>
+            <div style="font-size:11px;margin-bottom:2px;">Status: <strong style="color:${borderColor}">${statusLabel}</strong></div>
+            <div style="font-size:11px;margin-top:4px;">${description}</div>
+          </div>
+        `)
+        .addTo(map);
+
+      conflictPopupRef.current = popup;
+    });
+
+    map.on('mouseenter', CONFLICT_ICON_LAYER_ID, () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', CONFLICT_ICON_LAYER_ID, () => {
+      map.getCanvas().style.cursor = '';
+    });
+  }, [isMapReady, conflictGeojson, maplibre]);
+
+  // ── Conflict Ledger: toggle layer visibility ────────────────────────────
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!isMapReady || !map || !map.getLayer(CONFLICT_ICON_LAYER_ID)) return;
+
+    const vis = showConflicts ? 'visible' : 'none';
+    [CONFLICT_HALO_LAYER_ID, CONFLICT_ICON_LAYER_ID, CONFLICT_LABEL_LAYER_ID].forEach((layerId) => {
+      if (map.getLayer(layerId)) map.setLayoutProperty(layerId, 'visibility', vis);
+    });
+
+    if (!showConflicts && conflictPopupRef.current) {
+      conflictPopupRef.current.remove();
+      conflictPopupRef.current = null;
+    }
+  }, [isMapReady, showConflicts]);
+
+  // ── Conflict Ledger: halo pulsing animation (active markers only) ───────
+  useEffect(() => {
+    if (!isMapReady) return;
+
+    let rafId;
+    const animate = () => {
+      rafId = requestAnimationFrame(animate);
+      const map = mapRef.current;
+      if (!map || !map.getLayer(CONFLICT_HALO_LAYER_ID)) return;
+
+      const opacity = (Math.sin(performance.now() / 700) + 1) / 2 * 0.45 + 0.1;
+      map.setPaintProperty(CONFLICT_HALO_LAYER_ID, 'circle-opacity', opacity);
+    };
+
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [isMapReady]);
 
   // ── GDELT: toggle layer visibility when showRiskOverlay changes ──────────
   useEffect(() => {
@@ -811,6 +956,22 @@ const MapLibreWorldMap = ({
         <span className={showKodokuPanel ? 'text-red-500' : 'text-slate-400'}>⬡</span>
         <span>KODOKU ENGINE</span>
       </button>
+
+      {/* Conflict Ledger toggle */}
+      {conflictGeojson && (
+        <button
+          type="button"
+          onClick={() => setShowConflicts((prev) => !prev)}
+          className={`absolute top-[156px] left-4 z-[9999] flex items-center gap-1.5 px-2 py-0.5 rounded-full border shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all duration-300 font-bold tracking-wider text-[10px] cursor-pointer ${
+            showConflicts
+              ? 'bg-red-950/90 border-red-500 text-red-100 shadow-[0_0_15px_rgba(239,68,68,0.5)]'
+              : 'bg-slate-900/90 border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400'
+          }`}
+        >
+          <span className={showConflicts ? 'text-red-400' : 'text-slate-400'}>⚔</span>
+          <span>CONFLICT MONITOR</span>
+        </button>
+      )}
 
       {/* KODOKU Panel overlay */}
       {showKodokuPanel && (
