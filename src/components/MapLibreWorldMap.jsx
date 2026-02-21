@@ -989,7 +989,7 @@ const MapLibreWorldMap = ({
             <span
               key={pos}
               aria-hidden="true"
-              className="absolute top-0 h-3 w-[1px] bg-white/70"
+              className="absolute top-0 h-3 w-[1px] bg-black/80 shadow-[1px_0_0_rgba(255,255,255,0.3)]"
               style={{ left: `${pos}%` }}
             />
           ))}
